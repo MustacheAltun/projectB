@@ -10,10 +10,12 @@ namespace projectB
     {
         static void Main(string[] args)
         {
-            string buttonBanner;
-            string username = "Kawish";
-            string password = "123456";
             bool loggedInStatus = false;
+            
+            //Dit is testdata
+            string username = "Marc";
+            string password = "123456";
+            
 
             //instantiate de class
             Registratie accountMaken = new Registratie();
@@ -39,7 +41,7 @@ namespace projectB
             };
 
             //Als je dit roept ga je checken of de naam en wachtwoord die je hebt ingevoerd komt voor in Json file.
-            //Console.WriteLine(accountInloggen.loginMethod(jsonList, username, password));
+            Console.WriteLine(accountInloggen.loginMethod(jsonList, username, password));
 
             //geef alles naar de registreer funtie
             //note: ticketlijst heeft een default value, dus je kan die leeg laten als je wilt
