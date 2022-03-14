@@ -41,8 +41,8 @@ namespace projectB
             };
 
             //Als je dit roept ga je checken of de naam en wachtwoord die je hebt ingevoerd komt voor in Json file.
-            Console.WriteLine(accountInloggen.loginMethod(jsonList, username, password));
-
+            //Console.WriteLine(accountInloggen.loginMethod(jsonList, username, password));
+            accountInloggen.loginScherm(jsonList);
             //geef alles naar de registreer funtie
             //note: ticketlijst heeft een default value, dus je kan die leeg laten als je wilt
             //note: als je dit nog een keer runned maakt hij een account, als dit niet wilt dan moet je lijn 36 commenten

@@ -16,6 +16,20 @@ public class Login
                return true;
         }
         return false;
-        
+       
     }
+    public void loginScherm (List<Account> accountList)
+    {
+        Console.WriteLine("Voer username in:");
+        string Username = Console.ReadLine();
+
+        Console.WriteLine("Voer password in:");
+        string Password = Console.ReadLine();
+
+        if (loginMethod(accountList, Username, Password))
+            Console.WriteLine("U bent Ingelogd" + Username);
+        else
+            Console.WriteLine("Gebruikernaam of wachtwoord is onjuist");
+    }
+
 }
