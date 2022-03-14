@@ -34,6 +34,11 @@ namespace projectB
             //note: ticketlijst heeft een default value, dus je kan die leeg laten als je wilt
             //note: als je dit nog een keer runned maakt hij een account, als dit niet wilt dan moet je lijn 36 commenten
             accountMaken.Registreren(url, jsonList, "werk", "niet", "secreto", tickelijst);
+            bool loggedIn = false;
+            HoofdScherm hoofdScherm = new HoofdScherm();
+            hoofdScherm.GebruikerHoofdscherm(loggedIn);
+            loggedIn = true;
+            hoofdScherm.GebruikerHoofdscherm(loggedIn);
         }
     }
 }
