@@ -20,14 +20,16 @@ public class Login
     }
     public void loginScherm (List<Account> accountList)
     {
+        //Input voor gebruikersnaam en wachtwoord
         Console.WriteLine("Voer username in:");
         string Username = Console.ReadLine();
 
         Console.WriteLine("Voer password in:");
         string Password = Console.ReadLine();
 
+        //Gebruikt loginMethod om te checken of het juist of fout is
         if (loginMethod(accountList, Username, Password))
-            Console.WriteLine("U bent Ingelogd" + Username);
+            Console.WriteLine("U bent Ingelogd" +" "+ Username);
         else
             Console.WriteLine("Gebruikernaam of wachtwoord is onjuist");
     }
