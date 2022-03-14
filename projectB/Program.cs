@@ -33,7 +33,7 @@ namespace projectB
             //geef alles naar de registreer funtie
             //note: ticketlijst heeft een default value, dus je kan die leeg laten als je wilt
             //note: als je dit nog een keer runned maakt hij een account, als dit niet wilt dan moet je lijn 36 commenten
-            accountMaken.Registreren(url, jsonList, "werk", "niet", "secreto", tickelijst);
+            accountMaken.RegistrerenFrontend(url, jsonList);
         }
     }
 }
