@@ -42,36 +42,5 @@
         "name": "Dana Nash"
       }
     ]
-  },
-  {
-    "username": "werk",
-    "password": "niet",
-    "security": "secreto",
-    "tickets": [
-      {
-        "id": 3,
-        "name": "Red"
-      },
-      {
-        "id": 4,
-        "name": "Black"
-      },
-      {
-        "id": 5,
-        "name": "Yellow"
-      }
-    ]
-  },
-  {
-    "username": "hallo",
-    "password": "testoooo",
-    "security": "bob",
-    "tickets": null
-  },
-  {
-    "username": "nonononoono",
-    "password": "lololololol",
-    "security": "kawish",
-    "tickets": null
   }
 ]
