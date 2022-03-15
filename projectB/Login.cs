@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 public class Login
 {
@@ -18,8 +19,9 @@ public class Login
         return false;
        
     }
-    public void loginScherm (List<Account> accountList)
+    public bool loginScherm (List<Account> accountList)
     {
+        Console.Clear();
         //Input voor gebruikersnaam en wachtwoord
         Console.WriteLine("Voer username in:");
         string Username = Console.ReadLine();
@@ -29,9 +31,17 @@ public class Login
 
         //Gebruikt loginMethod om te checken of het juist of fout is
         if (loginMethod(accountList, Username, Password))
-            Console.WriteLine("U bent Ingelogd" +" "+ Username);
+        {
+            Console.WriteLine("U bent Ingelogd" + " " + Username);
+            Thread.Sleep(1000);
+            return true;
+        }
         else
+        {
             Console.WriteLine("Gebruikernaam of wachtwoord is onjuist");
+            Thread.Sleep(1000);
+            return false;
+        }
     }
 
 }

@@ -17,30 +17,5 @@
         "name": "Dana Nash"
       }
     ]
-  },
-  {
-    "username": "bob",
-    "password": "sok",
-    "security": "secret",
-    "tickets": null
-  },
-  {
-    "username": "meer",
-    "password": "pees",
-    "security": "secret2",
-    "tickets": [
-      {
-        "id": 0,
-        "name": "Cannon Anthony"
-      },
-      {
-        "id": 1,
-        "name": "Danielle Valenzuela"
-      },
-      {
-        "id": 2,
-        "name": "Dana Nash"
-      }
-    ]
   }
 ]

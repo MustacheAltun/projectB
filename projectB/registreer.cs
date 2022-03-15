@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 public class Registratie
 {
@@ -22,6 +23,7 @@ public class Registratie
     }
     public void RegistrerenFrontend(string url, List<Account> accountList)
     {
+        Console.Clear();
         //voer de informatie in
         Console.WriteLine("Voer username in:");
         string username = Console.ReadLine();
@@ -34,5 +36,6 @@ public class Registratie
         RegistrerenMethode(url, accountList, username, password, secretWord, null);
 
         Console.WriteLine("Je account is gemaakt.");
+        Thread.Sleep(1000);
     }
 }

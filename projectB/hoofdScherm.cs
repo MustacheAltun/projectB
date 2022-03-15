@@ -8,9 +8,9 @@ public class HoofdScherm
 	{
         //Haalt alles wat vooraf stond weg
         Console.Clear();
-        string menu = "| [1] Film | [2] Locaties | [3] Eten & Drinken | [4] Zoeken | [5] Inloggen |";
-        string[] menuArr = new string[5] { "Films", "Locaties", "Eten & Drinken", "Zoeken", "Inloggen" };
-        string[] menuLenght = new string[5] { "1","2","3","4","5"};
+        string menu = "| [1] Film | [2] Locaties | [3] Eten & Drinken | [4] Zoeken | [5] Inloggen | [6] Registreren";
+        string[] menuArr = new string[6] { "Films", "Locaties", "Eten & Drinken", "Zoeken", "Inloggen","Registreren"};
+        string[] menuLenght = new string[6] { "1","2","3","4","5","6"};
         if (loggedIn)
         { 
             //Als je bent ingelogd dan veranderd de menuBalk en de Lengte van het menu
@@ -34,7 +34,7 @@ public class HoofdScherm
                 Console.WriteLine("Invalide Input!");
             }
             //1 sec cooldown totdat hij alles wat was geprint weghaald
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
         }
         //Als je juiste input hebt gegeven dan return hij de naam van het scherm waar je naartoe wilt gaan door de index te gebruiken menuArr[Int32.Parse(Input)-1] 
         Console.WriteLine(menuArr[Int32.Parse(Input) - 1]);

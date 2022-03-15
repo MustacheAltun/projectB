@@ -10,6 +10,7 @@ namespace projectB
     {
         static void Main(string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.Blue;
             bool loggedInStatus = false;
             
             //Dit is testdata
@@ -42,15 +43,28 @@ namespace projectB
 
             //Als je dit roept ga je checken of de naam en wachtwoord die je hebt ingevoerd komt voor in Json file.
             //Console.WriteLine(accountInloggen.loginMethod(jsonList, username, password));
-            accountInloggen.loginScherm(jsonList);
+            //accountInloggen.loginScherm(jsonList);
             //geef alles naar de registreer funtie
             //note: ticketlijst heeft een default value, dus je kan die leeg laten als je wilt
             //note: als je dit nog een keer runned maakt hij een account, als dit niet wilt dan moet je lijn 36 commenten
-            accountMaken.RegistrerenFrontend(url, jsonList);
-          
-            bool loggedIn = true;
             HoofdScherm hoofdScherm = new HoofdScherm();
-            hoofdScherm.GebruikerHoofdscherm(loggedIn);
+            bool loggedIn = false;
+            while (true)
+            {
+                string page = hoofdScherm.GebruikerHoofdscherm(loggedIn);
+                if (page == "Inloggen")
+                {
+                    loggedIn = accountInloggen.loginScherm(jsonList);
+                }
+                else if (page == "Registreren")
+                {
+                    accountMaken.RegistrerenFrontend(url, jsonList);
+                }
+            }
+            //accountMaken.RegistrerenFrontend(url, jsonList);
+
+            //loggedIn = accountInloggen.loginScherm(jsonList);
+            //hoofdScherm.GebruikerHoofdscherm(loggedIn);
         }
     }
 }
