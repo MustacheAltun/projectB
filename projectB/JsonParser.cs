@@ -1,11 +1,5 @@
 ﻿using System;
 
-
-public class Rootobject
-{
-    public Account[] accountList { get; set; }
-}
-
 public class Account
 {
     public int id { get; set; }
@@ -20,6 +14,18 @@ public class Ticket
     public int? id { get; set; }
     public string? name { get; set; }
 }
+
+
+public class movie
+{
+    public string name { get; set; }
+    public string year { get; set; }
+    public string[] categories { get; set; }
+    public string releasedate { get; set; }
+    public string director { get; set; }
+    public string storyline { get; set; }
+}
+
 
 
 
