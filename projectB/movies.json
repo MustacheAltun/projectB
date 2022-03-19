@@ -1,0 +1,39 @@
+[
+  {
+    "id": "0",
+    "name": "Jurassic Park",
+    "year": "1993",
+    "categories": [
+      "Sciencefiction",
+      "actie",
+      "sci-fi"
+    ],
+    "release-date": "11 juni 1993",
+    "director": "Steven Spielberg",
+    "storyline": "Op een afgelegen eiland voor de kust van Costa Rica heeft miljonair John Hammond een uitzonderlijk themapark met gekloonde dinosaurussen gebouwd. Een select groepje mag een kijkje nemen, maar dan valt het beveiliggingssysteem uit."
+  },
+  {
+    "id": "1",
+    "name": "The Lord of the Rings: The Fellowship of the Ring",
+    "year": "2001",
+    "categories": [
+      "Fantasie",
+      "Avontuur"
+    ],
+    "release-date": "10 december 2001",
+    "director": "Peter Jackson",
+    "storyline": "In een klein, gezellig dorpje in Midden-Aarde komt een ring met bijzondere krachten toevallig in handen van de hobbit Frodo. Het is een instrument dat Sauron, de duistere heerser van het koninkrijk Mordor, in staat zou stellen de wereld te veroveren. Frodo krijgt de gevaarlijke opdracht om de ring naar Mount Doom te brengen en hem daar te vernietigen."
+  },
+  {
+    "id": "2",
+    "name": "Harry Potter en de Vuurbeker",
+    "year": "2005",
+    "categories": [
+      "Fantasie",
+      "Avontuur"
+    ],
+    "release-date": "18 november 2005",
+    "director": "Mike Newell",
+    "storyline": "Harry Potter en de Vuurbeker gaat over een school vol magiërs die moet strijden tegen andere scholen. Harry loopt wel veel gevaar hij overleeft de opdrachten wel maar als Voldemort terug komt is het nog maar net aan. Maar hij gaat ook nog naar een wereldkampioenschap Zwerkbal."
+  }
+]
