@@ -25,6 +25,16 @@ public class movie
     public string director { get; set; }
     public string storyline { get; set; }
 }
+public class Cinema_adress
+{
+    public string name { get; set; }
+    public string street { get; set; }
+    public string zipcode { get; set; }
+    public string city { get; set; }
+    public string telNr { get; set; }
+
+
+}
 
 
 
