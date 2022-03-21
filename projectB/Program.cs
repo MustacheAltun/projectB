@@ -58,6 +58,10 @@ namespace projectB
                 {
                     accountMaken.RegistrerenFrontend(url, jsonList);
                 }
+                else if (page == "Uitloggen")
+                {
+                    loggedIn = false;
+                }
                 else if (page == "Locaties")
                 {
                     locatie.viewLocations();
