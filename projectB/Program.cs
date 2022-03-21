@@ -11,12 +11,7 @@ namespace projectB
         static void Main(string[] args)
         {
             Console.ForegroundColor = ConsoleColor.Blue;
-            bool loggedInStatus = false;
-            
-            //Dit is testdata
-            string username = "Marc";
-            string password = "123456";
-            
+                  
 
             //instantiate de class
             Registratie accountMaken = new Registratie();
@@ -24,11 +19,14 @@ namespace projectB
             //object gemaakt van class Login
             Login accountInloggen = new Login();
 
+            Locatie locatie = new Locatie();
+
             // geef de url van de json
             string url = "..\\..\\..\\account.json";
 
             // lees de file en zet alles in een string
             string strResultJson = File.ReadAllText(url);
+
 
             // maak een lijst van alle informatie die er is
             List<Account> jsonList = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
@@ -63,6 +61,10 @@ namespace projectB
                 else if (page == "Uitloggen")
                 {
                     loggedIn = false;
+                }
+                else if (page == "Locaties")
+                {
+                    locatie.viewLocations();
                 }
             }
             //accountMaken.RegistrerenFrontend(url, jsonList);
