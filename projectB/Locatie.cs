@@ -26,7 +26,7 @@ public class Locatie
         //While loop dat blijft runnen tenzij gebruiker "1" invoert.
         while (input != "1")
         {
-            Console.WriteLine("| [1] Terug |");
+            
             //Forloop om 2d array (inner array) in te vullen met bioscoop locatie gegevens.
             for (int i = 0; i < locatieList.Count; i++)
             {
@@ -45,6 +45,7 @@ public class Locatie
                 Console.WriteLine("------------------------------------------------------------------------------------------");
             }
 
+            Console.WriteLine("| [1] Terug |");
             Console.WriteLine("Kies de actie die u wilt uitvoeren:");
             input = Console.ReadLine();
             while(input != "1")

@@ -65,21 +65,22 @@ public class Registratie
         //maak de cmd schoon van wat er ervoor is getypt
         Console.Clear();
         //kijk of de gebruiker wilt registeren of een missclick heeft gemaakt
-        Console.WriteLine("Do you want to register or return?");
+        Console.WriteLine("| [1] Terug | [2] Registreren |");
+        Console.WriteLine("Kies de actie die u wilt uitvoeren:");
         //lees de input
         string register = Console.ReadLine();
 
         //als de input geen register of return is dan moet hij de input accepteren totdat de gebruiker een goede input geft
-        while (register != "register" && register != "return")
+        while (register != "1" && register != "2")
         {
             //geef een error en wacht op de juiste input
-            Console.WriteLine("Invalide Input");
+            Console.WriteLine("Ongeldig Invoer!");
             register = Console.ReadLine();
         }
 
 
         //als register overeenkomt met de input "register" dan gaat hij in deze loop
-        while (register == "register")
+        while (register == "2")
         {
             //pak alle informatie de de gebruiker doorgeeft en check gelijk of hij goed of fout is. geef de resultaat pas op het einde nadat alle data is ingevoerd
             Console.Clear();
@@ -100,28 +101,33 @@ public class Registratie
             {
                 Console.WriteLine("Gebruikersnaam,Wachtwoord of Beveiliging is incorrect!");
                 Thread.Sleep(2000);
+                register = "";
                 //herhaal de functie, want account heeft niet de juiste data
                 RegistrerenFrontend(url, accountList);
             }else if(String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(secretWord))
             {
                 Console.WriteLine("een of meerdere input velden zijn leeg");
                 Thread.Sleep(2000);
+                register = "";
                 //herhaal de functie, want account heeft niet de juiste data
                 RegistrerenFrontend(url, accountList);
             }else if (CheckBestaandeNaam(accountList,username))
             {
                 Console.WriteLine("naam bestaat al");
                 Thread.Sleep(2000);
+                register = "";
                 //herhaal de functie, want account heeft niet de juiste data
                 RegistrerenFrontend(url, accountList);
             }
             else
             {
+                register = "";
                 //hier maakt hij de account en mag hij terug naar de hoofdmenu
-                RegistrerenMethode(url, accountList, username, password, secretWord,id, null);
-
+                RegistrerenMethode(url, accountList, username, password, secretWord, id, null);
                 Console.WriteLine("Je account is gemaakt.");
-                register = "return";
+                Thread.Sleep(1000);
+                return;
+
             }
             Thread.Sleep(1000);
             Console.Clear();
