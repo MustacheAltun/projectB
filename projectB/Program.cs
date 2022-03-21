@@ -60,6 +60,10 @@ namespace projectB
                 {
                     accountMaken.RegistrerenFrontend(url, jsonList);
                 }
+                else if (page == "Uitloggen")
+                {
+                    loggedIn = false;
+                }
             }
             //accountMaken.RegistrerenFrontend(url, jsonList);
 
