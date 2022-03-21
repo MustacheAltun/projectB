@@ -8,15 +8,15 @@ public class HoofdScherm
 	{
         //Haalt alles wat vooraf stond weg
         Console.Clear();
-        string menu = "| [1] Film | [2] Locaties | [3] Eten & Drinken | [4] Zoeken | [5] Inloggen | [6] Registreren";
-        string[] menuArr = new string[6] { "Films", "Locaties", "Eten & Drinken", "Zoeken", "Inloggen","Registreren"};
-        string[] menuLenght = new string[6] { "1","2","3","4","5","6"};
+        string menu = menuMethod(0);
+        string[] menuArr = new string[] { "Films", "Locaties", "Eten & Drinken", "Zoeken", "Inloggen","Registreren"};
+        string[] menuLenght = new string[] { "1","2","3","4","5","6"};
         if (loggedIn)
         { 
             //Als je bent ingelogd dan veranderd de menuBalk en de Lengte van het menu
-            menu = "| [1] Film | [2] Locaties | [3] Eten & Drinken | [4] Account Gegevens | [5] Zoeken | [6] Uitloggen |";
-            menuArr = new string[6] { "Films", "Locaties", "Eten & Drinken", "Account Gegevens", "Zoeken", "Uitloggen" };
-            menuLenght = new string[6] { "1", "2", "3", "4", "5","6" };
+            menu = menuMethod(1);
+            menuArr = new string[] { "Films", "Locaties", "Eten & Drinken", "Account Gegevens", "Zoeken", "Uitloggen" };
+            menuLenght = new string[] { "1", "2", "3", "4", "5","6" };
         }
         Console.WriteLine(menu);
         string Input = "";
@@ -40,8 +40,12 @@ public class HoofdScherm
         Console.WriteLine(menuArr[Int32.Parse(Input) - 1]);
         return menuArr[Int32.Parse(Input)-1];
     }
-    //public static string AdminHoofdscherm()
-    //{
-
-    //}
+    
+    public string menuMethod(int index)
+    {
+        string[]menuInterface = new string[] 
+        { "| [1] Film | [2] Locaties | [3] Eten & Drinken | [4] Zoeken | [5] Inloggen | [6] Registreren |",
+        "| [1] Film | [2] Locaties | [3] Eten & Drinken | [4] Account Gegevens | [5] Zoeken | [6] Uitloggen |"};
+        return menuInterface[index];
+    }
 }
