@@ -56,6 +56,7 @@ namespace projectB
                 else if (page == "Films")
                 {
                     overview.show(movieList);
+                }
                 else if (page == "Uitloggen")
                 {
                     loggedIn = false;
