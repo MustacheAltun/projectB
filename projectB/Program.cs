@@ -11,9 +11,10 @@ namespace projectB
         static void Main(string[] args)
         {
             Console.ForegroundColor = ConsoleColor.Blue;
-                  
 
             //instantiate de class
+            List<movie> movieList = JsonConvert.DeserializeObject<List<movie>>(File.ReadAllText("..\\..\\..\\movies.json"));
+            Movies overview = new Movies();
             Registratie accountMaken = new Registratie();
 
             //object gemaakt van class Login
@@ -25,7 +26,7 @@ namespace projectB
             string url = "..\\..\\..\\account.json";
 
             // lees de file en zet alles in een string
-            string strResultJson = File.ReadAllText(url);
+            string strResultJson = File.ReadAllText("..\\..\\..\\account.json");
 
 
             // maak een lijst van alle informatie die er is
@@ -39,12 +40,6 @@ namespace projectB
                 new Ticket() { id = 5, name = "Yellow" }
             };
 
-            //Als je dit roept ga je checken of de naam en wachtwoord die je hebt ingevoerd komt voor in Json file.
-            //Console.WriteLine(accountInloggen.loginMethod(jsonList, username, password));
-            //accountInloggen.loginScherm(jsonList);
-            //geef alles naar de registreer funtie
-            //note: ticketlijst heeft een default value, dus je kan die leeg laten als je wilt
-            //note: als je dit nog een keer runned maakt hij een account, als dit niet wilt dan moet je lijn 36 commenten
             HoofdScherm hoofdScherm = new HoofdScherm();
             bool loggedIn = false;
             while (true)
@@ -58,6 +53,9 @@ namespace projectB
                 {
                     accountMaken.RegistrerenFrontend(url, jsonList);
                 }
+                else if (page == "Films")
+                {
+                    overview.show(movieList);
                 else if (page == "Uitloggen")
                 {
                     loggedIn = false;
@@ -67,10 +65,12 @@ namespace projectB
                     locatie.viewLocations();
                 }
             }
-            //accountMaken.RegistrerenFrontend(url, jsonList);
+            hoofdScherm.GebruikerHoofdscherm(loggedIn);
 
-            //loggedIn = accountInloggen.loginScherm(jsonList);
-            //hoofdScherm.GebruikerHoofdscherm(loggedIn);
+            //dit alles is voor films
+
+
+
         }
     }
 }

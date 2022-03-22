@@ -8,7 +8,7 @@
       "actie",
       "sci-fi"
     ],
-    "release-date": "11 juni 1993",
+    "releasedate": null,
     "director": "Steven Spielberg",
     "storyline": "Op een afgelegen eiland voor de kust van Costa Rica heeft miljonair John Hammond een uitzonderlijk themapark met gekloonde dinosaurussen gebouwd. Een select groepje mag een kijkje nemen, maar dan valt het beveiliggingssysteem uit."
   },
@@ -20,7 +20,7 @@
       "Fantasie",
       "Avontuur"
     ],
-    "release-date": "10 december 2001",
+    "releasedate": null,
     "director": "Peter Jackson",
     "storyline": "In een klein, gezellig dorpje in Midden-Aarde komt een ring met bijzondere krachten toevallig in handen van de hobbit Frodo. Het is een instrument dat Sauron, de duistere heerser van het koninkrijk Mordor, in staat zou stellen de wereld te veroveren. Frodo krijgt de gevaarlijke opdracht om de ring naar Mount Doom te brengen en hem daar te vernietigen."
   },
@@ -32,8 +32,34 @@
       "Fantasie",
       "Avontuur"
     ],
-    "release-date": "18 november 2005",
+    "releasedate": null,
     "director": "Mike Newell",
     "storyline": "Harry Potter en de Vuurbeker gaat over een school vol magiërs die moet strijden tegen andere scholen. Harry loopt wel veel gevaar hij overleeft de opdrachten wel maar als Voldemort terug komt is het nog maar net aan. Maar hij gaat ook nog naar een wereldkampioenschap Zwerkbal."
+  },
+  {
+    "id": "231",
+    "name": "banaan",
+    "year": "1933",
+    "categories": [
+      "actie",
+      "horror",
+      "thriller"
+    ],
+    "releasedate": "1999",
+    "director": "kawish",
+    "storyline": "banaan vloog uit de lucht"
+  },
+  {
+    "id": "231",
+    "name": "banaan",
+    "year": "1933",
+    "categories": [
+      "actie",
+      "horror",
+      "thriller"
+    ],
+    "releasedate": "1999",
+    "director": "kawish",
+    "storyline": "banaan vloog uit de lucht"
   }
 ]
