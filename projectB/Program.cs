@@ -20,11 +20,14 @@ namespace projectB
             //object gemaakt van class Login
             Login accountInloggen = new Login();
 
+            Locatie locatie = new Locatie();
+
             // geef de url van de json
             string url = "..\\..\\..\\account.json";
 
             // lees de file en zet alles in een string
             string strResultJson = File.ReadAllText("..\\..\\..\\account.json");
+
 
             // maak een lijst van alle informatie die er is
             List<Account> jsonList = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
@@ -53,6 +56,13 @@ namespace projectB
                 else if (page == "Films")
                 {
                     overview.show(movieList);
+                else if (page == "Uitloggen")
+                {
+                    loggedIn = false;
+                }
+                else if (page == "Locaties")
+                {
+                    locatie.viewLocations();
                 }
             }
             hoofdScherm.GebruikerHoofdscherm(loggedIn);

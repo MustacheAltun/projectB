@@ -1,0 +1,37 @@
+[
+  {
+    "name": "De Kuip",
+    "street": "Cor Kieboomplein 501",
+    "zipcode": "3077MK",
+    "city": "Rotterdam",
+    "telNr": "088 515 2050"
+  },
+  {
+    "name": "Het Kasteel",
+    "street": "Spartapark-Noord 1",
+    "zipcode": "3027VW",
+    "city": "Rotterdam",
+    "telNr": "088 515 2051"
+  },
+  {
+    "name": "De Schouwburg",
+    "street": "Schouwburgplein 101",
+    "zipcode": "3012CL",
+    "city": "Rotterdam",
+    "telNr": "088 515 2052"
+  },
+  {
+    "name": "De Doelen",
+    "street": "Schouwburgplein 50",
+    "zipcode": "3012CL",
+    "city": "Rotterdam",
+    "telNr": "088 515 2053"
+  },
+  {
+    "name": "Witte de With",
+    "street": "Witte de Withstraat 50",
+    "zipcode": "3012BR",
+    "city": "Rotterdam",
+    "telNr": "088 515 2054"
+  }
+]
