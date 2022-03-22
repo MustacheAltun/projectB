@@ -71,9 +71,9 @@ public class Movies {
 
             }
             Console.WriteLine("Geef input om terug te gaan naar Hoofdscherm: ");
-            string[] genres = new string[] {};
-            genres = new string[] { "actie", "horror","thriller" };
-            FilmToevoegen(accountList, "231", "banaan", "1933", genres, "banaan vloog uit de lucht", "kawish", "1999");
+            //string[] genres = new string[] {};
+            //genres = new string[] { "actie", "horror","thriller" };
+            //FilmToevoegen(accountList, "231", "banaan", "1933", genres, "banaan vloog uit de lucht", "kawish", "1999");
             Console.ReadKey();
         } 
        if (Keuze == "1")

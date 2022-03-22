@@ -35,31 +35,5 @@
     "releasedate": null,
     "director": "Mike Newell",
     "storyline": "Harry Potter en de Vuurbeker gaat over een school vol magiërs die moet strijden tegen andere scholen. Harry loopt wel veel gevaar hij overleeft de opdrachten wel maar als Voldemort terug komt is het nog maar net aan. Maar hij gaat ook nog naar een wereldkampioenschap Zwerkbal."
-  },
-  {
-    "id": "231",
-    "name": "banaan",
-    "year": "1933",
-    "categories": [
-      "actie",
-      "horror",
-      "thriller"
-    ],
-    "releasedate": "1999",
-    "director": "kawish",
-    "storyline": "banaan vloog uit de lucht"
-  },
-  {
-    "id": "231",
-    "name": "banaan",
-    "year": "1933",
-    "categories": [
-      "actie",
-      "horror",
-      "thriller"
-    ],
-    "releasedate": "1999",
-    "director": "kawish",
-    "storyline": "banaan vloog uit de lucht"
   }
 ]
