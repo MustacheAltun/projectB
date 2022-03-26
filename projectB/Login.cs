@@ -19,7 +19,7 @@ public class Login
         return false;
        
     }
-    public bool loginScherm (List<Account> accountList)
+    public int loginScherm (List<Account> accountList)
     {
         Console.Clear();
         //Input voor gebruikersnaam en wachtwoord
@@ -34,14 +34,25 @@ public class Login
         {
             Console.WriteLine("U bent Ingelogd" + " " + Username);
             Thread.Sleep(1000);
-            return true;
+            return getId(accountList, Username, Password);
         }
         else
         {
             Console.WriteLine("Gebruikernaam of wachtwoord is onjuist");
             Thread.Sleep(1000);
-            return false;
+            return -1;
         }
     }
 
+    private int getId(List<Account> accountList, string username, string password)
+    {
+        //Itereren door elke item van Json list.
+        foreach (dynamic item in accountList)
+        {
+            //Check of gebruikersnaam en wachtwoord matchen
+            if (item.username.ToLower() == username.ToLower() && item.password == password)
+                return item.id;
+        }
+        return -1;
+    }
 }

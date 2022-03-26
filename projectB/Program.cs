@@ -41,13 +41,55 @@ namespace projectB
             };
 
             HoofdScherm hoofdScherm = new HoofdScherm();
-            bool loggedIn = false;
+            bool gebruikerLoggedIn = false;
+            bool adminLoggedIn = false;
+            int id;
+            string rol;
             while (true)
             {
-                string page = hoofdScherm.GebruikerHoofdscherm(loggedIn);
+                string page;
+                if (gebruikerLoggedIn)
+                {
+                    page = hoofdScherm.GebruikerHoofdscherm(gebruikerLoggedIn);
+                }else if (adminLoggedIn)
+                {
+                    page = hoofdScherm.adminHoofdscherm(adminLoggedIn);
+                }
+                else
+                {
+                    page = hoofdScherm.GebruikerHoofdscherm(gebruikerLoggedIn);
+                }
+                
                 if (page == "Inloggen")
                 {
-                    loggedIn = accountInloggen.loginScherm(jsonList);
+                    id = accountInloggen.loginScherm(jsonList);
+                    foreach (dynamic item in jsonList)
+                    {
+                        //Check of gebruikersnaam en wachtwoord matchen en kijk gelijk ook of hij admin of gebruiker is
+                        if (item.id == id)
+                        {
+                            rol = item.rol;
+                            if (rol == "admin")
+                            {
+                                gebruikerLoggedIn = false;
+                                adminLoggedIn = true;
+                            }
+                            else if (rol == "gebruiker")
+                            {
+                                adminLoggedIn = false;
+                                gebruikerLoggedIn = true;
+                            }
+                            else
+                            {
+                                adminLoggedIn = false;
+                                gebruikerLoggedIn = false;
+                            }
+                        }
+                        else
+                        {
+                            rol = null;
+                        }
+                    }
                 }
                 else if (page == "Registreren")
                 {
@@ -59,17 +101,14 @@ namespace projectB
                 }
                 else if (page == "Uitloggen")
                 {
-                    loggedIn = false;
+                    adminLoggedIn = false;
+                    gebruikerLoggedIn = false;
                 }
                 else if (page == "Locaties")
                 {
                     locatie.viewLocations();
                 }
             }
-            hoofdScherm.GebruikerHoofdscherm(loggedIn);
-
-            //dit alles is voor films
-
 
 
         }
