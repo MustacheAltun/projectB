@@ -16,6 +16,7 @@ public class Registratie
             username = name,
             password = password,
             security = secret,
+            rol = "gebruiker",
             tickets = tickets
         });
         //verdander de lijst naar een json type

@@ -6,6 +6,7 @@ public class Account
     public string username { get; set; }
     public string password { get; set; }
     public string security { get; set; }
+    public string rol { get; set; }
     public Ticket[]? tickets { get; set; }
 }
 

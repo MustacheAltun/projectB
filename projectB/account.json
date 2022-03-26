@@ -4,6 +4,7 @@
     "username": "Mustafa",
     "password": "hello",
     "security": "hi",
+    "rol": "gebruiker",
     "tickets": [
       {
         "id": 0,
@@ -24,6 +25,15 @@
     "username": "salahedinne",
     "password": "bruhsalahbruh",
     "security": "ikweetniet",
+    "rol": "gebruiker",
+    "tickets": null
+  },
+  {
+    "id": 2,
+    "username": "admin",
+    "password": "admin",
+    "security": "admin",
+    "rol": "admin",
     "tickets": null
   }
 ]
