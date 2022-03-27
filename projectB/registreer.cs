@@ -20,7 +20,7 @@ public class Registratie
             tickets = tickets
         });
         //verdander de lijst naar een json type
-        var convertedJson = JsonConvert.SerializeObject(accountList, Formatting.Indented);
+        string convertedJson = JsonConvert.SerializeObject(accountList, Formatting.Indented);
         //verander de hele file met de nieuwe json informatie
         File.WriteAllText(url, convertedJson);
     }
