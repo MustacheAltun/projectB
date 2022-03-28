@@ -13,7 +13,7 @@ namespace projectB
             Console.ForegroundColor = ConsoleColor.Blue;
 
             //instantiate de class
-            List<movie> movieList = JsonConvert.DeserializeObject<List<movie>>(File.ReadAllText("..\\..\\..\\movies.json"));
+            //List<movie> movieList = JsonConvert.DeserializeObject<List<movie>>(File.ReadAllText("..\\..\\..\\movies.json"));
             Movies overview = new Movies();
             Registratie accountMaken = new Registratie();
 
@@ -97,7 +97,15 @@ namespace projectB
                 }
                 else if (page == "Films")
                 {
-                    overview.show(movieList);
+                    if (adminLoggedIn)
+                    {
+                        overview.show("admin");
+                    }
+                    else
+                    {
+                        overview.show("gebruiker");
+                    }
+                    
                 }
                 else if (page == "Uitloggen")
                 {
