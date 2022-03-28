@@ -56,6 +56,7 @@ public class Locatie
             }
             Console.WriteLine("Kies de actie die u wilt uitvoeren:");
             input = Console.ReadLine();
+            Console.WriteLine();
             if (rol == "gebruiker")
             {
                 while(input != "1" && input.ToLower() != "terug")
@@ -64,15 +65,16 @@ public class Locatie
                     Console.WriteLine("Ongeldige invoer!");
                     Console.WriteLine("Kies de actie die u wilt uitvoeren:");
                     input = Console.ReadLine();
+                    Console.WriteLine();
                 }
             }
             else
             {
                 while (input != "1" && input.ToLower() != "terug" && input != "2" && input.ToLower() != "toevoegen" && input != "3" && input.ToLower() != "aanpassen" && input != "4" && input.ToLower() != "verwijderen")
                 {
-                    Console.WriteLine("Ongeldige invoer!");
-                    Console.WriteLine("Kies de actie die u wilt uitvoeren:");
-                    input = Console.ReadLine()+"\n";
+                    Console.WriteLine("\nOngeldige invoer!");
+                    Console.WriteLine("Kies de actie die u wilt uitvoeren:\n");
+                    input = Console.ReadLine();
                 }
                 switch (input.ToLower())
                 {
@@ -140,9 +142,11 @@ public class Locatie
         int bioscoopNr = 999999999;
         while (!bioscoopNrArray.Contains(bioscoopNr))
         {
+            
             Console.WriteLine("Voer ID nummer in van de bioscoop die u wilt aanpassen:");
             if (int.TryParse(Console.ReadLine(), out bioscoopNr))
             {
+                Console.WriteLine();
                 bioscoopNr--;
             }
             else
@@ -184,6 +188,7 @@ public class Locatie
             Console.WriteLine("Voer een correcte ID in van de bioscoop die u wilt verwijderen:");
             if (int.TryParse(Console.ReadLine(), out bioscoopNr))
             {
+                Console.WriteLine();
                 bioscoopNr--;
             }
             else
