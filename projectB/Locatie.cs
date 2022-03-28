@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 public class Locatie
 {
     
-    public void viewLocations()
+    public void viewLocations(string rol)
     {
         //Directory van Json bestand met locatie gegevens
         string url = "..\\..\\..\\locatie.json";
@@ -44,33 +46,162 @@ public class Locatie
                 Console.WriteLine("                       Telnr: " + arr[index][4]);
                 Console.WriteLine("------------------------------------------------------------------------------------------");
             }
-
-            Console.WriteLine("| [1] Terug |");
+            if (rol == "gebruiker")
+            {
+                Console.WriteLine("| [1] Terug |");
+            }
+            else
+            {
+                Console.WriteLine("| [1] Terug | [2] toevoegen | [3] aanpassen | [4] verwijderen |");
+            }
             Console.WriteLine("Kies de actie die u wilt uitvoeren:");
             input = Console.ReadLine();
-            while(input != "1")
+            Console.WriteLine();
+            if (rol == "gebruiker")
             {
-                Console.WriteLine("Ongeldige invoer!");
-                Console.WriteLine("Kies de actie die u wilt uitvoeren:");
-                input = Console.ReadLine();
+                while(input != "1" && input.ToLower() != "terug")
+                {
+                    input = "";
+                    Console.WriteLine("Ongeldige invoer!");
+                    Console.WriteLine("Kies de actie die u wilt uitvoeren:");
+                    input = Console.ReadLine();
+                    Console.WriteLine();
+                }
             }
-            
+            else
+            {
+                while (input != "1" && input.ToLower() != "terug" && input != "2" && input.ToLower() != "toevoegen" && input != "3" && input.ToLower() != "aanpassen" && input != "4" && input.ToLower() != "verwijderen")
+                {
+                    Console.WriteLine("\nOngeldige invoer!");
+                    Console.WriteLine("Kies de actie die u wilt uitvoeren:\n");
+                    input = Console.ReadLine();
+                }
+                switch (input.ToLower())
+                {
+
+                    case "2":
+                    case "toevoegen":
+                        addLocation(locatieList, url);
+                        input = "1";
+                        viewLocations(rol);
+                        break;
+                    case "3":
+                    case "aanpassen":
+                        editLocation(locatieList, url);
+                        input = "1";
+                        viewLocations(rol);
+                        break;
+                    case "4":
+                    case "verwijderen":
+                        removeLocation(locatieList, url);
+                        input = "1";
+                        viewLocations(rol);
+                        break;
+                }
+            }
         }
        
     }
 
-    public void addLocation()
+    public void addLocation(List<Cinema_adress> lijst, string url)
     {
-
+        Console.Clear();
+        Console.WriteLine("Voer bioscoop naam in:");
+        string bioscoop = Console.ReadLine();
+        Console.WriteLine("Voer straat in:");
+        string straat = Console.ReadLine();
+        Console.WriteLine("Voer postcode in:");
+        string postcode = Console.ReadLine();
+        Console.WriteLine("Voer stad in:");
+        string stad = Console.ReadLine();
+        Console.WriteLine("Voer telefoon nummer in:");
+        string nummer = Console.ReadLine();
+        lijst.Add(new Cinema_adress()
+        {
+            name = bioscoop,
+            street = straat,
+            zipcode = postcode,
+            city = stad,
+            telNr = nummer
+        });
+        //verdander de lijst naar een json type
+        string cinemaLijst = JsonConvert.SerializeObject(lijst, Formatting.Indented);
+        //verander de hele file met de nieuwe json informatie
+        File.WriteAllText(url, cinemaLijst);
     }
 
-    public void editLocation()
+    public void editLocation(List<Cinema_adress> lijst, string url)
     {
+        //Console.WriteLine("Voer ID in van de bioscoop die u wilt aanpassen:");
+        
+        int[] bioscoopNrArray = new int[lijst.Count()+1];
+        for (int i = 0; i < lijst.Count(); i++)
+        {
+            bioscoopNrArray[i] = i;
+        }
+        int bioscoopNr = 999999999;
+        while (!bioscoopNrArray.Contains(bioscoopNr))
+        {
+            
+            Console.WriteLine("Voer ID nummer in van de bioscoop die u wilt aanpassen:");
+            if (int.TryParse(Console.ReadLine(), out bioscoopNr))
+            {
+                Console.WriteLine();
+                bioscoopNr--;
+            }
+            else
+            {
+                bioscoopNr = 999999999;
+                Console.WriteLine("Uw invoer is geen nummer.\n\n");
+                Thread.Sleep(1000);
+            }
+        }
+        Console.WriteLine("Voer de aangepaste naam van de bioscoop in:");
+        lijst[bioscoopNr].name = Console.ReadLine();
+        Console.WriteLine("Voer de aangepaste straat van de bioscoop in:");
+        lijst[bioscoopNr].street = Console.ReadLine();
+        Console.WriteLine("Voer de aangepaste postcode van de bioscoop in:");
+        lijst[bioscoopNr].zipcode = Console.ReadLine();
+        Console.WriteLine("Voer de aangepaste stad van de bioscoop in:");
+        lijst[bioscoopNr].city = Console.ReadLine();
+        Console.WriteLine("Voer de aangepaste telefoon nummer van de bioscoop in:");
+        lijst[bioscoopNr].telNr = Console.ReadLine();
 
+        //verdander de lijst naar een json type
+        string cinemaLijst = JsonConvert.SerializeObject(lijst, Formatting.Indented);
+        //verander de hele file met de nieuwe json informatie
+        File.WriteAllText(url, cinemaLijst);
     }
 
-    public void removeLocation()
+    public void removeLocation(List<Cinema_adress> lijst, string url)
     {
+        //Console.WriteLine("Voer ID in van de bioscoop die u wilt verwijderen:");
 
+        int[] bioscoopNrArray = new int[lijst.Count()];
+        for (int i = 0; i < lijst.Count(); i++)
+        {
+            bioscoopNrArray[i] = i;
+        }
+        int bioscoopNr = 999999999;
+        while (!bioscoopNrArray.Contains(bioscoopNr))
+        {
+            Console.WriteLine("Voer een correcte ID in van de bioscoop die u wilt verwijderen:");
+            if (int.TryParse(Console.ReadLine(), out bioscoopNr))
+            {
+                Console.WriteLine();
+                bioscoopNr--;
+            }
+            else
+            {
+                bioscoopNr = 999999999;
+                Console.WriteLine("Uw invoer is geen nummer.\n\n");
+                Thread.Sleep(1000);
+            }
+        }
+        lijst.RemoveAt(bioscoopNr);
+        //verdander de lijst naar een json type
+        string cinemaLijst = JsonConvert.SerializeObject(lijst, Formatting.Indented);
+        //verander de hele file met de nieuwe json informatie
+        File.WriteAllText(url, cinemaLijst);
     }
 }

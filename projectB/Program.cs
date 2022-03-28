@@ -48,18 +48,8 @@ namespace projectB
             while (true)
             {
                 string page;
-                if (gebruikerLoggedIn)
-                {
-                    page = hoofdScherm.GebruikerHoofdscherm(gebruikerLoggedIn);
-                }else if (adminLoggedIn)
-                {
-                    page = hoofdScherm.adminHoofdscherm(adminLoggedIn);
-                }
-                else
-                {
-                    page = hoofdScherm.GebruikerHoofdscherm(gebruikerLoggedIn);
-                }
-                
+                page = menu(hoofdScherm, gebruikerLoggedIn, adminLoggedIn);
+
                 if (page == "Inloggen")
                 {
                     id = accountInloggen.loginScherm(jsonList);
@@ -114,11 +104,38 @@ namespace projectB
                 }
                 else if (page == "Locaties")
                 {
-                    locatie.viewLocations();
+                    if (adminLoggedIn)
+                    {
+                        locatie.viewLocations("admin");
+                    }
+                    else
+                    {
+                        locatie.viewLocations("gebruiker");
+                    }
+
                 }
             }
 
 
+        }
+
+        private static string menu(HoofdScherm hoofdScherm, bool gebruikerLoggedIn, bool adminLoggedIn)
+        {
+            string page;
+            if (gebruikerLoggedIn)
+            {
+                page = hoofdScherm.GebruikerHoofdscherm(gebruikerLoggedIn);
+            }
+            else if (adminLoggedIn)
+            {
+                page = hoofdScherm.adminHoofdscherm(adminLoggedIn);
+            }
+            else
+            {
+                page = hoofdScherm.GebruikerHoofdscherm(gebruikerLoggedIn);
+            }
+
+            return page;
         }
     }
 }
