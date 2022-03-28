@@ -18,8 +18,8 @@ $$ | \_/ $$ | $$$$$$  |   \$  /   $$$$$$\ $$$$$$$$\    \$  /   $$$$$$$$\ $$ |  $
         //Haalt alles wat vooraf stond weg
         Console.Clear();
         string menu = menuMethod(0);
-        string[] menuArr = new string[] { "Films", "Locaties", "Eten & Drinken", "Zoeken", "Inloggen","Registreren"};
-        string[] menuLenght = new string[] { "1","2","3","4","5","6"};
+        string[] menuArr = new string[] { "Films", "Locaties", "Eten & Drinken", "Zoeken", "Inloggen"};
+        string[] menuLenght = new string[] { "1","2","3","4","5"};
         if (loggedIn)
         { 
             //Als je bent ingelogd dan veranderd de menuBalk en de Lengte van het menu
@@ -86,7 +86,7 @@ $$ | \_/ $$ | $$$$$$  |   \$  /   $$$$$$\ $$$$$$$$\    \$  /   $$$$$$$$\ $$ |  $
     public string menuMethod(int index)
     {
         string[]menuInterface = new string[] 
-        { "| [1] Film | [2] Locaties | [3] Eten & Drinken | [4] Zoeken | [5] Inloggen | [6] Registreren |",
+        { "| [1] Film | [2] Locaties | [3] Eten & Drinken | [4] Zoeken | [5] Inloggen |",
         "| [1] Film | [2] Locaties | [3] Eten & Drinken | [4] Account Gegevens | [5] Zoeken | [6] Uitloggen |",
         "| [1] Film | [2] Locaties | [3] Eten & Drinken | [4] Account Gegevens | [5] Zoeken | [6] Omzet | [7] Uitloggen |"
         };

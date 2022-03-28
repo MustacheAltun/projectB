@@ -11,7 +11,6 @@ namespace projectB
         static void Main(string[] args)
         {
             Console.ForegroundColor = ConsoleColor.Blue;
-
             //instantiate de class
             //List<movie> movieList = JsonConvert.DeserializeObject<List<movie>>(File.ReadAllText("..\\..\\..\\movies.json"));
             Movies overview = new Movies();
@@ -52,7 +51,7 @@ namespace projectB
 
                 if (page == "Inloggen")
                 {
-                    id = accountInloggen.loginScherm(jsonList);
+                    id = accountInloggen.LoginScherm(jsonList);
                     foreach (dynamic item in jsonList)
                     {
                         //Check of gebruikersnaam en wachtwoord matchen en kijk gelijk ook of hij admin of gebruiker is
@@ -81,10 +80,10 @@ namespace projectB
                         }
                     }
                 }
-                else if (page == "Registreren")
-                {
-                    accountMaken.RegistrerenFrontend(url, jsonList);
-                }
+                //else if (page == "Registreren")
+                //{
+                //    accountMaken.RegistrerenFrontend(url, jsonList);
+                //}
                 else if (page == "Films")
                 {
                     if (adminLoggedIn)
