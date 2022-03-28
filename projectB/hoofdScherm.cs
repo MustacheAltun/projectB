@@ -86,7 +86,7 @@ $$ | \_/ $$ | $$$$$$  |   \$  /   $$$$$$\ $$$$$$$$\    \$  /   $$$$$$$$\ $$ |  $
     public string menuMethod(int index)
     {
         string[]menuInterface = new string[] 
-        { "| [1] Film | [2] Locaties | [3] Eten & Drinken | [4] Zoeken | [5] Inloggen |",
+        { "| [1] Film | [2] Locaties | [3] Eten & Drinken | [4] Zoeken | [5] Inloggen -- Wachtwoord Vegeten -- Registreren |",
         "| [1] Film | [2] Locaties | [3] Eten & Drinken | [4] Account Gegevens | [5] Zoeken | [6] Uitloggen |",
         "| [1] Film | [2] Locaties | [3] Eten & Drinken | [4] Account Gegevens | [5] Zoeken | [6] Omzet | [7] Uitloggen |"
         };
