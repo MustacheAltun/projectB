@@ -65,73 +65,49 @@ public class Registratie
 
         //maak de cmd schoon van wat er ervoor is getypt
         Console.Clear();
-        //kijk of de gebruiker wilt registeren of een missclick heeft gemaakt
-        Console.WriteLine("| [1] Terug | [2] Registreren |");
-        Console.WriteLine("Kies de actie die u wilt uitvoeren:");
-        //lees de input
-        string register = Console.ReadLine();
+        //pak alle informatie de de gebruiker doorgeeft en check gelijk of hij goed of fout is. geef de resultaat pas op het einde nadat alle data is ingevoerd
+        Console.WriteLine("*-*-*-*-*-*-*-*-"+ "\n" + "|   Registeren   |" + "\n" + "*-*-*-*-*-*-*-*-");
+        Console.WriteLine("Voer username in:");
+        string username = Console.ReadLine();
+        bool usernameCheck = CheckVerbodenLetters(verbodenKarakters, username);
+        Console.WriteLine("Voer password in:");
+        string password = Console.ReadLine();
+        bool passwordCheck = CheckVerbodenLetters(verbodenKarakters, password);
+        Console.WriteLine("Voer beveiliging woord in (voor wachtwoordvergeten):");
+        string secretWord = Console.ReadLine();
+        bool secretCheck = CheckVerbodenLetters(verbodenKarakters, secretWord);
 
-        //als de input geen register of return is dan moet hij de input accepteren totdat de gebruiker een goede input geft
-        while (register != "1" && register != "2")
+
+
+        //als een van de volgende statements false zijn dan is de account fout
+        if (secretCheck == false || passwordCheck == false || usernameCheck == false || password.Length < 8)
         {
-            //geef een error en wacht op de juiste input
-            Console.WriteLine("Ongeldig Invoer!");
-            register = Console.ReadLine();
+            Console.WriteLine("Gebruikersnaam,Wachtwoord of Beveiliging is incorrect!");
+            Thread.Sleep(2000);
+            //herhaal de functie, want account heeft niet de juiste data
         }
-
-
-        //als register overeenkomt met de input "register" dan gaat hij in deze loop
-        while (register == "2")
+        else if (String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(secretWord))
         {
-            //pak alle informatie de de gebruiker doorgeeft en check gelijk of hij goed of fout is. geef de resultaat pas op het einde nadat alle data is ingevoerd
-            Console.Clear();
-            Console.WriteLine("Voer username in:");
-            string username = Console.ReadLine();
-            bool usernameCheck = CheckVerbodenLetters(verbodenKarakters, username);
-            Console.WriteLine("Voer password in:");
-            string password = Console.ReadLine();
-            bool passwordCheck = CheckVerbodenLetters(verbodenKarakters, password);
-            Console.WriteLine("Voer beveiliging woord in (voor wachtwoordvergeten):");
-            string secretWord = Console.ReadLine();
-            bool secretCheck = CheckVerbodenLetters(verbodenKarakters, secretWord);
-
-
-
-            //als een van de volgende statements false zijn dan is de account fout
-            if (secretCheck == false || passwordCheck == false || usernameCheck == false || password.Length < 8)
-            {
-                Console.WriteLine("Gebruikersnaam,Wachtwoord of Beveiliging is incorrect!");
-                Thread.Sleep(2000);
-                register = "";
-                //herhaal de functie, want account heeft niet de juiste data
-                RegistrerenFrontend(url, accountList);
-            }else if(String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(secretWord))
-            {
-                Console.WriteLine("een of meerdere input velden zijn leeg");
-                Thread.Sleep(2000);
-                register = "";
-                //herhaal de functie, want account heeft niet de juiste data
-                RegistrerenFrontend(url, accountList);
-            }else if (CheckBestaandeNaam(accountList,username))
-            {
-                Console.WriteLine("naam bestaat al");
-                Thread.Sleep(2000);
-                register = "";
-                //herhaal de functie, want account heeft niet de juiste data
-                RegistrerenFrontend(url, accountList);
-            }
-            else
-            {
-                register = "";
-                //hier maakt hij de account en mag hij terug naar de hoofdmenu
-                RegistrerenMethode(url, accountList, username, password, secretWord, id, null);
-                Console.WriteLine("Je account is gemaakt.");
-                Thread.Sleep(1000);
-                return;
-
-            }
+            Console.WriteLine("een of meerdere input velden zijn leeg");
+            Thread.Sleep(2000);
+            //herhaal de functie, want account heeft niet de juiste data
+        }
+        else if (CheckBestaandeNaam(accountList, username))
+        {
+            Console.WriteLine("naam bestaat al");
+            Thread.Sleep(2000);
+            //herhaal de functie, want account heeft niet de juiste data
+        }
+        else
+        {
+            //hier maakt hij de account en mag hij terug naar de hoofdmenu
+            RegistrerenMethode(url, accountList, username, password, secretWord, id, null);
+            Console.WriteLine("Je account is gemaakt.");
             Thread.Sleep(1000);
-            Console.Clear();
+            return;
+
         }
+        Thread.Sleep(1000);
+        Console.Clear();
     }
 }
