@@ -72,7 +72,7 @@ public class Locatie
                 {
                     Console.WriteLine("Ongeldige invoer!");
                     Console.WriteLine("Kies de actie die u wilt uitvoeren:");
-                    input = Console.ReadLine();
+                    input = Console.ReadLine()+"\n";
                 }
                 switch (input.ToLower())
                 {
@@ -130,24 +130,26 @@ public class Locatie
 
     public void editLocation(List<Cinema_adress> lijst, string url)
     {
-        Console.WriteLine("Voer ID in van de bioscoop die u wilt aanpassen:");
+        //Console.WriteLine("Voer ID in van de bioscoop die u wilt aanpassen:");
         
         int[] bioscoopNrArray = new int[lijst.Count()+1];
         for (int i = 0; i < lijst.Count(); i++)
         {
             bioscoopNrArray[i] = i;
         }
-        int bioscoopNr = -1;
+        int bioscoopNr = 999999999;
         while (!bioscoopNrArray.Contains(bioscoopNr))
         {
-            try
+            Console.WriteLine("Voer ID nummer in van de bioscoop die u wilt aanpassen:");
+            if (int.TryParse(Console.ReadLine(), out bioscoopNr))
             {
-                bioscoopNr = Convert.ToInt32(Console.ReadLine())-1;
+                bioscoopNr--;
             }
-            catch (Exception)
+            else
             {
-                Console.WriteLine("Voer ID nummer in van de bioscoop die u wilt aanpassen:");
-                bioscoopNr = Convert.ToInt32(Console.ReadLine());
+                bioscoopNr = 999999999;
+                Console.WriteLine("Uw invoer is geen nummer.\n\n");
+                Thread.Sleep(1000);
             }
         }
         Console.WriteLine("Voer de aangepaste naam van de bioscoop in:");
@@ -171,22 +173,23 @@ public class Locatie
     {
         //Console.WriteLine("Voer ID in van de bioscoop die u wilt verwijderen:");
 
-        int[] bioscoopNrArray = new int[lijst.Count() + 1];
+        int[] bioscoopNrArray = new int[lijst.Count()];
         for (int i = 0; i < lijst.Count(); i++)
         {
             bioscoopNrArray[i] = i;
         }
-        int bioscoopNr = -1;
+        int bioscoopNr = 999999999;
         while (!bioscoopNrArray.Contains(bioscoopNr))
         {
             Console.WriteLine("Voer een correcte ID in van de bioscoop die u wilt verwijderen:");
-            if (int.TryParse(Console.ReadLine(), out _))
+            if (int.TryParse(Console.ReadLine(), out bioscoopNr))
             {
-                bioscoopNr = Convert.ToInt32(Console.ReadLine()) - 1;
+                bioscoopNr--;
             }
             else
             {
-                Console.WriteLine("Uw invoer is geen nummer.\n");
+                bioscoopNr = 999999999;
+                Console.WriteLine("Uw invoer is geen nummer.\n\n");
                 Thread.Sleep(1000);
             }
         }
