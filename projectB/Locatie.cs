@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 public class Locatie
@@ -168,7 +169,7 @@ public class Locatie
 
     public void removeLocation(List<Cinema_adress> lijst, string url)
     {
-        Console.WriteLine("Voer ID in van de bioscoop die u wilt verwijderen:");
+        //Console.WriteLine("Voer ID in van de bioscoop die u wilt verwijderen:");
 
         int[] bioscoopNrArray = new int[lijst.Count() + 1];
         for (int i = 0; i < lijst.Count(); i++)
@@ -178,14 +179,15 @@ public class Locatie
         int bioscoopNr = -1;
         while (!bioscoopNrArray.Contains(bioscoopNr))
         {
-            try
+            Console.WriteLine("Voer een correcte ID in van de bioscoop die u wilt verwijderen:");
+            if (int.TryParse(Console.ReadLine(), out _))
             {
                 bioscoopNr = Convert.ToInt32(Console.ReadLine()) - 1;
             }
-            catch (Exception)
+            else
             {
-                Console.WriteLine("Voer ID nummer in van de bioscoop die u wilt aanpassen:");
-                bioscoopNr = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Uw invoer is geen nummer.\n");
+                Thread.Sleep(1000);
             }
         }
         lijst.RemoveAt(bioscoopNr);
