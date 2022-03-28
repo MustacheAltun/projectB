@@ -18,7 +18,7 @@ public class Ticket
 
 public class movie
 {
-    public string id { get; set; }
+    public int id { get; set; }
     public string name { get; set; }
     public string year { get; set; }
     public string[] categories { get; set; }
