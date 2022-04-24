@@ -1,5 +1,4 @@
 ﻿using System;
-
 public class Account
 {
     public int id { get; set; }
@@ -7,13 +6,17 @@ public class Account
     public string password { get; set; }
     public string security { get; set; }
     public string rol { get; set; }
+    #nullable enable
     public Ticket[]? tickets { get; set; }
+    #nullable disable
 }
 
 public class Ticket
 {
+    #nullable enable
     public int? id { get; set; }
     public string? name { get; set; }
+    #nullable disable
 }
 
 public class movie
@@ -26,6 +29,7 @@ public class movie
     public string director { get; set; }
     public string storyline { get; set; }
 }
+
 public class Cinema_adress
 {
     public string name { get; set; }
@@ -33,9 +37,26 @@ public class Cinema_adress
     public string zipcode { get; set; }
     public string city { get; set; }
     public string telNr { get; set; }
-
-
+    public Zalen[] zalen { get; set; }
 }
+
+public class Zalen
+{
+    public string naam { get; set; }
+    public string type { get; set; }
+    public int zitplekken { get; set; }
+    public Tijden[] tijden { get; set; }
+    public string film_naam { get; set; }
+}
+
+public class Tijden
+{
+    public string tijd { get; set; }
+    public System.Collections.Generic.Dictionary<string, bool> beschikbaar { get; set; }
+    public System.Collections.Generic.Dictionary<string, bool> gebroken { get; set; }
+}
+
+
 
 
 
