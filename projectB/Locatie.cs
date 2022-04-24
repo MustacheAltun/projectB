@@ -105,6 +105,9 @@ public class Locatie
 
     public void addLocation(List<Cinema_adress> lijst, string url)
     {
+        /*
+         * geef alle informatie dus bioscoop naam postcode adres etc etc
+         */
         Console.Clear();
         Console.WriteLine("Voer bioscoop naam in:");
         string bioscoop = Console.ReadLine();
@@ -116,6 +119,8 @@ public class Locatie
         string stad = Console.ReadLine();
         Console.WriteLine("Voer telefoon nummer in:");
         string nummer = Console.ReadLine();
+
+        //voeg het toe aan de lijst van bestaande locaties
         lijst.Add(new Cinema_adress()
         {
             name = bioscoop,
@@ -132,14 +137,18 @@ public class Locatie
 
     public void editLocation(List<Cinema_adress> lijst, string url)
     {
-        //Console.WriteLine("Voer ID in van de bioscoop die u wilt aanpassen:");
         
+        //maak een lijst van alle id's met een for loop
         int[] bioscoopNrArray = new int[lijst.Count()+1];
         for (int i = 0; i < lijst.Count(); i++)
         {
             bioscoopNrArray[i] = i;
         }
+
+        //de huidige nummer is 99999999 zodat dit geen goede id is
         int bioscoopNr = 999999999;
+
+        //als de bioscoopNr niet in de lijst zit dan vraag je gewoon telkens opnieuw totdat de persoon een geldig ID geeft
         while (!bioscoopNrArray.Contains(bioscoopNr))
         {
             
@@ -156,6 +165,8 @@ public class Locatie
                 Thread.Sleep(1000);
             }
         }
+
+        // alle informatie voor het veranderen van bioscoop informatie gebeurd hier
         Console.WriteLine("Voer de aangepaste naam van de bioscoop in:");
         lijst[bioscoopNr].name = Console.ReadLine();
         Console.WriteLine("Voer de aangepaste straat van de bioscoop in:");
@@ -175,14 +186,16 @@ public class Locatie
 
     public void removeLocation(List<Cinema_adress> lijst, string url)
     {
-        //Console.WriteLine("Voer ID in van de bioscoop die u wilt verwijderen:");
-
         int[] bioscoopNrArray = new int[lijst.Count()];
         for (int i = 0; i < lijst.Count(); i++)
         {
             bioscoopNrArray[i] = i;
         }
+
+        //de huidige nummer is 99999999 zodat dit geen goede id is
         int bioscoopNr = 999999999;
+
+        //als de bioscoopNr niet in de lijst zit dan vraag je gewoon telkens opnieuw totdat de persoon een geldig ID geeft
         while (!bioscoopNrArray.Contains(bioscoopNr))
         {
             Console.WriteLine("Voer een correcte ID in van de bioscoop die u wilt verwijderen:");
