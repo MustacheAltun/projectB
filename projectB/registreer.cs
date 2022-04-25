@@ -66,44 +66,51 @@ public class Registratie
         //maak de cmd schoon van wat er ervoor is getypt
         Console.Clear();
         //pak alle informatie de de gebruiker doorgeeft en check gelijk of hij goed of fout is. geef de resultaat pas op het einde nadat alle data is ingevoerd
-        Console.WriteLine("*-*-*-*-*-*-*-*-"+ "\n" + "|   Registeren   |" + "\n" + "*-*-*-*-*-*-*-*-");
-        Console.WriteLine("Voer username in:");
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*" + "\n" +
+                          "|   Registeren    |" + "\n" +
+                          "*-*-*-*-*-*-*-*-*-*" + "\n");
+        Console.WriteLine("Voer uw gewenste gebruikersnaam in:");
         string username = Console.ReadLine();
         bool usernameCheck = CheckVerbodenLetters(verbodenKarakters, username);
-        Console.WriteLine("Voer password in:");
+        Console.WriteLine("Voer uw gewenste wachtwoord in:");
         string password = Console.ReadLine();
         bool passwordCheck = CheckVerbodenLetters(verbodenKarakters, password);
-        Console.WriteLine("Voer beveiliging woord in (voor wachtwoordvergeten):");
+        Console.WriteLine("Als u uw wachtwoord vergeet moet u als controle een beveiligingswoord invoeren." + "\n" + "Voer uw gewenste beveiligingswoord in:");
         string secretWord = Console.ReadLine();
         bool secretCheck = CheckVerbodenLetters(verbodenKarakters, secretWord);
 
 
 
         //als een van de volgende statements false zijn dan is de account fout
-        if (secretCheck == false || passwordCheck == false || usernameCheck == false || password.Length < 8)
+        if (secretCheck == false || passwordCheck == false || usernameCheck == false)
         {
-            Console.WriteLine("Gebruikersnaam,Wachtwoord of Beveiliging is incorrect!");
+            Console.WriteLine("Gebruikersnaam, wachtwoord en/of beveiligingswoord is incorrect!");
             Thread.Sleep(2000);
             //herhaal de functie, want account heeft niet de juiste data
         }
         else if (String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(secretWord))
         {
-            Console.WriteLine("een of meerdere input velden zijn leeg");
-            Thread.Sleep(2000);
+            Console.WriteLine("Een of meerdere velden zijn niet ingevuld");
+            Thread.Sleep(2500);
             //herhaal de functie, want account heeft niet de juiste data
         }
         else if (CheckBestaandeNaam(accountList, username))
         {
-            Console.WriteLine("naam bestaat al");
-            Thread.Sleep(2000);
+            Console.WriteLine("Uw gekozen gebruikersnaam bestaat al. Kies a.u.b. een andere gebruikersnaam");
+            Thread.Sleep(2500);
             //herhaal de functie, want account heeft niet de juiste data
         }
+        else if (password.Length < 8) 
+        {
+            Console.WriteLine("Uw wachtwoord is kleiner dan 9 karakters" + "\n" + "Voer een wachtwoord in dat groter  is dan 8 karakters.");
+            Thread.Sleep(3000);
+        } 
         else
         {
             //hier maakt hij de account en mag hij terug naar de hoofdmenu
             RegistrerenMethode(url, accountList, username, password, secretWord, id, null);
-            Console.WriteLine("Je account is gemaakt.");
-            Thread.Sleep(1000);
+            Console.WriteLine("Uw account is aangemaakt.");
+            Thread.Sleep(1500);
             return;
 
         }

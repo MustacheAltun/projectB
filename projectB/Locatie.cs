@@ -28,7 +28,9 @@ public class Locatie
         //While loop dat blijft runnen tenzij gebruiker "1" invoert.
         while (input != "1")
         {
-            
+            Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            Console.WriteLine("|                                            Bioscopen                                              |");
+            Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
             //Forloop om 2d array (inner array) in te vullen met bioscoop locatie gegevens.
             for (int i = 0; i < locatieList.Count; i++)
             {
@@ -38,23 +40,29 @@ public class Locatie
             //Een forloop die de verschillende locaties in de console weergeeft.
             for (int index = 0, locationNr = 1; index < locatieList.Count; index++, locationNr++)
             {
-                Console.WriteLine("------------------------------------------------------------------------------------------");
-                Console.WriteLine("                       Naam locatie " + locationNr + " : "+ arr[index][0]);
-                Console.WriteLine("                       Adress: " + arr[index][1]);
-                Console.WriteLine("                       Postcode: " + arr[index][2]);
-                Console.WriteLine("                       Stad: " + arr[index][3]);
-                Console.WriteLine("                       Telnr: " + arr[index][4]);
-                Console.WriteLine("------------------------------------------------------------------------------------------");
+                Console.WriteLine("-----------------------------------------------------------------------------------------------------");
+                Console.WriteLine("                         Naam locatie " + locationNr + " : "+ arr[index][0]);
+                Console.WriteLine("                         Adress: " + arr[index][1]);
+                Console.WriteLine("                         Postcode: " + arr[index][2]);
+                Console.WriteLine("                         Stad: " + arr[index][3]);
+                Console.WriteLine("                         Telnr: " + arr[index][4]);
+                Console.WriteLine("-----------------------------------------------------------------------------------------------------");
             }
             if (rol == "gebruiker")
             {
-                Console.WriteLine("| [1] Terug |");
+                Console.WriteLine("\n" +
+                                  "*-*-*-*-*-*-*");
+                Console.WriteLine("| [1] Terug |" + "\n" +
+                                  "-------------" + "\n");
             }
             else
             {
-                Console.WriteLine("| [1] Terug | [2] toevoegen | [3] aanpassen | [4] verwijderen |");
+                Console.WriteLine("\n" + 
+                                  "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+                Console.WriteLine("| [1] Terug | [2] toevoegen | [3] aanpassen | [4] verwijderen |" + "\n" +
+                                  "---------------------------------------------------------------");
             }
-            Console.WriteLine("Kies de actie die u wilt uitvoeren:");
+            Console.WriteLine("Toets 1 om terug te gaan naar het hoofdmenu.");
             input = Console.ReadLine();
             Console.WriteLine();
             if (rol == "gebruiker")
@@ -62,8 +70,8 @@ public class Locatie
                 while(input != "1" && input.ToLower() != "terug")
                 {
                     input = "";
-                    Console.WriteLine("Ongeldige invoer!");
-                    Console.WriteLine("Kies de actie die u wilt uitvoeren:");
+                    Console.WriteLine("Voer a.u.b. een van de mogelijke opties in.");
+                    Console.WriteLine("Toets 1 om terug te gaan naar het hoofdmenu.");
                     input = Console.ReadLine();
                     Console.WriteLine();
                 }
@@ -72,8 +80,8 @@ public class Locatie
             {
                 while (input != "1" && input.ToLower() != "terug" && input != "2" && input.ToLower() != "toevoegen" && input != "3" && input.ToLower() != "aanpassen" && input != "4" && input.ToLower() != "verwijderen")
                 {
-                    Console.WriteLine("\nOngeldige invoer!");
-                    Console.WriteLine("Kies de actie die u wilt uitvoeren:\n");
+                    Console.WriteLine("\nKies a.u.b. een van de bovenstaande opties.");
+                    Console.WriteLine("Toets een getal en druk op enter om op de gewilde pagina te komen:\n");
                     input = Console.ReadLine();
                 }
                 switch (input.ToLower())
@@ -109,15 +117,15 @@ public class Locatie
          * geef alle informatie dus bioscoop naam postcode adres etc etc
          */
         Console.Clear();
-        Console.WriteLine("Voer bioscoop naam in:");
+        Console.WriteLine("Voer de bioscoop naam in:");
         string bioscoop = Console.ReadLine();
-        Console.WriteLine("Voer straat in:");
+        Console.WriteLine("Voer de straat in:");
         string straat = Console.ReadLine();
-        Console.WriteLine("Voer postcode in:");
+        Console.WriteLine("Voer de postcode in:");
         string postcode = Console.ReadLine();
-        Console.WriteLine("Voer stad in:");
+        Console.WriteLine("Voer de stad in:");
         string stad = Console.ReadLine();
-        Console.WriteLine("Voer telefoon nummer in:");
+        Console.WriteLine("Voer het telefoon nummer in:");
         string nummer = Console.ReadLine();
 
         //voeg het toe aan de lijst van bestaande locaties
@@ -152,7 +160,7 @@ public class Locatie
         while (!bioscoopNrArray.Contains(bioscoopNr))
         {
             
-            Console.WriteLine("Voer ID nummer in van de bioscoop die u wilt aanpassen:");
+            Console.WriteLine("Voer het ID nummer in van de bioscoop die u wilt aanpassen:");
             if (int.TryParse(Console.ReadLine(), out bioscoopNr))
             {
                 Console.WriteLine();
@@ -161,7 +169,7 @@ public class Locatie
             else
             {
                 bioscoopNr = 999999999;
-                Console.WriteLine("Uw invoer is geen nummer.\n\n");
+                Console.WriteLine("Er is geen bioscoop met de ingevoerde waarde.\n\n");
                 Thread.Sleep(1000);
             }
         }
@@ -175,7 +183,7 @@ public class Locatie
         lijst[bioscoopNr].zipcode = Console.ReadLine();
         Console.WriteLine("Voer de aangepaste stad van de bioscoop in:");
         lijst[bioscoopNr].city = Console.ReadLine();
-        Console.WriteLine("Voer de aangepaste telefoon nummer van de bioscoop in:");
+        Console.WriteLine("Voer het aangepaste telefoon nummer van de bioscoop in:");
         lijst[bioscoopNr].telNr = Console.ReadLine();
 
         //verdander de lijst naar een json type
@@ -198,7 +206,7 @@ public class Locatie
         //als de bioscoopNr niet in de lijst zit dan vraag je gewoon telkens opnieuw totdat de persoon een geldig ID geeft
         while (!bioscoopNrArray.Contains(bioscoopNr))
         {
-            Console.WriteLine("Voer een correcte ID in van de bioscoop die u wilt verwijderen:");
+            Console.WriteLine("Voer de ID in van de bioscoop die u wilt verwijderen:");
             if (int.TryParse(Console.ReadLine(), out bioscoopNr))
             {
                 Console.WriteLine();
@@ -207,7 +215,7 @@ public class Locatie
             else
             {
                 bioscoopNr = 999999999;
-                Console.WriteLine("Uw invoer is geen nummer.\n\n");
+                Console.WriteLine("Er is geen bioscoop met de ingevoerde waarde.\n\n");
                 Thread.Sleep(1000);
             }
         }

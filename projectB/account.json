@@ -35,5 +35,13 @@
     "security": "admin",
     "rol": "admin",
     "tickets": null
+  },
+  {
+    "id": 3,
+    "username": "golbert",
+    "password": "ceitapages1234",
+    "security": "golbertceitapages",
+    "rol": "gebruiker",
+    "tickets": null
   }
 ]

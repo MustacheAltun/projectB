@@ -26,7 +26,8 @@ public class Login
         string url = "..\\..\\..\\account.json";
         Console.Clear();
         string[] ArrayOpties = new string[] {"inloggen","1","2","3","4","wachtwoord vergeten","registreren","terug"};
-        string menu = "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" + "\n" + "| [1] Terug | [2] Inloggen | [3] Wachtwoord Vergeten | [4] Registreren |" + "\n" + "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-";
+        string menu = "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n" + "|  [1] Terug |  [2] Inloggen | [3] Wachtwoord Vergeten | [4] Registreren  |" + "\n" + 
+            "---------------------------------------------------------------------------";
         string keuze = "";
         while (!ArrayOpties.Contains(keuze))
         {
@@ -35,31 +36,39 @@ public class Login
             keuze = Console.ReadLine();
             if (!ArrayOpties.Contains(keuze))
             {
-                Console.WriteLine("Invalide Input!");
-                Thread.Sleep(500);
+                Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.");
+                Thread.Sleep(1000);
             }
         }
         //Input voor gebruikersnaam en wachtwoord
         if ((keuze == "2") || (keuze.ToLower() == "inloggen"))
         {
             Console.Clear();
-            Console.WriteLine("*-*-*-*-*-*-*-*-" + "\n" + "|   Inloggen   |" + "\n" + "*-*-*-*-*-*-*-*-");
-            Console.WriteLine("Voer username in:");
+            Console.WriteLine("*-*-*-*-*-*-*-*-*" + "\n" +
+                              "|   Inloggen    |" + "\n" +
+                              "*-*-*-*-*-*-*-*-*" + "\n");
+            Console.WriteLine("Voer uw gebruikersnaam in:");
             string Username = Console.ReadLine();
 
-            Console.WriteLine("Voer password in:");
+            Console.WriteLine("Voer uw wachtwoord in:");
             string Password = Console.ReadLine();
 
             //Gebruikt loginMethod om te checken of het juist of fout is
             if (loginMethod(accountList, Username, Password))
             {
-                Console.WriteLine("U bent Ingelogd" + " " + Username);
+                Console.WriteLine("U bent ingelogd" + " " + Username);
                 Thread.Sleep(1000);
                 return getId(accountList, Username, Password);
             }
+            else if (Username.Length < 8)
+            {
+                Console.WriteLine("Uw wachtwoord is kleiner dan 8 karakters");
+                Thread.Sleep(1000);
+                return -1;
+            }
             else
             {
-                Console.WriteLine("Gebruikernaam of wachtwoord is onjuist");
+                Console.WriteLine("Gebruikernaam en/of wachtwoord is onjuist");
                 Thread.Sleep(1000);
                 return -1;
             }
@@ -76,10 +85,12 @@ public class Login
         else if ((keuze == "3") || (keuze.ToLower() == "wachtwoord vergeten"))
         {
             Console.Clear();
-            Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-" + "\n" + "|   Wachtwoord Vergeten   |" + "\n" + "*-*-*-*-*-*-*-*-*-*-*-");
+            Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n" +
+                              "|   Wachtwoord vergeten   |" + "\n"+ 
+                              "*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n");
             Console.WriteLine("Voor uw gebruikersnaam in:");
             string oldName = Console.ReadLine();
-            Console.WriteLine("Voor uw security code in:");
+            Console.WriteLine("Voor uw beveligingswoord in:");
             string oldSec = Console.ReadLine();
             ChangePass(accountList, oldName, oldSec);
             return LoginScherm(accountList);
@@ -119,13 +130,13 @@ public class Login
         if(InJson)
         {
             string newPass = "";
-            Console.WriteLine("Voer nieuwe wachtwoord in");
+            Console.WriteLine("Voer uw nieuwe wachtwoord in");
             while ((newPass.Length < 8) || (verbodenKarakters.Contains(newPass)))
             {
                 newPass = Console.ReadLine();
                 if ((newPass.Length < 8) || (verbodenKarakters.Contains(newPass)))
                 {
-                    Console.WriteLine("Wachtwoord is te klein (<8) &/ Wachtwoord bevat verboden karakters");
+                    Console.WriteLine("Uw wachtwoord is kleiner dan 9 karakters en/of bevat verboden karakters");
                 }
             }
             accountList[i].password = newPass;
@@ -137,7 +148,7 @@ public class Login
         }
         else
         {
-            Console.WriteLine("Username of Security code is ongeldig!");
+            Console.WriteLine("Gebruikersnaam of beveiligingswoord is ongeldig!");
             Thread.Sleep(500);
         }
     }

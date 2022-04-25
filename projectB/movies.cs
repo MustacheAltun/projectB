@@ -18,9 +18,9 @@ public class Movies
 
         while (Keuze != "1")
         {
-            Console.WriteLine("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
-            Console.WriteLine("                                             Films");
-            Console.WriteLine("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            Console.WriteLine("|                                                Films                                              |");
+            Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
             // pak alle informatie per film
             foreach (dynamic item in movieList)
             {
@@ -42,27 +42,36 @@ public class Movies
                 }
                 //print alles uit
                 
-                Console.WriteLine("------------------------------------------------------------------------------------------");
-                Console.WriteLine("                       movie id : " + item.id);
-                Console.WriteLine("                       name: " + item.name);
-                Console.WriteLine("                       year: " + item.year);
-                Console.WriteLine("                       categories: " + categories);
-                Console.WriteLine("------------------------------------------------------------------------------------------");
+                Console.WriteLine("-----------------------------------------------------------------------------------------------------");
+                Console.WriteLine("                                         Film-ID : " + item.id);
+                Console.WriteLine("                           Naam: " + item.name);
+                Console.WriteLine("                           Publicatiejaar: " + item.year);
+                Console.WriteLine("                           Genres: " + categories);
+                Console.WriteLine("-----------------------------------------------------------------------------------------------------");
 
 
             }
 
             if (rol == "gebruiker")
             {
-                Console.WriteLine("| [1] Terug |");
+                Console.WriteLine("\n" + "*-*-*-*-*-*-*" + "\n" +"| [1] Terug |" + "\n" + "-------------");
+                Console.WriteLine("\n" + "Toets 1 om terug te keren naar het hoofdscherm of toets een film-ID in om een film te bekijken:    ");
             }
             else
             {
-                Console.WriteLine("| [1] Terug | [2] toevoegen | [3] aanpassen | [4] verwijderen |");
+                Console.WriteLine("\n" + "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n" +
+                                         "| [1] Terug | [2] toevoegen | [3] aanpassen | [4] verwijderen |" + "\n" +
+                                         "---------------------------------------------------------------" + "\n");
+                Console.WriteLine("Toets 1 om terug te keren naar het hoofdmenu.                " + "\n" +
+                                  "Toets 2 om een nieuwe film toe te voegen.                    " + "\n" +
+                                  "Toets 3 om de gegevens van een bestaande film aan te passen. " + "\n" +
+                                  "Toets 4 om een bestaande film te verwijderen.                ");
+                Console.WriteLine("");
+
             }
-            Console.WriteLine("---------------------------------------------");
-            Console.WriteLine("     Kies de actie die u wilt uitvoeren: ");
-            Console.WriteLine("---------------------------------------------");
+            
+            
+            
             Keuze = Console.ReadLine();
 
             if (rol == "gebruiker")
@@ -70,10 +79,10 @@ public class Movies
                 while (Keuze != "1" && Keuze.ToLower() != "terug")
                 {
                     Keuze = "";
-                    Console.WriteLine("Ongeldige invoer!\n");
-                    Console.WriteLine("---------------------------------------------");
-                    Console.WriteLine("     Kies de actie die u wilt uitvoeren:");
-                    Console.WriteLine("---------------------------------------------");
+                    Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                    
+                    Console.WriteLine("Toets het getal van uw gewenste actie in:");
+                    
                     Keuze = Console.ReadLine();
                 }
             }
@@ -81,10 +90,13 @@ public class Movies
             {
                 while (Keuze != "1" && Keuze.ToLower() != "terug" && Keuze != "2" && Keuze.ToLower() != "toevoegen" && Keuze != "3" && Keuze.ToLower() != "aanpassen" && Keuze != "4" && Keuze.ToLower() != "verwijderen")
                 {
-                    Console.WriteLine("Ongeldige invoer!\n");
-                    Console.WriteLine("---------------------------------------------");
-                    Console.WriteLine("     Kies de actie die u wilt uitvoeren:");
-                    Console.WriteLine("---------------------------------------------");
+                    Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                    Console.WriteLine("----------------------------------------------------------------");
+                    Console.WriteLine("| Toets 1 om terug te keren naar het hoofdmenu.                |" + "\n" +
+                                      "| Toets 2 om een nieuwe film toe te voegen.                    |" + "\n" +
+                                      "| Toets 3 om de gegevens van een bestaande film aan te passen. |" + "\n" +
+                                      "| Toets 4 om een bestaande film te verwijderen.                |" );
+                    Console.WriteLine("----------------------------------------------------------------");
                     Keuze = Console.ReadLine();
                 }
                 switch (Keuze.ToLower())
@@ -124,16 +136,16 @@ public class Movies
         }
 
 
-        Console.WriteLine("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-        Console.WriteLine("                 Toevoegen");
-        Console.WriteLine("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-        Console.WriteLine("---------------------------------------------");
-        Console.WriteLine("             Voer film naam in:");
-        Console.WriteLine("---------------------------------------------");
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+        Console.WriteLine("|          Nieuwe film toevoegen              |");
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n");
+        Console.WriteLine("-----------------------------------------------");
+        Console.WriteLine("|            Voer de filmtitel in:            |");
+        Console.WriteLine("-----------------------------------------------" + "\n");
         string name = Console.ReadLine();
         Console.WriteLine("---------------------------------------------");
-        Console.WriteLine("             Voer film jaar in:");
-        Console.WriteLine("---------------------------------------------");
+        Console.WriteLine("|       Voer de publicatiedatum in:         |");
+        Console.WriteLine("---------------------------------------------" + "\n");
         string year = Console.ReadLine();
 
         
@@ -143,7 +155,7 @@ public class Movies
         while (check)
         {
             Console.WriteLine("---------------------------------------------");
-            Console.WriteLine("    Voer het aantal genres van de film in:");
+            Console.WriteLine("|   Voer het aantal genres van de film in:  |");
             Console.WriteLine("---------------------------------------------");
             
             if (int.TryParse(Console.ReadLine(), out lengthArr))
@@ -153,7 +165,7 @@ public class Movies
             }
             else
             {
-                Console.WriteLine("Uw invoer is geen nummer!\n");
+                Console.WriteLine("Voer een nummer in. \n");
                 Thread.Sleep(1000);
             }
         }
@@ -162,23 +174,23 @@ public class Movies
         for (int i = 0; i < lengthArr; i++)
         {
             Console.WriteLine("---------------------------------------------");
-            Console.WriteLine("               Vul in genre:");
+            Console.WriteLine("|             Vul een genre in:             |");
             Console.WriteLine("---------------------------------------------");
             genreArr[i] = Console.ReadLine();
         }
 
         Console.WriteLine("---------------------------------------------");
-        Console.WriteLine("      Typ de verhaallijn van de film:");
-        Console.WriteLine("---------------------------------------------");
+        Console.WriteLine("|     Type de verhaallijn van de film:      |");
+        Console.WriteLine("---------------------------------------------" + "\n");
         string storyline = Console.ReadLine();
 
         Console.WriteLine("---------------------------------------------");
-        Console.WriteLine("      Voer de naam van de regisseur in:");
-        Console.WriteLine("---------------------------------------------");
+        Console.WriteLine("|     Voer de naam van de regisseur in:     |");
+        Console.WriteLine("---------------------------------------------" + "\n");
         string director = Console.ReadLine();
 
         Console.WriteLine("---------------------------------------------");
-        Console.WriteLine("  Voer in de film release datum:(DD-MM-YYYY)");
+        Console.WriteLine("|  Voer de publicatiedatum in:(DD-MM-YYYY)  |");
         Console.WriteLine("---------------------------------------------");
         string releasedate = Console.ReadLine();
 
@@ -204,9 +216,9 @@ public class Movies
 
     public static void editFilm(List<movie> movieList, string url)
     {
-        Console.WriteLine("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-        Console.WriteLine("                   Aanpassen");
-        Console.WriteLine("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+        Console.WriteLine("|                     Aanpassen                   |");
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
         
         int[] filmIdArr = new int[movieList.Count()];
         for(int i=0; i<movieList.Count(); i++)
@@ -217,41 +229,41 @@ public class Movies
         int filmId = int.MinValue;
         while (!filmIdArr.Contains(filmId))
         {
-            Console.WriteLine("---------------------------------------------");
-            Console.WriteLine(" Voer ID in van de film die u wilt aanpassen:");
-            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine("| Voer de ID in van de film die u wilt aanpassen: |");
+            Console.WriteLine("---------------------------------------------------");
             if (int.TryParse(Console.ReadLine(), out filmId))
             {
 
             }
             else
             {
-                Console.WriteLine("Uw invoer is geen film ID!\n");
+                Console.WriteLine("Er is geen film voor de ingevoerde ID.\n");
                 filmId = int.MinValue;
                 Thread.Sleep(1000);
             }
         }
-        Console.WriteLine("---------------------------------------------");
-        Console.WriteLine("   Voer de aangepaste naam van de film in:");
-        Console.WriteLine("---------------------------------------------");
+        Console.WriteLine("---------------------------------------------------");
+        Console.WriteLine("|  Voer de aangepaste naam van de film in:        |");
+        Console.WriteLine("---------------------------------------------------");
         string name = Console.ReadLine();
 
-        Console.WriteLine("---------------------------------------------");
-        Console.WriteLine("   Voer de aangepaste jaar van de film in:");
-        Console.WriteLine("---------------------------------------------");
+        Console.WriteLine("---------------------------------------------------");
+        Console.WriteLine("|  Voer de aangepaste jaar van de film in:        |");
+        Console.WriteLine("---------------------------------------------------");
         string year = Console.ReadLine();
 
-        Console.WriteLine("---------------------------------------------");
-        Console.WriteLine("    Voer de aantal genres van de film in:");
-        Console.WriteLine("---------------------------------------------");
+        Console.WriteLine("---------------------------------------------------");
+        Console.WriteLine("|   Voer de aantal genres van de film in:         |");
+        Console.WriteLine("---------------------------------------------------");
         int lengthArr = 0;
         bool check = true;
 
         while (check)
         {
-            Console.WriteLine("---------------------------------------------");
-            Console.WriteLine("    Voer het aantal genres van de film in:");
-            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine("|   Voer het aantal genres van de film in:        |");
+            Console.WriteLine("---------------------------------------------------");
 
             if (int.TryParse(Console.ReadLine(), out lengthArr))
             {
@@ -268,24 +280,24 @@ public class Movies
         string[] genreArr = new string[lengthArr];
         for (int i = 0; i < lengthArr; i++)
         {
-            Console.WriteLine("---------------------------------------------");
-            Console.WriteLine("               Vul in genre:");
-            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine("|              Vul een genre in:                  |");
+            Console.WriteLine("---------------------------------------------------");
             genreArr[i] = Console.ReadLine();
         }
 
-        Console.WriteLine("---------------------------------------------");
-        Console.WriteLine("      Voer de verhaallijn van de film in:");
-        Console.WriteLine("---------------------------------------------");
+        Console.WriteLine("---------------------------------------------------");
+        Console.WriteLine("|     Voer de verhaallijn van de film in:         |");
+        Console.WriteLine("---------------------------------------------------");
         string storyLine = Console.ReadLine();
 
-        Console.WriteLine("---------------------------------------------");
-        Console.WriteLine("      Voer de naam van de regisseur in:");
-        Console.WriteLine("---------------------------------------------");
+        Console.WriteLine("---------------------------------------------------");
+        Console.WriteLine("|     Voer de naam van de regisseur in:           |");
+        Console.WriteLine("---------------------------------------------------");
         string director = Console.ReadLine();
 
         Console.WriteLine("---------------------------------------------------");
-        Console.WriteLine(" Voer de release datum van de film in:(DD-MM-YYYY)");
+        Console.WriteLine("|     Voer de publicatiedatum in:(DD-MM-YYYY)     |");
         Console.WriteLine("---------------------------------------------------");
         string releasedate = Console.ReadLine();
 
@@ -318,15 +330,14 @@ public class Movies
         int filmNr = int.MinValue;
         //bool check = true;
         //string intCheck = "";
-        Console.WriteLine("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-        Console.WriteLine("                 Verwijderen");
-        Console.WriteLine("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+        Console.WriteLine("|                   Verwijderen                     |");
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
         while (!filmArray.Contains(filmNr))
         {
-
-            Console.WriteLine("----------------------------------------------------");
-            Console.WriteLine("   Voer ID in van de film die u wilt verwijderen:");
-            Console.WriteLine("----------------------------------------------------");
+            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("| Voer de ID in van de film die u wilt verwijderen: |");
+            Console.WriteLine("-----------------------------------------------------");
                 
             if (int.TryParse(Console.ReadLine(), out filmNr))
             {
@@ -334,7 +345,7 @@ public class Movies
             }
             else
             {
-                Console.WriteLine("Uw invoer is geen film ID!\n");
+                Console.WriteLine("Er is geen film voor het ingevoerde ID. \n");
                 filmNr = int.MinValue;
                 Thread.Sleep(1000);
             }
