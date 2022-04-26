@@ -81,7 +81,7 @@ public class Locatie
                 while (input != "1" && input.ToLower() != "terug" && input != "2" && input.ToLower() != "toevoegen" && input != "3" && input.ToLower() != "aanpassen" && input != "4" && input.ToLower() != "verwijderen")
                 {
                     Console.WriteLine("\nKies a.u.b. een van de bovenstaande opties.");
-                    Console.WriteLine("Toets een getal en druk op enter om op de gewilde pagina te komen:\n");
+                    Console.WriteLine("Toets een getal en druk op enter om op de gewenste pagina te komen:\n");
                     input = Console.ReadLine();
                 }
                 switch (input.ToLower())
