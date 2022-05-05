@@ -21,18 +21,18 @@ public class HoofdScherm
         Console.Clear();
         string menu = menuMethod(0);
         string[] menuArr = new string[] { "Films", "Locaties", "Eten & Drinken", "Zoeken", "Inloggen"};
-        string[] menuLenght = new string[] { "1","2","3","4","5"};
+        string[] menuLength = new string[] { "1","2","3","4","5"};
         if (loggedIn)
         { 
             //Als je bent ingelogd dan veranderd de menuBalk en de Lengte van het menu
             menu = menuMethod(1);
             menuArr = new string[] { "Films", "Locaties", "Eten & Drinken", "Account Gegevens", "Zoeken", "Uitloggen" };
-            menuLenght = new string[] { "1", "2", "3", "4", "5","6" };
+            menuLength = new string[] { "1", "2", "3", "4", "5","6" };
         }
         Console.WriteLine(menu);
         string Input = "";
         //Deze while loop blijft loopen totdat je input in de menuLenght zit
-        while (!menuLenght.Contains(Input))
+        while (!menuLength.Contains(Input))
         {
             Console.Clear();
             Console.Write(logo);
@@ -40,7 +40,7 @@ public class HoofdScherm
             Console.WriteLine("Toets het nummer van de pagina die u wilt bezoeken en druk vervolgens op enter:");
             Input = Console.ReadLine();
             //Input
-            if (!menuLenght.Contains(Input))
+            if (!menuLength.Contains(Input))
             {
                 //Wordt geprint als je foute input geeft
                 Console.WriteLine("Toets a.u.b. een van de bovenstaande nummers in.");
@@ -59,12 +59,12 @@ public class HoofdScherm
         Console.Clear();
         string menu = menuMethod(2);
         string[] menuArr = new string[] { "Films", "Locaties", "Eten & Drinken", "Account Gegevens", "Zoeken", "Omzet", "Uitloggen" };
-        string[] menuLenght = new string[] { "1", "2", "3", "4", "5", "6", "7" };
+        string[] menuLength = new string[] { "1", "2", "3", "4", "5", "6", "7" };
 
         Console.WriteLine(menu);
         string Input = "";
         //Deze while loop blijft loopen totdat je input in de menuLenght zit
-        while (!menuLenght.Contains(Input))
+        while (!menuLength.Contains(Input))
         {
             Console.Clear();
             Console.Write(logo);
@@ -72,7 +72,7 @@ public class HoofdScherm
             Console.WriteLine("Toets het nummer van de pagina die u wilt bezoeken en druk vervolgens op enter:");
             Input = Console.ReadLine();
             //Input
-            if (!menuLenght.Contains(Input))
+            if (!menuLength.Contains(Input))
             {
                 //Wordt geprint als je foute input geeft
                 Console.WriteLine("Toets a.u.b. een van de bovenstaande nummers in.");

@@ -32,18 +32,18 @@ namespace projectB
             List<Account> jsonList = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
 
             //voeg een lijst van tickets toe als je dat wilt, het hoeft niet
-            Ticket[] tickelijst = new Ticket[]
-            {
-                new Ticket() { id = 3, name = "Red" },
-                new Ticket() { id = 4, name = "Black" },
-                new Ticket() { id = 5, name = "Yellow" }
-            };
+            //Ticket[] tickelijst = new Ticket[]
+            //{
+            //    new Ticket() { id = 3, name = "Red" },
+            //    new Ticket() { id = 4, name = "Black" },
+            //    new Ticket() { id = 5, name = "Yellow" }
+            //};
 
             HoofdScherm hoofdScherm = new HoofdScherm();
             bool gebruikerLoggedIn = false;
             bool adminLoggedIn = false;
             int id;
-            string rol;
+            string rol="gast";
             while (true)
             {
                 string page;
@@ -73,6 +73,7 @@ namespace projectB
                                 adminLoggedIn = false;
                                 gebruikerLoggedIn = false;
                             }
+                            break;
                         }
                         else
                         {
@@ -80,21 +81,11 @@ namespace projectB
                         }
                     }
                 }
-                //else if (page == "Registreren")
-                //{
-                //    accountMaken.RegistrerenFrontend(url, jsonList);
-                //}
+               
                 else if (page == "Films")
                 {
-                    if (adminLoggedIn)
-                    {
-                        overview.show("admin");
-                    }
-                    else
-                    {
-                        overview.show("gebruiker");
-                    }
-                    
+                    overview.show(rol);
+
                 }
                 else if (page == "Uitloggen")
                 {
@@ -103,14 +94,7 @@ namespace projectB
                 }
                 else if (page == "Locaties")
                 {
-                    if (adminLoggedIn)
-                    {
-                        locatie.viewLocations("admin");
-                    }
-                    else
-                    {
-                        locatie.viewLocations("gebruiker");
-                    }
+                    locatie.viewLocations(rol);
 
                 }
             }
