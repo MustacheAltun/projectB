@@ -89,6 +89,7 @@ namespace projectB
                 }
                 else if (page == "Uitloggen")
                 {
+                    rol = "gast";
                     adminLoggedIn = false;
                     gebruikerLoggedIn = false;
                 }
