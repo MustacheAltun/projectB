@@ -7,7 +7,7 @@ using System.Threading;
 
 public class ReservatieFilms
 {
-	private void showBeschikbaar(string bioscoopNaam, string zaalNaam, string tijdNaam)
+	private void showBeschikbaar(int bioscoopNaam, string zaalNaam, string tijdNaam)
 	{
 		//pak alle json informatie
 		string url = "..\\..\\..\\locatie.json";
@@ -34,7 +34,7 @@ public class ReservatieFilms
 		 */
 		foreach (var locatie in locatieList)
 		{
-			if (locatie.name == bioscoopNaam)
+			if (locatie.id == bioscoopNaam)
 			{ 
 				foreach (var zaal in locatie.zalen)
 				{
@@ -106,7 +106,7 @@ public class ReservatieFilms
 		Console.WriteLine("------------------------------------------------ACHTERKANT------------------------------------------------");
 	}
 
-	private string stoelKiezen(string bioscoopNaam, string zaalNaam, string tijdNaam)
+	private string stoelKiezen(int bioscoopNaam, string zaalNaam, string tijdNaam)
 	{
 		//pak alle json informatie
 		string url = "..\\..\\..\\locatie.json";
@@ -132,7 +132,7 @@ public class ReservatieFilms
 		 */
 		foreach (var locatie in locatieList)
 		{
-			if (locatie.name == bioscoopNaam)
+			if (locatie.id == bioscoopNaam)
 			{
 				foreach (var zaal in locatie.zalen)
 				{
@@ -228,7 +228,7 @@ public class ReservatieFilms
 		}
 
 		//verander deze data met genomen in de json file
-		locatieList.Single(locatie => locatie.name == bioscoopNaam)
+		locatieList.Single(locatie => locatie.id == bioscoopNaam)
 			.zalen.Single(zaal => zaal.naam == zaalNaam)
 			.tijden.Single(tijd => tijd.tijd == tijdNaam)
 			.beschikbaar[input] = false;
@@ -408,7 +408,7 @@ public class ReservatieFilms
 					{
 						if (filmId == tijd.film_ID)
 						{
-							zalenTechnoligien[zalenMetFilm] = zaal.type;
+							zalenTechnoligien[zalenMetFilm] = zaal.naam+" "+zaal.type;
 							zalenMetFilm++;
 							break;
 						}
@@ -423,7 +423,7 @@ public class ReservatieFilms
 			Console.WriteLine("Kies de zaal waarin u de film wilt bekijken.\n");
 			foreach (var item in zalenTechnoligien)
 			{
-				Console.WriteLine("[" + zalenMetFilm + "] : zaal " + (zalenMetFilm + 1) + " " + item + "\n");
+				Console.WriteLine("[" + zalenMetFilm + "] : " + item + "\n");
 				zalenMetFilm++;
 			}
 			zaalKeuze = Console.ReadLine();
@@ -437,15 +437,15 @@ public class ReservatieFilms
 				zaalKeuze = zalenTechnoligien[Int32.Parse(zaalKeuze)];
 				switch (zaalKeuze)
 				{
-					case "2D":
+					case "zaal 1 2D":
 						zaalKeuze = "zaal 1";
 						technologie = "2D";
 						break;
-					case "3D":
+					case "zaal 2 3D":
 						zaalKeuze = "zaal 2";
 						technologie = "3D";
 						break;
-					case "IMAX":
+					case "zaal 3 IMAX":
 						zaalKeuze = "zaal 3";
 						technologie = "IMAX";
 						break;
@@ -542,6 +542,7 @@ public class ReservatieFilms
 					if (counter == Int32.Parse(tijdKeuze))
 					{
 						tijdKeuze = filmtijden[counter];
+						break;
 					}
 				}
 				break;
@@ -614,8 +615,8 @@ public class ReservatieFilms
 
 		}
 
-		showBeschikbaar(bioscoopNaam, zaalKeuze, tijdKeuze);
-		stoelKeuze = stoelKiezen(bioscoopNaam, zaalKeuze, tijdKeuze);
+		showBeschikbaar(Int32.Parse(bioscoopKeuze), zaalKeuze, tijdKeuze);
+		stoelKeuze = stoelKiezen(Int32.Parse(bioscoopKeuze), zaalKeuze, tijdKeuze);
 		if (bevestiging(filmId, fullName, filmPrijs, bioscoopKeuze, zaalKeuze, technologie, dagKeuze, tijdKeuze, stoelKeuze,locaties))
 		{
 
