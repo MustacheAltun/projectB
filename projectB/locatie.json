@@ -224,7 +224,7 @@
           },
           {
             "tijd": "12-15",
-            "film_ID": null,
+            "film_ID": "2",
             "beschikbaar": {
               "1": false,
               "2": true,
@@ -8079,7 +8079,7 @@
           },
           {
             "tijd": "15-18",
-            "film_ID": null,
+            "film_ID": "2",
             "beschikbaar": {
               "1": true,
               "2": true,
@@ -33003,7 +33003,7 @@
           },
           {
             "tijd": "15-18",
-            "film_ID": null,
+            "film_ID": "2",
             "beschikbaar": {
               "1": true,
               "2": true,
@@ -33634,7 +33634,7 @@
         "tijden": [
           {
             "tijd": "9-12",
-            "film_ID": null,
+            "film_ID": "2",
             "beschikbaar": {
               "1": true,
               "2": true,

@@ -279,6 +279,7 @@ public class ReservatieFilms
 
 		foreach (var locatie in locaties)
 		{
+			bool check = false;
 			foreach (var zaal in locatie.zalen)
 			{
 
@@ -288,20 +289,15 @@ public class ReservatieFilms
 					if (tijd.film_ID == filmId)
 					{
 						bioscopenMetFilm++;
+						check = true;
 						break;
 					}
 
 				}
-				foreach (var tijd in zaal.tijden)
-				{
-
-					if (tijd.film_ID == filmId)
-					{
-						tijdenMetFilm++;
-					}
-
-				}
-
+                if (check)
+                {
+					break;
+                }
 			}
 
 		}
@@ -313,6 +309,7 @@ public class ReservatieFilms
 		int filmtijdenCounter = 0;
 		foreach (var locatie in locaties)
 		{
+			bool check = false;
 			foreach (var zaal in locatie.zalen)
 			{
 
@@ -323,12 +320,16 @@ public class ReservatieFilms
 					{
 						bioscoopNamen[bioscoopNamenCounter] = locatie.name + " " + locatie.address;
 						bioscoopNamenID[bioscoopNamenCounter] = locatie.id;
+						check = true;
+						bioscoopNamenCounter++;
 						break;
 					}
 
 				}
-
-
+				if (check)
+				{
+					break;
+				}
 			}
 
 		}
@@ -479,6 +480,7 @@ public class ReservatieFilms
 		}
 		string[] filmtijden = new string[tijdenMetFilm];
 		tijdenMetFilm = 0;
+		filmtijdenCounter = 0;
 		foreach (var locatie in locaties)
 		{
 			if (locatie.id == int.Parse(bioscoopKeuze))
@@ -493,6 +495,7 @@ public class ReservatieFilms
 							if (tijd.film_ID == filmId)
 							{
 								filmtijden[filmtijdenCounter] = tijd.tijd;
+								filmtijdenCounter++;
 							}
 
 						}
@@ -502,7 +505,7 @@ public class ReservatieFilms
 			}
 		}
 		tijdenMetFilm = 0;
-
+		filmtijdenCounter = 0;
 		while (true)
 		{
 			Console.WriteLine("Kies de tijd waarin u de film wilt bekijken.");
