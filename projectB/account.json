@@ -41,6 +41,30 @@
         "dag": "woensdag",
         "tijd": "15-18",
         "stoel": 14
+      },
+      {
+        "id": 3,
+        "filmID": "2",
+        "name": "mustafa",
+        "prijs": 14.99,
+        "bioscoopID": 8,
+        "zaalID": 1,
+        "filmTechnologie": "2D",
+        "dag": "maandag",
+        "tijd": "9-12",
+        "stoel": 8
+      },
+      {
+        "id": 4,
+        "filmID": "2",
+        "name": "mustafa",
+        "prijs": 14.99,
+        "bioscoopID": 8,
+        "zaalID": 1,
+        "filmTechnologie": "2D",
+        "dag": "maandag",
+        "tijd": "9-12",
+        "stoel": 9
       }
     ]
   },
