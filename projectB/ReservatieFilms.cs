@@ -494,7 +494,18 @@ public class ReservatieFilms
         //    new Ticket() { id = 4, name = "Black" },
         //    new Ticket() { id = 5, name = "Yellow" }
         //};
-
+        switch (zaalKeuze)
+        {
+			case "zaal1":
+				zaalKeuze = "1";
+				break;
+			case "zaal2":
+				zaalKeuze = "2";
+				break;
+			case "zaal3":
+				zaalKeuze = "3";
+				break;
+		}
         foreach (var item in accounts)
         {
             if (item.id == accountID)
@@ -516,12 +527,13 @@ public class ReservatieFilms
 						tickets[ticketcounter] = item2;
 						ticketcounter++;
 					}
-					tickets[tickets.Length-1] = new Ticket() { id = 0, filmID = filmId, name = fullName, prijs = filmPrijs, bioscoopID = Int32.Parse(bioscoopKeuze), zaalID = Int32.Parse(zaalKeuze), filmTechnologie = technologie, dag = dagKeuze, stoel = Int32.Parse(stoelKeuze), tijd = tijdKeuze };
+					tickets[tickets.Length-1] = new Ticket() { id = 0, filmID = filmId, name = fullName, prijs = filmPrijs, bioscoopID = Int32.Parse(bioscoopKeuze), zaalID = Int32.Parse(zaalKeuze), filmTechnologie = technologie, dag = dagKeuze, tijd = tijdKeuze, stoel = Int32.Parse(stoelKeuze) };
+					item.tickets = tickets;
 				}
             }
         }
 		string convertedJson = JsonConvert.SerializeObject(accounts, Formatting.Indented);
 		//verander de hele file met de nieuwe json informatie
-		File.WriteAllText(strResultJson, convertedJson);
+		File.WriteAllText("..\\..\\..\\account.json", convertedJson);
 	}
 }
