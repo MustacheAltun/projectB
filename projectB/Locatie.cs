@@ -510,21 +510,21 @@ public class Locatie
         var objectToSerialize = new List<Zalen>();
         objectToSerialize.Add(new Zalen()
         {
-            naam = "zaal1",
+            naam = "zaal 1",
             type = "2D",
             zitplekken = 100,
             tijden = tijdObj1.ToArray()
         });
         objectToSerialize.Add(new Zalen()
         {
-            naam = "zaal2",
+            naam = "zaal 2",
             type = "3D",
             zitplekken = 150,
             tijden = tijdObj2.ToArray()
         });
         objectToSerialize.Add(new Zalen()
         {
-            naam = "zaal3",
+            naam = "zaal 3",
             type = "IMAX",
             zitplekken = 200,
             tijden = tijdObj3.ToArray()

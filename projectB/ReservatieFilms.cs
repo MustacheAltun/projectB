@@ -438,15 +438,15 @@ public class ReservatieFilms
 				switch (zaalKeuze)
 				{
 					case "2D":
-						zaalKeuze = "zaal1";
+						zaalKeuze = "zaal 1";
 						technologie = "2D";
 						break;
 					case "3D":
-						zaalKeuze = "zaal2";
+						zaalKeuze = "zaal 2";
 						technologie = "3D";
 						break;
 					case "IMAX":
-						zaalKeuze = "zaal3";
+						zaalKeuze = "zaal 3";
 						technologie = "IMAX";
 						break;
 
@@ -456,13 +456,27 @@ public class ReservatieFilms
 			}
 		}
 		tijdenMetFilm = 0;
+
+		string searchZaal = "";
+		switch (zaalKeuze)
+		{
+			case "zaal 1":
+				searchZaal = "zaal 1";
+				break;
+			case "zaal 2":
+				searchZaal = "zaal 2";
+				break;
+			case "zaal 3":
+				searchZaal = "zaal 3";
+				break;
+		}
 		foreach (var locatie in locaties)
 		{
 			if (locatie.id == int.Parse(bioscoopKeuze))
 			{
 				foreach (var zaal in locatie.zalen)
 				{
-					if (zaalKeuze == zaal.naam)
+					if (searchZaal == zaal.naam)
 					{
 						foreach (var tijd in zaal.tijden)
 						{
@@ -479,6 +493,7 @@ public class ReservatieFilms
 			}
 		}
 		string[] filmtijden = new string[tijdenMetFilm];
+		
 		tijdenMetFilm = 0;
 		filmtijdenCounter = 0;
 		foreach (var locatie in locaties)
@@ -487,7 +502,7 @@ public class ReservatieFilms
 			{
 				foreach (var zaal in locatie.zalen)
 				{
-					if (zaalKeuze == zaal.naam)
+					if (searchZaal == zaal.naam)
 					{
 						foreach (var tijd in zaal.tijden)
 						{
@@ -515,7 +530,7 @@ public class ReservatieFilms
 				filmtijdenCounter++;
 			}
 			tijdKeuze = Console.ReadLine();
-			if (!(tijdKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(tijdKeuze) || Int32.Parse(tijdKeuze) >= bioscoopNamen.Length || Int32.Parse(tijdKeuze) < 0)
+			if (!(tijdKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(tijdKeuze) || Int32.Parse(tijdKeuze) >= filmtijden.Length || Int32.Parse(tijdKeuze) < 0)
 			{
 				filmtijdenCounter = 0;
 				Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.");
@@ -607,13 +622,13 @@ public class ReservatieFilms
 		
 		switch (zaalKeuze)
 		{
-			case "zaal1":
+			case "zaal 1":
 				zaalKeuze = "1";
 				break;
-			case "zaal2":
+			case "zaal 2":
 				zaalKeuze = "2";
 				break;
-			case "zaal3":
+			case "zaal 3":
 				zaalKeuze = "3";
 				break;
 		}
@@ -650,7 +665,19 @@ public class ReservatieFilms
         }
         else
         {
-			stoelVrijMaken(Int32.Parse(bioscoopKeuze), zaalKeuze,tijdKeuze,stoelKeuze);
+            switch (zaalKeuze)
+            {
+                case "zaal 1":
+                    zaalKeuze = "zaal 1";
+                    break;
+                case "zaal 2":
+                    zaalKeuze = "zaal 2";
+                    break;
+                case "zaal 3":
+                    zaalKeuze = "zaal 3";
+                    break;
+            }
+            stoelVrijMaken(Int32.Parse(bioscoopKeuze), zaalKeuze,tijdKeuze,stoelKeuze);
 
 		}
 	}
@@ -681,13 +708,13 @@ public class ReservatieFilms
 		}
         switch (zaalKeuze)
         {
-			case "zaal1":
+			case "zaal 1":
 				zaalKeuze = "1";
 				break;
-			case "zaal2":
+			case "zaal 2":
 				zaalKeuze = "2";
 				break;
-			case "zaal3":
+			case "zaal 3":
 				zaalKeuze = "3";
 				break;
 		}

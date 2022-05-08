@@ -65,6 +65,18 @@
         "dag": "maandag",
         "tijd": "9-12",
         "stoel": 9
+      },
+      {
+        "id": 5,
+        "filmID": "2",
+        "name": "asdsada",
+        "prijs": 14.99,
+        "bioscoopID": 0,
+        "zaalID": 1,
+        "filmTechnologie": "2D",
+        "dag": "maandag",
+        "tijd": "12-15",
+        "stoel": 5
       }
     ]
   },
