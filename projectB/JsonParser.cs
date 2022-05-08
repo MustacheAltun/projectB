@@ -14,9 +14,17 @@ public class Account
 public class Ticket
 {
     #nullable enable
-    public int? id { get; set; }
-    public string? name { get; set; }
-    #nullable disable
+    public int id { get; set; }
+    public string filmID { get; set; }
+    public string name { get; set; }
+    public double prijs { get; set; }
+    public int bioscoopID { get; set; }
+    public int zaalID { get; set; }
+    public string filmTechnologie { get; set; }
+    public string dag { get; set; }
+    public string tijd { get; set; }
+    public int stoel { get; set; }
+#nullable disable
 }
 
 public class movie

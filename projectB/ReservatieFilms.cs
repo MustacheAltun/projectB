@@ -237,4 +237,291 @@ public class ReservatieFilms
 		File.WriteAllText(url, changedLocatie);
 		return input;
     }
+
+	public void reserveren( string filmId,int accountID)
+    {
+		Console.Clear();
+		double filmPrijs = 14.99;
+		int bioscopenMetFilm = 0;
+		int tijdenMetFilm = 0;
+		
+
+		// lees de file en zet alles in een string
+		string strResultJson = File.ReadAllText("..\\..\\..\\account.json");
+		string strResultJson2 = File.ReadAllText("..\\..\\..\\locatie.json");
+
+		// maak een lijst van alle informatie die er is
+		List<Account> accounts = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
+		List<Cinema_adress> locaties = JsonConvert.DeserializeObject<List<Cinema_adress>>(strResultJson2);
+
+		Console.WriteLine("wat is jouw volledige naam?");
+		string fullName = Console.ReadLine();
+
+		foreach (var locatie in locaties)
+		{
+			foreach (var zaal in locatie.zalen)
+			{
+
+				foreach (var tijd in zaal.tijden)
+				{
+
+					if(tijd.film_ID == filmId)
+                    {
+						bioscopenMetFilm++;
+						break;
+                    }
+							
+				}
+				foreach (var tijd in zaal.tijden)
+				{
+
+					if (tijd.film_ID == filmId)
+					{
+						tijdenMetFilm++;
+					}
+
+				}
+
+			}
+			
+		}
+		string[] bioscoopNamen = new string[bioscopenMetFilm];
+		int[] bioscoopNamenID = new int[bioscopenMetFilm];
+		string[] filmtijden = new string[tijdenMetFilm];
+
+		int bioscoopNamenCounter = 0;
+		int filmtijdenCounter = 0;
+		foreach (var locatie in locaties)
+		{
+			foreach (var zaal in locatie.zalen)
+			{
+
+				foreach (var tijd in zaal.tijden)
+				{
+
+					if (tijd.film_ID == filmId)
+					{
+						bioscoopNamen[bioscoopNamenCounter] = locatie.name + " "+ locatie.address;
+						bioscoopNamenID[bioscoopNamenCounter] = locatie.id;
+						break;
+					}
+
+				}
+				foreach (var tijd in zaal.tijden)
+				{
+
+					if (tijd.film_ID == filmId)
+					{
+						filmtijden[filmtijdenCounter] = tijd.tijd;
+					}
+
+				}
+
+			}
+
+		}
+
+		bioscoopNamenCounter = 0;
+		filmtijdenCounter = 0;
+		string bioscoopKeuze;
+		string bioscoopNaam = "";
+		string tijdKeuze;
+		string zaalKeuze;
+		string technologie = "";
+		string dagKeuze;
+		string stoelKeuze;
+		while (true)
+        {
+			Console.WriteLine("Kies de bioscoop waarin u de film wilt bekijken.\n");
+			foreach (var item in bioscoopNamen)
+			{
+				
+				Console.WriteLine("[" + bioscoopNamenCounter + "] : " + item + "\n");
+				bioscoopNamenCounter++;
+			}
+			bioscoopKeuze = Console.ReadLine();
+			if (!(bioscoopKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(bioscoopKeuze) || Int32.Parse(bioscoopKeuze) >= bioscoopNamen.Length || Int32.Parse(bioscoopKeuze) < 0 )
+			{
+				bioscoopNamenCounter = 0;
+				Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.\n");
+			}
+            else
+            {
+
+				bioscoopKeuze = bioscoopNamenID[int.Parse(bioscoopKeuze)].ToString();
+                foreach (var item in locaties)
+                {
+                    if (int.Parse(bioscoopKeuze) == item.id)
+                    {
+						bioscoopNaam = item.name;
+						break;
+                    }
+                }
+				break;
+            }
+		}
+
+		while (true)
+		{
+			Console.WriteLine("Kies de tijd waarin u de film wilt bekijken.");
+			foreach (var item in filmtijden)
+			{
+				Console.WriteLine("[" + filmtijdenCounter + "] : " + item + "\n");
+				filmtijdenCounter++;
+			}
+			tijdKeuze = Console.ReadLine();
+			if (!(tijdKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(tijdKeuze) || Int32.Parse(tijdKeuze) >= bioscoopNamen.Length || Int32.Parse(tijdKeuze) < 0)
+			{
+				filmtijdenCounter = 0;
+				Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.");
+			}
+			else
+			{
+                for (int counter = 0; counter < filmtijden.Length; counter++)
+                {
+                    if (counter == Int32.Parse(tijdKeuze))
+                    {
+						tijdKeuze = filmtijden[counter];
+                    }
+                }
+				break;
+			}
+		}
+		while (true)
+		{
+			Console.WriteLine("Kies de zaal waarin u de film wilt bekijken.\n");
+			Console.WriteLine("[1] : zaal 1 is 2D\n");
+			Console.WriteLine("[2] : zaal 2 is 3D\n");
+			Console.WriteLine("[3] : zaal 3 is IMAX\n");
+			zaalKeuze = Console.ReadLine();
+            if (zaalKeuze == "1" || zaalKeuze == "2" || zaalKeuze == "3")
+			{
+				switch (zaalKeuze)
+				{
+					case "1":
+						zaalKeuze = "zaal1";
+						technologie = "2D";
+						break;
+					case "2":
+						zaalKeuze = "zaal2";
+						technologie = "3D";
+						break;
+					case "3":
+						zaalKeuze = "zaal3";
+						technologie = "IMAX";
+						break;
+
+				}
+				break;
+            }
+            else
+            {
+				Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.\n");
+			}
+		}
+		while (true)
+		{
+			Console.WriteLine("Kies de dag waarop u de film wilt bekijken.");
+			Console.WriteLine("[1] : maandag\n");
+			Console.WriteLine("[2] : dinsdag\n");
+			Console.WriteLine("[3] : woensdag\n");
+			Console.WriteLine("[4] : donderdag\n");
+			Console.WriteLine("[5] : vrijdag\n");
+			Console.WriteLine("[6] : zaterdag\n");
+			Console.WriteLine("[7] : zondag\n");
+			dagKeuze = Console.ReadLine();
+			if (dagKeuze == "1" || dagKeuze == "2" || dagKeuze == "3"|| dagKeuze == "4" || dagKeuze == "5" || dagKeuze == "6" || dagKeuze == "7")
+			{
+                switch (dagKeuze)
+                {
+					case "1":
+						dagKeuze = "maandag";
+						break;
+					case "2":
+						dagKeuze = "dinsdag";
+						break;
+					case "3":
+						dagKeuze = "woensdag";
+						break;
+					case "4":
+						dagKeuze = "donderdag";
+						break;
+					case "5":
+						dagKeuze = "vrijdag";
+						break;
+					case "6":
+						dagKeuze = "zaterdag";
+						break;
+					case "7":
+						dagKeuze = "zondag";
+						break;
+
+				}
+				break;
+			}
+			else
+			{
+				Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.");
+			}
+		}
+
+		foreach (var locatie in locaties)
+		{
+			foreach (var zaal in locatie.zalen)
+			{
+
+				foreach (var tijd in zaal.tijden)
+				{
+
+					if (tijd.film_ID == filmId)
+					{
+						bioscoopNaam = locatie.name;
+						break;
+					}
+
+				}
+
+			}
+
+		}
+		showBeschikbaar(bioscoopNaam, zaalKeuze, tijdKeuze);
+		stoelKeuze = stoelKiezen(bioscoopNaam, zaalKeuze, tijdKeuze);
+
+        //voeg een lijst van tickets toe als je dat wilt, het hoeft niet
+        //Ticket[] tickelijst = new Ticket[]
+        //{
+        //    new Ticket() { id = 3, name = "Red" },
+        //    new Ticket() { id = 4, name = "Black" },
+        //    new Ticket() { id = 5, name = "Yellow" }
+        //};
+
+        foreach (var item in accounts)
+        {
+            if (item.id == accountID)
+            {
+                if (item.tickets == null)
+                {
+					item.tickets = new Ticket[]
+					{
+						new Ticket() { id = 0, filmID = filmId,name = fullName, prijs = filmPrijs, bioscoopID = Int32.Parse(bioscoopKeuze), zaalID = Int32.Parse(zaalKeuze),filmTechnologie = technologie, dag = dagKeuze, stoel = Int32.Parse(stoelKeuze),tijd = tijdKeuze}
+					};
+
+                }
+                else
+                {
+					var tickets = new Ticket[item.tickets.Length + 1];
+					int ticketcounter = 0;
+					foreach (var item2 in item.tickets)
+					{
+						tickets[ticketcounter] = item2;
+						ticketcounter++;
+					}
+					tickets[tickets.Length-1] = new Ticket() { id = 0, filmID = filmId, name = fullName, prijs = filmPrijs, bioscoopID = Int32.Parse(bioscoopKeuze), zaalID = Int32.Parse(zaalKeuze), filmTechnologie = technologie, dag = dagKeuze, stoel = Int32.Parse(stoelKeuze), tijd = tijdKeuze };
+				}
+            }
+        }
+		string convertedJson = JsonConvert.SerializeObject(accounts, Formatting.Indented);
+		//verander de hele file met de nieuwe json informatie
+		File.WriteAllText(strResultJson, convertedJson);
+	}
 }

@@ -42,7 +42,7 @@ namespace projectB
             HoofdScherm hoofdScherm = new HoofdScherm();
             bool gebruikerLoggedIn = false;
             bool adminLoggedIn = false;
-            int id;
+            int id = -1;
             string rol="gast";
             while (true)
             {
@@ -84,7 +84,7 @@ namespace projectB
                
                 else if (page == "Films")
                 {
-                    overview.show(rol);
+                    overview.show(rol,id);
 
                 }
                 else if (page == "Uitloggen")

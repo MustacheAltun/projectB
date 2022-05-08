@@ -8,7 +8,7 @@ using System.Threading;
 public class Movies
 {
 
-    public void show(string rol)
+    public void show(string rol, int accountID)
     {
         //Omzet van gegevens in Json bestand over naar string en daarna in een lijst zetten.
         string url = "..\\..\\..\\movies.json";
@@ -113,7 +113,7 @@ public class Movies
                 {
 
                     case "2":
-                        viewFilm(movieList);
+                        viewFilm(movieList, accountID);
                         break;
                     case "3":
                         
@@ -143,7 +143,7 @@ public class Movies
                         removeFilm(movieList, url);
                         break;
                     case "5":
-                        viewFilm(movieList);
+                        viewFilm(movieList, accountID);
                         break;
                     case "6":
                         break;
@@ -811,12 +811,12 @@ public class Movies
         Console.Clear();
     }
 
-    private static void viewFilm(List<movie> movieList)
+    private static void viewFilm(List<movie> movieList,int id)
     {
         string Keuze = "";
-
         
-            int[] filmIdArr = new int[movieList.Count()];
+
+        int[] filmIdArr = new int[movieList.Count()];
             for (int i = 0; i < movieList.Count(); i++)
             {
                 filmIdArr[i] = movieList[i].id;
@@ -862,20 +862,21 @@ public class Movies
 
         while(Keuze != "1")
         {
-
+            
             Console.Clear();
             Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
             Console.WriteLine("|                                            Filmoverzicht                                          |");
             Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
 
 
-
+            string filmID = "";
 
             string showing = "";
             foreach (dynamic item in movieList)
             {
                 if (item.id == filmId)
                 {
+                    filmID = item.id.ToString();
                     string genres = "";
                     foreach (string item2 in item.categories)
                     {
@@ -945,6 +946,8 @@ public class Movies
             switch (Keuze)
             {
                 case "2":
+                    ReservatieFilms reservatie = new ReservatieFilms();
+                    reservatie.reserveren(filmID,id);
                     Console.WriteLine("Reserveren");
                     Thread.Sleep(3000);
                     break;

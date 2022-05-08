@@ -8,15 +8,39 @@
     "tickets": [
       {
         "id": 0,
-        "name": "Cannon Anthony"
+        "filmID": "2",
+        "name": "Cannon Anthony",
+        "prijs": 14.99,
+        "bioscoopID": 1,
+        "zaalID": 1,
+        "filmTechnologie": "2d",
+        "dag": "maandag",
+        "tijd": "9-12",
+        "stoel": 11
       },
       {
         "id": 1,
-        "name": "Danielle Valenzuela"
+        "filmID": "2",
+        "name": "Danielle Valenzuela",
+        "prijs": 14.99,
+        "bioscoopID": 2,
+        "zaalID": 1,
+        "filmTechnologie": "IMAX",
+        "dag": "dinsdag",
+        "tijd": "12-15",
+        "stoel": 16
       },
       {
         "id": 2,
-        "name": "Dana Nash"
+        "filmID": "2",
+        "name": "Dana Nash",
+        "prijs": 14.99,
+        "bioscoopID": 3,
+        "zaalID": 1,
+        "filmTechnologie": "3d",
+        "dag": "woensdag",
+        "tijd": "15-18",
+        "stoel": 14
       }
     ]
   },
