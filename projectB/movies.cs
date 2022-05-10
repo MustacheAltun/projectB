@@ -972,9 +972,9 @@ public class Movies
         string filmIDplaceHolder = "";
         while (!filmIdArr.Contains(filmId))
         {
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine("| Voer de ID in van de film die u wilt aanpassen: (typ '*' om te annuleren)|");
-            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine("------------------------------------------------------------------------------");
+            Console.WriteLine("| Voer de ID in van de film die u wilt inroosteren: (typ '*' om te annuleren)|");
+            Console.WriteLine("------------------------------------------------------------------------------");
 
             filmIDplaceHolder = Console.ReadLine();
             if (int.TryParse(filmIDplaceHolder, out filmId))
