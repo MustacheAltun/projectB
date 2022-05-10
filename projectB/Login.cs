@@ -57,7 +57,7 @@ public class Login
             if (loginMethod(accountList, Username, Password))
             {
                 Console.WriteLine("U bent ingelogd" + " " + Username);
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
                 return getId(accountList, Username, Password);
             }
             else if (Username.Length < 8)
