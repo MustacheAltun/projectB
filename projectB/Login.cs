@@ -33,7 +33,9 @@ public class Login
         {
             Console.Clear();
             Console.WriteLine(menu);
+            Console.WriteLine("Kies een van de bovenstaande opties.");
             keuze = Console.ReadLine();
+
             if (!ArrayOpties.Contains(keuze))
             {
                 Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.");
@@ -43,34 +45,38 @@ public class Login
         //Input voor gebruikersnaam en wachtwoord
         if ((keuze == "2") || (keuze.ToLower() == "inloggen"))
         {
-            Console.Clear();
-            Console.WriteLine("*-*-*-*-*-*-*-*-*" + "\n" +
-                              "|   Inloggen    |" + "\n" +
-                              "*-*-*-*-*-*-*-*-*" + "\n");
-            Console.WriteLine("Voer uw gebruikersnaam in:");
-            string Username = Console.ReadLine();
+            while (keuze == "2")
+            {
 
-            Console.WriteLine("Voer uw wachtwoord in:");
-            string Password = Console.ReadLine();
+                Console.Clear();
+                Console.WriteLine("*-*-*-*-*-*-*-*-*" + "\n" +
+                                  "|   Inloggen    |" + "\n" +
+                                  "*-*-*-*-*-*-*-*-*" + "\n");
+                Console.WriteLine("Voer uw gebruikersnaam in of voer * in om te annuleren:");
+                string Username = Console.ReadLine();
+                if (Username == "*")
+                {
+                    return LoginScherm(accountList);
+                }
 
-            //Gebruikt loginMethod om te checken of het juist of fout is
-            if (loginMethod(accountList, Username, Password))
-            {
-                Console.WriteLine("U bent ingelogd" + " " + Username);
-                //Thread.Sleep(1000);
-                return getId(accountList, Username, Password);
-            }
-            else if (Username.Length < 8)
-            {
-                Console.WriteLine("Uw wachtwoord is kleiner dan 8 karakters");
-                Thread.Sleep(1000);
-                return -1;
-            }
-            else
-            {
-                Console.WriteLine("Gebruikernaam en/of wachtwoord is onjuist");
-                Thread.Sleep(1000);
-                return -1;
+                Console.WriteLine("Voer uw wachtwoord in of voer * in om te annuleren::");
+                string Password = Console.ReadLine();
+                if (Password == "*")
+                {
+                    return LoginScherm(accountList);
+                }
+                //Gebruikt loginMethod om te checken of het juist of fout is
+                if (loginMethod(accountList, Username, Password))
+                {
+                    Console.WriteLine("U bent ingelogd" + " " + Username);
+                    //Thread.Sleep(1000);
+                    return getId(accountList, Username, Password);
+                }
+                else
+                {
+                    Console.WriteLine("Gebruikernaam en/of wachtwoord is onjuist");
+                    Thread.Sleep(1000);
+                }
             }
         }
         else if ((keuze == "4") || (keuze.ToLower() == "registreren"))
@@ -88,9 +94,9 @@ public class Login
             Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n" +
                               "|   Wachtwoord vergeten   |" + "\n"+ 
                               "*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n");
-            Console.WriteLine("Voor uw gebruikersnaam in:");
+            Console.WriteLine("Voor uw gebruikersnaam in of voer * in om the annuleren:");
             string oldName = Console.ReadLine();
-            Console.WriteLine("Voor uw beveligingswoord in:");
+            Console.WriteLine("Voor uw beveligingswoord in of voer * in om the annuleren:");
             string oldSec = Console.ReadLine();
             ChangePass(accountList, oldName, oldSec);
             return LoginScherm(accountList);
