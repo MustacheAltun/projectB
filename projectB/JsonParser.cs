@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 public class Account
 {
     public int id { get; set; }
@@ -39,6 +41,36 @@ public class movie
     public bool showing { get; set; }
 }
 
+//public class Cinema_adress
+//{
+//    public int id { get; set; }
+//    public string name { get; set; }
+//    public string address { get; set; }
+//    public string street { get; set; }
+//    public string streetNr { get; set; }
+//    public string zipcode { get; set; }
+//    public string city { get; set; }
+//    public string telNr { get; set; }
+//    public List<List<Dagen>> dagen { get; set; }
+//}
+
+//public class Dagen
+//{
+//    public string naam { get; set; }
+//    public string type { get; set; }
+//    public int zitplekken { get; set; }
+//    public List<Tijden> tijden { get; set; }
+//    public string Create_Date { get; set; }
+//    public string datum { get; set; }
+//    public int? film_ID { get; set; }
+//    public string prijs { get; set; }
+//}
+
+//public class Tijden
+//{
+//    public string tijd { get; set; }
+//    public string beschikbaar { get; set; }
+//}
 
 public class Cinema_adress
 {
@@ -50,47 +82,26 @@ public class Cinema_adress
     public string zipcode { get; set; }
     public string city { get; set; }
     public string telNr { get; set; }
-    public Dagen[] dagen { get; set; }
+    public List<List<Dagen>> dagen { get; set; }
 }
 
 public class Dagen
 {
-    public Dag[]? dag1 { get; set; }
-    public Dag[]? dag2 { get; set; }
-    public Dag[]? dag3 { get; set; }
-    public Dag[]? dag4 { get; set; }
-    public Dag[]? dag5 { get; set; }
-    public Dag[]? dag6 { get; set; }
-    public Dag[]? dag7 { get; set; }
-    public Dag[]? dag8 { get; set; }
-    public Dag[]? dag9 { get; set; }
-    public Dag[]? dag10 { get; set; }
-    public Dag[]? dag11 { get; set; }
-    public Dag[]? dag12 { get; set; }
-    public Dag[]? dag13 { get; set; }
-    public Dag[]? dag14 { get; set; }
-}
-
-public class Dag
-{
     public string naam { get; set; }
     public string type { get; set; }
     public int zitplekken { get; set; }
-    public Tijden[] tijden { get; set; }
+    public List<Tijden> tijden { get; set; }
     public string Create_Date { get; set; }
     public string datum { get; set; }
-    public string? film_ID { get; set; }
+    public int? film_ID { get; set; }
     public string prijs { get; set; }
-
 }
 
 public class Tijden
 {
     public string tijd { get; set; }
     public string beschikbaar { get; set; }
-
 }
-
 
 
 

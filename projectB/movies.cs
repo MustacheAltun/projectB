@@ -1,9 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿//using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Text.Json;
 
 public class Movies
 {
@@ -12,10 +13,12 @@ public class Movies
     {
         //Omzet van gegevens in Json bestand over naar string en daarna in een lijst zetten.
         string url = "..\\..\\..\\movies.json";
-        List<movie> movieList = JsonConvert.DeserializeObject<List<movie>>(File.ReadAllText(url));
+        var movieList = JsonSerializer.Deserialize<List<movie>>(File.ReadAllText(url));
 
         string locatieUrl = "..\\..\\..\\locatie.json";
-        List<Cinema_adress> locatieList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Cinema_adress>>(File.ReadAllText(locatieUrl));
+        //List<Cinema_adress> locatieList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Cinema_adress>>(File.ReadAllText(locatieUrl));
+        string json = File.ReadAllText(url);
+        var locatieList = JsonSerializer.Deserialize<List<Cinema_adress>>(json);
 
         Console.Clear();
         string Keuze = "";
@@ -388,7 +391,7 @@ public class Movies
 
 
         //verdander de lijst naar een json type
-        var convertedJson = JsonConvert.SerializeObject(movieList, Formatting.Indented);
+        var convertedJson = JsonSerializer.Serialize(movieList);
         //verander de hele file met de nieuwe json informatie
         File.WriteAllText(url, convertedJson);
         Console.WriteLine("Film succesvol toegevoegd!");
@@ -731,7 +734,7 @@ public class Movies
                 break;
             }
         }
-        string updatedMovieList = JsonConvert.SerializeObject(movieList, Formatting.Indented);
+        string updatedMovieList = JsonSerializer.Serialize(movieList);
         File.WriteAllText(url, updatedMovieList);
         Console.WriteLine("Film succesvol aangepast!");
         Thread.Sleep(3000);
@@ -803,7 +806,7 @@ public class Movies
         }
 
         //verdander de lijst naar een json type
-        string cinemaLijst = JsonConvert.SerializeObject(movieList, Formatting.Indented);
+        string cinemaLijst = JsonSerializer.Serialize(movieList);
         //verander de hele file met de nieuwe json informatie
         File.WriteAllText(url, cinemaLijst);
         Console.WriteLine("Film succesvol verwijderd!");
@@ -1315,8 +1318,8 @@ public class Movies
 
 
         //verander de hele file met de nieuwe json informatie
-        File.WriteAllText(locatieUrl, JsonConvert.SerializeObject(locatieList, Formatting.Indented));
-        File.WriteAllText(movieUrl, JsonConvert.SerializeObject(movielist, Formatting.Indented));
+        File.WriteAllText(locatieUrl, JsonSerializer.Serialize(locatieList));
+        File.WriteAllText(movieUrl, JsonSerializer.Serialize(movielist));
         Console.WriteLine("Film is succesvol toegewezen!");
         Thread.Sleep(3000);
         Console.Clear();
