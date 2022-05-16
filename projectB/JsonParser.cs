@@ -9,7 +9,18 @@ public class Account
     #nullable enable
     public Ticket[]? tickets { get; set; }
     #nullable disable
+    public EtenBestelling[] etenBestelling { get; set; }
+    
 }
+
+public class EtenBestelling
+{
+    public int orderID { get; set; }
+    public System.Collections.Generic.Dictionary<string, int> orderList { get; set; }
+    public double total { get; set; }
+
+}
+
 
 public class Ticket
 {
@@ -67,6 +78,17 @@ public class Tijden
     public string film_ID  { get; set; }
     public System.Collections.Generic.Dictionary<string, bool> beschikbaar { get; set; }
     public System.Collections.Generic.Dictionary<string, bool> gebroken { get; set; }
+}
+
+
+public class Eten
+{
+    public int productID { get; set; }
+    public string productName { get; set; }
+    public int amount { get; set; }
+    public double price { get; set; }
+    public string productType { get; set; }
+
 }
 
 
