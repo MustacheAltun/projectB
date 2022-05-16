@@ -103,5 +103,13 @@
     "security": "golbertceitapages",
     "rol": "gebruiker",
     "tickets": null
+  },
+  {
+    "id": 4,
+    "username": "Kawish1234",
+    "password": "Kawish1234",
+    "security": "Kawish1234",
+    "rol": "gebruiker",
+    "tickets": null
   }
 ]

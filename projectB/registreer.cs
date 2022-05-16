@@ -53,7 +53,7 @@ public class Registratie
     public void RegistrerenFrontend(string url, List<Account> accountList)
     {
         //onthoudt alle verboden characters
-        string[] verbodenKarakters = new string[27] { " ", ",", ".", "/", "'", "\"", ";", ":", "`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "+", "=", "<", ">", "?" };
+        string[] verbodenKarakters = new string[26] { " ", ",", ".", "/", "'", ";", ":", "`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "+", "=", "<", ">", "?" };
         //om de account een ID te geven is er een forloop om te checken wat de laatste id is
         int id = 0;
 
@@ -69,15 +69,69 @@ public class Registratie
         Console.WriteLine("*-*-*-*-*-*-*-*-*-*" + "\n" +
                           "|   Registeren    |" + "\n" +
                           "*-*-*-*-*-*-*-*-*-*" + "\n");
-        Console.WriteLine("Voer uw gewenste gebruikersnaam in:");
+        Console.WriteLine("Voer uw gewenste gebruikersnaam in of voer * in om te annuleren:");
         string username = Console.ReadLine();
+        if(username == "*")
+        {
+            return;
+        }
         bool usernameCheck = CheckVerbodenLetters(verbodenKarakters, username);
-        Console.WriteLine("Voer uw gewenste wachtwoord in:");
+        bool checkBestatt = CheckBestaandeNaam(accountList,username);
+        while (usernameCheck == false || checkBestatt == true)
+        {
+            if (usernameCheck == false)
+            {
+                Console.WriteLine("Gebruikersnaam bevat verboden karakters.");
+            }
+            else
+            {
+                Console.WriteLine("Gebruikersnaam bestaat al");
+            }
+            Console.WriteLine("Voer uw gewenste gebruikersnaam in of voer * in om te annuleren:");
+            username = Console.ReadLine();
+            if (username == "*")
+            {
+                return;
+            }
+            usernameCheck = CheckVerbodenLetters(verbodenKarakters, username);
+            checkBestatt = CheckBestaandeNaam(accountList, username);
+
+        }
+        Console.WriteLine("Voer uw gewenste wachtwoord in of voer * in om te annuleren:");
         string password = Console.ReadLine();
+        if (password == "*")
+        {
+            return;
+        }
         bool passwordCheck = CheckVerbodenLetters(verbodenKarakters, password);
-        Console.WriteLine("Als u uw wachtwoord vergeet moet u als controle een beveiligingswoord invoeren." + "\n" + "Voer uw gewenste beveiligingswoord in:");
+        while (passwordCheck == false)
+        {
+            Console.WriteLine("Wachtwoord bevat verboden karakters.");
+            password = Console.ReadLine();
+            if (password == "*")
+            {
+                return;
+            }
+            passwordCheck = CheckVerbodenLetters(verbodenKarakters, password);
+        }
+        Console.WriteLine("Als u uw wachtwoord vergeet moet u als controle een beveiligingswoord invoeren." + "\n" + "Voer uw gewenste beveiligingswoord in of voer * in om te annuleren:");
         string secretWord = Console.ReadLine();
+        if (secretWord == "*")
+        {
+            return;
+        }
         bool secretCheck = CheckVerbodenLetters(verbodenKarakters, secretWord);
+        while (secretCheck == false)
+        {
+            Console.WriteLine("Beveiligingswoord bevat verboden karakters.");
+            secretWord = Console.ReadLine();
+            if (secretWord == "*")
+            {
+                return;
+            }
+            secretCheck = CheckVerbodenLetters(verbodenKarakters, secretWord);
+
+        }
 
 
 
