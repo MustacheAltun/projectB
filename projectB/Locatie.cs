@@ -98,7 +98,7 @@ public class Locatie
                 {
 
                     case "2":
-                        addLocation(locatieList, url);
+                        //addLocation(locatieList, url);
                         //input = "1";
                         //viewLocations(rol);
                         break;
@@ -122,439 +122,439 @@ public class Locatie
        
     }
 
-    public void addLocation(List<Cinema_adress> lijst, string url)
-    {
-        /*
-         * geef alle informatie dus bioscoop naam postcode adres etc etc
-         */
-        Console.Clear();
-        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
-        Console.WriteLine("|          Nieuwe Locatie toevoegen           |");
-        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n");
+    //public void addLocation(List<Cinema_adress> lijst, string url)
+    //{
+    //    /*
+    //     * geef alle informatie dus bioscoop naam postcode adres etc etc
+    //     */
+    //    Console.Clear();
+    //    Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+    //    Console.WriteLine("|          Nieuwe Locatie toevoegen           |");
+    //    Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n");
 
-        int id = 0;
-        foreach (dynamic item in lijst)
-        {
-            //Check de laatste id
-            id = item.id + 1;
-        }
+    //    int id = 0;
+    //    foreach (dynamic item in lijst)
+    //    {
+    //        //Check de laatste id
+    //        id = item.id + 1;
+    //    }
 
-        Console.WriteLine("------------------------------------------------------------------");
-        Console.WriteLine("|    Voer de naam van de locatie in: (typ '*' om te annuleren)   |");
-        Console.WriteLine("------------------------------------------------------------------" + "\n");
-        string bioscoop = Console.ReadLine();
-        while (string.IsNullOrEmpty(bioscoop) || bioscoop.Trim().Length == 0)
-        {
-            Console.WriteLine("Vul in een geldige naam a.u.b!");
-            Thread.Sleep(3000);
-            bioscoop = Console.ReadLine();
-        }
-        if (bioscoop.Trim() == "*")
-        {
-            Console.WriteLine("Bewerking is geannuleerd!");
-            Thread.Sleep(3000);
-            Console.Clear();
-            return;
-        }
-
-
-        Console.WriteLine("------------------------------------------------------------------------");
-        Console.WriteLine("|    Voer de straat naam van de locatie in: (typ '*' om te annuleren)   |");
-        Console.WriteLine("------------------------------------------------------------------------" + "\n");
-        //string straat = Console.ReadLine();
-        //while (string.IsNullOrEmpty(straat) || straat.Trim().Length == 0)
-        //{
-        //    Console.WriteLine("Vul in een geldige naam a.u.b!");
-        //    Thread.Sleep(3000);
-        //    straat = Console.ReadLine();
-        //}
-        //if (straat.Trim() == "*")
-        //{
-        //    Console.WriteLine("Bewerking is geannuleerd!");
-        //    Thread.Sleep(3000);
-        //    Console.Clear();
-        //    return;
-        //}
-
-        string straat = "";
-        bool check = true;
-        while (check)
-        {
-            straat = Console.ReadLine();
-            if (int.TryParse(straat, out _))
-            {
-                Console.WriteLine("Ongeldig invoer!\nDe straatnaam mag geen nummer zijn!");
-            }
-            else
-            {
-                if (straat.Trim().ToCharArray().Any(char.IsDigit))
-                {
-                    Console.WriteLine("Een straatnaam mag geen nummer bevatten!");
-                    Thread.Sleep(3000);
-                }
-                else if (straat.Trim() == "*")
-                {
-                    Console.WriteLine("Bewerking is geannuleerd!");
-                    Thread.Sleep(3000);
-                    Console.Clear();
-                    return;
-                }
-                else if (straat.Trim().Length == 0)
-                {
-                    Console.WriteLine("Ongeldig invoer!\nVoer een geldige straatnaam in a.u.b!");
-                    Thread.Sleep(3000);
-                }
-                else if (hasSpecialChar(straat.Trim()))
-                {
-                    Console.WriteLine("Een straatnaam mag geen speciale karakter bevatten!");
-                    Thread.Sleep(3000);
-                }
-                else
-                {
-                    check = false;
-                }
-            }
-        }
-
-        Console.WriteLine("-------------------------------------------------------------------------");
-        Console.WriteLine("|    Voer de huisnummer van de locatie in: (typ '*' om te annuleren)    |");
-        Console.WriteLine("-------------------------------------------------------------------------" + "\n");
-        string straatNr;
-        check = true;
-        int straatNrPlaceholder = 0;
-        while (check)
-        {
-            straatNr = Console.ReadLine();
-            if (int.TryParse(straatNr, out straatNrPlaceholder))
-            {
-                if (straatNrPlaceholder <= 0 || straatNrPlaceholder > 999)
-                {
-                    Console.WriteLine("Voer een geldige huisnummer in a.u.b!\n");
-                    Thread.Sleep(3000);
-                }
-                else
-                    check = false;
-            }
-            else
-            {
-                if (straatNr.Trim() == "*")
-                {
-                    Console.WriteLine("Bewerking is geannuleerd!");
-                    Thread.Sleep(3000);
-                    Console.Clear();
-                    return;
-                }
-                else
-                {
-                    Console.WriteLine("Voer een geldige huisnummer in a.u.b!\n");
-                    Thread.Sleep(3000);
-                }
-            }
-        }
-        straatNr = straatNrPlaceholder.ToString();
+    //    Console.WriteLine("------------------------------------------------------------------");
+    //    Console.WriteLine("|    Voer de naam van de locatie in: (typ '*' om te annuleren)   |");
+    //    Console.WriteLine("------------------------------------------------------------------" + "\n");
+    //    string bioscoop = Console.ReadLine();
+    //    while (string.IsNullOrEmpty(bioscoop) || bioscoop.Trim().Length == 0)
+    //    {
+    //        Console.WriteLine("Vul in een geldige naam a.u.b!");
+    //        Thread.Sleep(3000);
+    //        bioscoop = Console.ReadLine();
+    //    }
+    //    if (bioscoop.Trim() == "*")
+    //    {
+    //        Console.WriteLine("Bewerking is geannuleerd!");
+    //        Thread.Sleep(3000);
+    //        Console.Clear();
+    //        return;
+    //    }
 
 
-        Console.WriteLine("-------------------------------------------------------------------------");
-        Console.WriteLine("|    Voer de postcode van de locatie in: (typ '*' om te annuleren)      |");
-        Console.WriteLine("-------------------------------------------------------------------------" + "\n");
-        string postcode = "";
-        check = true;
-        string postcodeNr;
-        string postcodeString;
-        while (check)
-        {
-            postcode = Console.ReadLine();
-            if (postcode.Trim().Length == 6)
-            {
-                postcodeNr = postcode.Substring(0, 4);
-                postcodeString = postcode.Substring(postcode.Length-2);
-                int poscodePlaceholder = 0;
+    //    Console.WriteLine("------------------------------------------------------------------------");
+    //    Console.WriteLine("|    Voer de straat naam van de locatie in: (typ '*' om te annuleren)   |");
+    //    Console.WriteLine("------------------------------------------------------------------------" + "\n");
+    //    //string straat = Console.ReadLine();
+    //    //while (string.IsNullOrEmpty(straat) || straat.Trim().Length == 0)
+    //    //{
+    //    //    Console.WriteLine("Vul in een geldige naam a.u.b!");
+    //    //    Thread.Sleep(3000);
+    //    //    straat = Console.ReadLine();
+    //    //}
+    //    //if (straat.Trim() == "*")
+    //    //{
+    //    //    Console.WriteLine("Bewerking is geannuleerd!");
+    //    //    Thread.Sleep(3000);
+    //    //    Console.Clear();
+    //    //    return;
+    //    //}
 
-                if (int.TryParse(postcodeNr, out poscodePlaceholder))
-                {
-                    if (poscodePlaceholder < 1000 || poscodePlaceholder > 9999)
-                    {
-                        Console.WriteLine("Voer een geldige postcode in a.u.b!\n");
-                        Thread.Sleep(3000);
-                    }
-                    else if (int.TryParse(postcodeString, out _) || postcodeString.Trim().Length == 0 || hasSpecialChar(postcodeString.Trim()))
-                    {
-                        Console.WriteLine("Voer een geldige postcode in a.u.b!\n");
-                        Thread.Sleep(3000);
-                    }
-                    else
-                        check = false;
-                        postcode = postcodeNr.ToString()+postcodeString;
-                }
-            }
-            else
-            {
-                if (postcode.Trim() == "*")
-                {
-                    Console.WriteLine("Bewerking is geannuleerd!");
-                    Thread.Sleep(3000);
-                    Console.Clear();
-                    return;
-                }
-                else
-                {
-                    Console.WriteLine("Voer een geldige postcode in a.u.b!\n");
-                    Thread.Sleep(3000);
-                }
-            }  
-        }
+    //    string straat = "";
+    //    bool check = true;
+    //    while (check)
+    //    {
+    //        straat = Console.ReadLine();
+    //        if (int.TryParse(straat, out _))
+    //        {
+    //            Console.WriteLine("Ongeldig invoer!\nDe straatnaam mag geen nummer zijn!");
+    //        }
+    //        else
+    //        {
+    //            if (straat.Trim().ToCharArray().Any(char.IsDigit))
+    //            {
+    //                Console.WriteLine("Een straatnaam mag geen nummer bevatten!");
+    //                Thread.Sleep(3000);
+    //            }
+    //            else if (straat.Trim() == "*")
+    //            {
+    //                Console.WriteLine("Bewerking is geannuleerd!");
+    //                Thread.Sleep(3000);
+    //                Console.Clear();
+    //                return;
+    //            }
+    //            else if (straat.Trim().Length == 0)
+    //            {
+    //                Console.WriteLine("Ongeldig invoer!\nVoer een geldige straatnaam in a.u.b!");
+    //                Thread.Sleep(3000);
+    //            }
+    //            else if (hasSpecialChar(straat.Trim()))
+    //            {
+    //                Console.WriteLine("Een straatnaam mag geen speciale karakter bevatten!");
+    //                Thread.Sleep(3000);
+    //            }
+    //            else
+    //            {
+    //                check = false;
+    //            }
+    //        }
+    //    }
+
+    //    Console.WriteLine("-------------------------------------------------------------------------");
+    //    Console.WriteLine("|    Voer de huisnummer van de locatie in: (typ '*' om te annuleren)    |");
+    //    Console.WriteLine("-------------------------------------------------------------------------" + "\n");
+    //    string straatNr;
+    //    check = true;
+    //    int straatNrPlaceholder = 0;
+    //    while (check)
+    //    {
+    //        straatNr = Console.ReadLine();
+    //        if (int.TryParse(straatNr, out straatNrPlaceholder))
+    //        {
+    //            if (straatNrPlaceholder <= 0 || straatNrPlaceholder > 999)
+    //            {
+    //                Console.WriteLine("Voer een geldige huisnummer in a.u.b!\n");
+    //                Thread.Sleep(3000);
+    //            }
+    //            else
+    //                check = false;
+    //        }
+    //        else
+    //        {
+    //            if (straatNr.Trim() == "*")
+    //            {
+    //                Console.WriteLine("Bewerking is geannuleerd!");
+    //                Thread.Sleep(3000);
+    //                Console.Clear();
+    //                return;
+    //            }
+    //            else
+    //            {
+    //                Console.WriteLine("Voer een geldige huisnummer in a.u.b!\n");
+    //                Thread.Sleep(3000);
+    //            }
+    //        }
+    //    }
+    //    straatNr = straatNrPlaceholder.ToString();
+
+
+    //    Console.WriteLine("-------------------------------------------------------------------------");
+    //    Console.WriteLine("|    Voer de postcode van de locatie in: (typ '*' om te annuleren)      |");
+    //    Console.WriteLine("-------------------------------------------------------------------------" + "\n");
+    //    string postcode = "";
+    //    check = true;
+    //    string postcodeNr;
+    //    string postcodeString;
+    //    while (check)
+    //    {
+    //        postcode = Console.ReadLine();
+    //        if (postcode.Trim().Length == 6)
+    //        {
+    //            postcodeNr = postcode.Substring(0, 4);
+    //            postcodeString = postcode.Substring(postcode.Length-2);
+    //            int poscodePlaceholder = 0;
+
+    //            if (int.TryParse(postcodeNr, out poscodePlaceholder))
+    //            {
+    //                if (poscodePlaceholder < 1000 || poscodePlaceholder > 9999)
+    //                {
+    //                    Console.WriteLine("Voer een geldige postcode in a.u.b!\n");
+    //                    Thread.Sleep(3000);
+    //                }
+    //                else if (int.TryParse(postcodeString, out _) || postcodeString.Trim().Length == 0 || hasSpecialChar(postcodeString.Trim()))
+    //                {
+    //                    Console.WriteLine("Voer een geldige postcode in a.u.b!\n");
+    //                    Thread.Sleep(3000);
+    //                }
+    //                else
+    //                    check = false;
+    //                    postcode = postcodeNr.ToString()+postcodeString;
+    //            }
+    //        }
+    //        else
+    //        {
+    //            if (postcode.Trim() == "*")
+    //            {
+    //                Console.WriteLine("Bewerking is geannuleerd!");
+    //                Thread.Sleep(3000);
+    //                Console.Clear();
+    //                return;
+    //            }
+    //            else
+    //            {
+    //                Console.WriteLine("Voer een geldige postcode in a.u.b!\n");
+    //                Thread.Sleep(3000);
+    //            }
+    //        }  
+    //    }
         
 
-        Console.WriteLine("-----------------------------------------------------------------------");
-        Console.WriteLine("|    Voer de stad naam van de locatie in: (typ '*' om te annuleren)   |");
-        Console.WriteLine("-----------------------------------------------------------------------" + "\n");
-        string stad = "";
+    //    Console.WriteLine("-----------------------------------------------------------------------");
+    //    Console.WriteLine("|    Voer de stad naam van de locatie in: (typ '*' om te annuleren)   |");
+    //    Console.WriteLine("-----------------------------------------------------------------------" + "\n");
+    //    string stad = "";
 
-        check = true;
-        while (check)
-        {
+    //    check = true;
+    //    while (check)
+    //    {
             
-            stad = Console.ReadLine();
-            if (int.TryParse(stad, out _))
-            {
-                Console.WriteLine("Een stad naam mag geen nummer zijn!");
-            }
-            else
-            {
-                if (stad.Trim() == "*")
-                {
-                    Console.WriteLine("Bewerking is geannuleerd!");
-                    Thread.Sleep(3000);
-                    Console.Clear();
-                    return;
-                }
-                else if (stad.Trim().Length == 0)
-                {
-                    Console.WriteLine("Ongeldig invoer!\n");
-                    Thread.Sleep(3000);
-                }
-                else if (stad.Trim().ToCharArray().Any(char.IsDigit))
-                {
-                    Console.WriteLine("Een stad naam mag geen nummer bevatten!");
-                    Thread.Sleep(3000);
-                }
-                else if (hasSpecialChar(stad.Trim()))
-                {
-                    Console.WriteLine("Een stad naam mag geen speciale karakter bevatten!");
-                    Thread.Sleep(3000);
-                }
-                else
-                {
-                    check = false;
-                }
-            }
-        }
+    //        stad = Console.ReadLine();
+    //        if (int.TryParse(stad, out _))
+    //        {
+    //            Console.WriteLine("Een stad naam mag geen nummer zijn!");
+    //        }
+    //        else
+    //        {
+    //            if (stad.Trim() == "*")
+    //            {
+    //                Console.WriteLine("Bewerking is geannuleerd!");
+    //                Thread.Sleep(3000);
+    //                Console.Clear();
+    //                return;
+    //            }
+    //            else if (stad.Trim().Length == 0)
+    //            {
+    //                Console.WriteLine("Ongeldig invoer!\n");
+    //                Thread.Sleep(3000);
+    //            }
+    //            else if (stad.Trim().ToCharArray().Any(char.IsDigit))
+    //            {
+    //                Console.WriteLine("Een stad naam mag geen nummer bevatten!");
+    //                Thread.Sleep(3000);
+    //            }
+    //            else if (hasSpecialChar(stad.Trim()))
+    //            {
+    //                Console.WriteLine("Een stad naam mag geen speciale karakter bevatten!");
+    //                Thread.Sleep(3000);
+    //            }
+    //            else
+    //            {
+    //                check = false;
+    //            }
+    //        }
+    //    }
 
 
-        Console.WriteLine("-----------------------------------------------------------------------------");
-        Console.WriteLine("|    Voer het telefoonnummer van de locatie in: (typ '*' om te annuleren)   |");
-        Console.WriteLine("-----------------------------------------------------------------------------" + "\n");
-        string nummer = "";
-        check = true;
-        while (check)
-        {
-            nummer = Console.ReadLine();
-            if (int.TryParse(nummer, out _))
-            {
-                if (nummer.Length == 9)
-                {
-                    check = false;
-                }
-                else
-                {
-                    Console.WriteLine("Het telefoonnummer moet '9' nummers bevatten!\n");
-                    Thread.Sleep(3000);
-                }
-            }
-            else
-            {
-                if (nummer.Trim() == "*")
-                {
-                    Console.WriteLine("Bewerking is geannuleerd!");
-                    Thread.Sleep(3000);
-                    Console.Clear();
-                    return;
-                }
-                else
-                {
-                    Console.WriteLine("Ongeldig invoer!\n");
-                    Thread.Sleep(3000);
-                }
-            }
-        }
+    //    Console.WriteLine("-----------------------------------------------------------------------------");
+    //    Console.WriteLine("|    Voer het telefoonnummer van de locatie in: (typ '*' om te annuleren)   |");
+    //    Console.WriteLine("-----------------------------------------------------------------------------" + "\n");
+    //    string nummer = "";
+    //    check = true;
+    //    while (check)
+    //    {
+    //        nummer = Console.ReadLine();
+    //        if (int.TryParse(nummer, out _))
+    //        {
+    //            if (nummer.Length == 9)
+    //            {
+    //                check = false;
+    //            }
+    //            else
+    //            {
+    //                Console.WriteLine("Het telefoonnummer moet '9' nummers bevatten!\n");
+    //                Thread.Sleep(3000);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            if (nummer.Trim() == "*")
+    //            {
+    //                Console.WriteLine("Bewerking is geannuleerd!");
+    //                Thread.Sleep(3000);
+    //                Console.Clear();
+    //                return;
+    //            }
+    //            else
+    //            {
+    //                Console.WriteLine("Ongeldig invoer!\n");
+    //                Thread.Sleep(3000);
+    //            }
+    //        }
+    //    }
 
 
-        Dictionary<string, bool> beschikbaarZaal1 = new Dictionary<string, bool>();
-        Dictionary<string, bool> gebrokenZaal1 = new Dictionary<string, bool>();
-        for(int i = 0; i < 100; i++)
-        {
-            beschikbaarZaal1.Add((i+1).ToString(), true);
-            gebrokenZaal1.Add((i+1).ToString(), false);
-        }
-        Dictionary<string, bool> beschikbaarZaal2 = new Dictionary<string,bool>();
-        Dictionary<string, bool> gebrokenZaal2 = new Dictionary<string, bool>();
-        for (int i = 0; i < 150; i++)
-        {
-            beschikbaarZaal2.Add((i + 1).ToString(), true);
-            gebrokenZaal2.Add((i+1).ToString(), false);
-        }
-        Dictionary<string, bool> beschikbaarZaal3 = new Dictionary<string, bool>();
-        Dictionary<string, bool> gebrokenZaal3 = new Dictionary<string, bool>();
-        for (int i = 0; i < 200; i++)
-        {
-            beschikbaarZaal3.Add((i + 1).ToString(), true);
-            gebrokenZaal3.Add((i+1).ToString(), false);
-        }
+    //    Dictionary<string, bool> beschikbaarZaal1 = new Dictionary<string, bool>();
+    //    Dictionary<string, bool> gebrokenZaal1 = new Dictionary<string, bool>();
+    //    for(int i = 0; i < 100; i++)
+    //    {
+    //        beschikbaarZaal1.Add((i+1).ToString(), true);
+    //        gebrokenZaal1.Add((i+1).ToString(), false);
+    //    }
+    //    Dictionary<string, bool> beschikbaarZaal2 = new Dictionary<string,bool>();
+    //    Dictionary<string, bool> gebrokenZaal2 = new Dictionary<string, bool>();
+    //    for (int i = 0; i < 150; i++)
+    //    {
+    //        beschikbaarZaal2.Add((i + 1).ToString(), true);
+    //        gebrokenZaal2.Add((i+1).ToString(), false);
+    //    }
+    //    Dictionary<string, bool> beschikbaarZaal3 = new Dictionary<string, bool>();
+    //    Dictionary<string, bool> gebrokenZaal3 = new Dictionary<string, bool>();
+    //    for (int i = 0; i < 200; i++)
+    //    {
+    //        beschikbaarZaal3.Add((i + 1).ToString(), true);
+    //        gebrokenZaal3.Add((i+1).ToString(), false);
+    //    }
 
-        var tijdObj1 = new List<Tijden>();
-        tijdObj1.Add(new Tijden()
-        {
-            tijd = "9-12",
-            beschikbaar = beschikbaarZaal1,
-            gebroken = gebrokenZaal1
-        });
-        tijdObj1.Add(new Tijden()
-        {
-            tijd = "12-15",
-            beschikbaar = beschikbaarZaal1,
-            gebroken = gebrokenZaal1
-        });
-        tijdObj1.Add(new Tijden()
-        {
-            tijd = "15-18",
-            beschikbaar = beschikbaarZaal1,
-            gebroken = gebrokenZaal1
-        });
-        tijdObj1.Add(new Tijden()
-        {
-            tijd = "18-21",
-            beschikbaar = beschikbaarZaal1,
-            gebroken = gebrokenZaal1
-        });
-        tijdObj1.Add(new Tijden()
-        {
-            tijd = "21-24",
-            beschikbaar = beschikbaarZaal1,
-            gebroken = gebrokenZaal1
-        });
+    //    var tijdObj1 = new List<Tijden>();
+    //    tijdObj1.Add(new Tijden()
+    //    {
+    //        tijd = "9-12",
+    //        beschikbaar = beschikbaarZaal1,
+    //        gebroken = gebrokenZaal1
+    //    });
+    //    tijdObj1.Add(new Tijden()
+    //    {
+    //        tijd = "12-15",
+    //        beschikbaar = beschikbaarZaal1,
+    //        gebroken = gebrokenZaal1
+    //    });
+    //    tijdObj1.Add(new Tijden()
+    //    {
+    //        tijd = "15-18",
+    //        beschikbaar = beschikbaarZaal1,
+    //        gebroken = gebrokenZaal1
+    //    });
+    //    tijdObj1.Add(new Tijden()
+    //    {
+    //        tijd = "18-21",
+    //        beschikbaar = beschikbaarZaal1,
+    //        gebroken = gebrokenZaal1
+    //    });
+    //    tijdObj1.Add(new Tijden()
+    //    {
+    //        tijd = "21-24",
+    //        beschikbaar = beschikbaarZaal1,
+    //        gebroken = gebrokenZaal1
+    //    });
 
-        var tijdObj2 = new List<Tijden>();
-        tijdObj2.Add(new Tijden()
-        {
-            tijd = "9-12",
-            beschikbaar = beschikbaarZaal2,
-            gebroken = gebrokenZaal2
-        });
-        tijdObj2.Add(new Tijden()
-        {
-            tijd = "12-15",
-            beschikbaar = beschikbaarZaal2,
-            gebroken = gebrokenZaal2
-        });
-        tijdObj2.Add(new Tijden()
-        {
-            tijd = "15-18",
-            beschikbaar = beschikbaarZaal2,
-            gebroken = gebrokenZaal2
-        });
-        tijdObj2.Add(new Tijden()
-        {
-            tijd = "18-21",
-            beschikbaar = beschikbaarZaal2,
-            gebroken = gebrokenZaal2
-        });
-        tijdObj2.Add(new Tijden()
-        {
-            tijd = "21-24",
-            beschikbaar = beschikbaarZaal2,
-            gebroken = gebrokenZaal2
-        });
+    //    var tijdObj2 = new List<Tijden>();
+    //    tijdObj2.Add(new Tijden()
+    //    {
+    //        tijd = "9-12",
+    //        beschikbaar = beschikbaarZaal2,
+    //        gebroken = gebrokenZaal2
+    //    });
+    //    tijdObj2.Add(new Tijden()
+    //    {
+    //        tijd = "12-15",
+    //        beschikbaar = beschikbaarZaal2,
+    //        gebroken = gebrokenZaal2
+    //    });
+    //    tijdObj2.Add(new Tijden()
+    //    {
+    //        tijd = "15-18",
+    //        beschikbaar = beschikbaarZaal2,
+    //        gebroken = gebrokenZaal2
+    //    });
+    //    tijdObj2.Add(new Tijden()
+    //    {
+    //        tijd = "18-21",
+    //        beschikbaar = beschikbaarZaal2,
+    //        gebroken = gebrokenZaal2
+    //    });
+    //    tijdObj2.Add(new Tijden()
+    //    {
+    //        tijd = "21-24",
+    //        beschikbaar = beschikbaarZaal2,
+    //        gebroken = gebrokenZaal2
+    //    });
 
-        var tijdObj3 = new List<Tijden>();
-        tijdObj3.Add(new Tijden()
-        {
-            tijd = "9-12",
-            beschikbaar = beschikbaarZaal3,
-            gebroken = gebrokenZaal3
-        });
-        tijdObj3.Add(new Tijden()
-        {
-            tijd = "12-15",
-            beschikbaar = beschikbaarZaal3,
-            gebroken = gebrokenZaal3
-        });
-        tijdObj3.Add(new Tijden()
-        {
-            tijd = "15-18",
-            beschikbaar = beschikbaarZaal3,
-            gebroken = gebrokenZaal3
-        });
-        tijdObj3.Add(new Tijden()
-        {
-            tijd = "18-21",
-            beschikbaar = beschikbaarZaal3,
-            gebroken = gebrokenZaal3
-        });
-        tijdObj3.Add(new Tijden()
-        {
-            tijd = "21-24",
-            beschikbaar = beschikbaarZaal3,
-            gebroken = gebrokenZaal3
-        });
+    //    var tijdObj3 = new List<Tijden>();
+    //    tijdObj3.Add(new Tijden()
+    //    {
+    //        tijd = "9-12",
+    //        beschikbaar = beschikbaarZaal3,
+    //        gebroken = gebrokenZaal3
+    //    });
+    //    tijdObj3.Add(new Tijden()
+    //    {
+    //        tijd = "12-15",
+    //        beschikbaar = beschikbaarZaal3,
+    //        gebroken = gebrokenZaal3
+    //    });
+    //    tijdObj3.Add(new Tijden()
+    //    {
+    //        tijd = "15-18",
+    //        beschikbaar = beschikbaarZaal3,
+    //        gebroken = gebrokenZaal3
+    //    });
+    //    tijdObj3.Add(new Tijden()
+    //    {
+    //        tijd = "18-21",
+    //        beschikbaar = beschikbaarZaal3,
+    //        gebroken = gebrokenZaal3
+    //    });
+    //    tijdObj3.Add(new Tijden()
+    //    {
+    //        tijd = "21-24",
+    //        beschikbaar = beschikbaarZaal3,
+    //        gebroken = gebrokenZaal3
+    //    });
 
-        var objectToSerialize = new List<Zalen>();
-        objectToSerialize.Add(new Zalen()
-        {
-            naam = "zaal 1",
-            type = "2D",
-            zitplekken = 100,
-            tijden = tijdObj1.ToArray()
-        });
-        objectToSerialize.Add(new Zalen()
-        {
-            naam = "zaal 2",
-            type = "3D",
-            zitplekken = 150,
-            tijden = tijdObj2.ToArray()
-        });
-        objectToSerialize.Add(new Zalen()
-        {
-            naam = "zaal 3",
-            type = "IMAX",
-            zitplekken = 200,
-            tijden = tijdObj3.ToArray()
-        });
+    //    var objectToSerialize = new List<Zalen>();
+    //    objectToSerialize.Add(new Zalen()
+    //    {
+    //        naam = "zaal 1",
+    //        type = "2D",
+    //        zitplekken = 100,
+    //        tijden = tijdObj1.ToArray()
+    //    });
+    //    objectToSerialize.Add(new Zalen()
+    //    {
+    //        naam = "zaal 2",
+    //        type = "3D",
+    //        zitplekken = 150,
+    //        tijden = tijdObj2.ToArray()
+    //    });
+    //    objectToSerialize.Add(new Zalen()
+    //    {
+    //        naam = "zaal 3",
+    //        type = "IMAX",
+    //        zitplekken = 200,
+    //        tijden = tijdObj3.ToArray()
+    //    });
 
 
-        //voeg het toe aan de lijst van bestaande locaties
-        lijst.Add(new Cinema_adress()
-        {
-            id = id,
-            name = bioscoop,
-            address = straat + " " + straatNr,
-            street = straat,
-            streetNr = straatNr,
-            zipcode = postcode,
-            city = stad,
-            telNr = "+31 "+ nummer,
-            zalen = objectToSerialize.ToArray()
-        });
+    //    //voeg het toe aan de lijst van bestaande locaties
+    //    lijst.Add(new Cinema_adress()
+    //    {
+    //        id = id,
+    //        name = bioscoop,
+    //        address = straat + " " + straatNr,
+    //        street = straat,
+    //        streetNr = straatNr,
+    //        zipcode = postcode,
+    //        city = stad,
+    //        telNr = "+31 "+ nummer,
+    //        zalen = objectToSerialize.ToArray()
+    //    });
 
         
 
-        //verdander de lijst naar een json type
-        string cinemaLijst = JsonConvert.SerializeObject(lijst, Formatting.Indented);
-        //verander de hele file met de nieuwe json informatie
-        File.WriteAllText(url, cinemaLijst);
-        Console.WriteLine("Bioscoop gegevens succesvol toegevoegd!");
-        Thread.Sleep(3000);
-        Console.Clear();
-    }
+    //    //verdander de lijst naar een json type
+    //    string cinemaLijst = JsonConvert.SerializeObject(lijst, Formatting.Indented);
+    //    //verander de hele file met de nieuwe json informatie
+    //    File.WriteAllText(url, cinemaLijst);
+    //    Console.WriteLine("Bioscoop gegevens succesvol toegevoegd!");
+    //    Thread.Sleep(3000);
+    //    Console.Clear();
+    //}
 
     public void editLocation(List<Cinema_adress> lijst, string url)
     {
