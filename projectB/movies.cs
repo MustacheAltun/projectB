@@ -155,6 +155,14 @@ public class Movies
 
                 }
             }
+            else
+            {
+                while (Keuze.Trim() != "1")
+                {
+                    Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                    Keuze = Console.ReadLine();
+                }
+            }
         }
     }
 

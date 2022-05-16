@@ -78,7 +78,8 @@
         "tijd": "12-15",
         "stoel": 5
       }
-    ]
+    ],
+    "etenBestelling": null
   },
   {
     "id": 1,
@@ -86,7 +87,8 @@
     "password": "test",
     "security": "ikweetniet",
     "rol": "gebruiker",
-    "tickets": null
+    "tickets": null,
+    "etenBestelling": null
   },
   {
     "id": 2,
@@ -94,7 +96,8 @@
     "password": "admin",
     "security": "admin",
     "rol": "admin",
-    "tickets": null
+    "tickets": null,
+    "etenBestelling": null
   },
   {
     "id": 3,
@@ -102,14 +105,7 @@
     "password": "ceitapages1234",
     "security": "golbertceitapages",
     "rol": "gebruiker",
-    "tickets": null
-  },
-  {
-    "id": 4,
-    "username": "Kawish1234",
-    "password": "Kawish1234",
-    "security": "Kawish1234",
-    "rol": "gebruiker",
-    "tickets": null
+    "tickets": null,
+    "etenBestelling": null
   }
 ]
