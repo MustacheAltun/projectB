@@ -293,26 +293,13 @@ public class ReservatieFilms
        
 		foreach (var locatie in locaties)
 		{
-			bool check = false;
 			foreach (var zaal in locatie.dagen)
 			{
+				Console.WriteLine(zaal.film_ID);
 				if (zaal.film_ID == filmId)
 				{
-					foreach (var tijd in zaal.tijden)
-					{
-
-
-						bioscopenMetFilm++;
-						check = true;
-						break;
-					
-
-					}
+					bioscopenMetFilm++;
 				}
-                if (check)
-                {
-					break;
-                }
 			}
 
 		}
