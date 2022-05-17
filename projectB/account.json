@@ -89,6 +89,18 @@
         "dag": "29/05/2022",
         "tijd": "9-12",
         "stoel": 1
+      },
+      {
+        "id": 7,
+        "filmID": "2",
+        "name": "mustsfa",
+        "prijs": 12.5,
+        "bioscoopID": 0,
+        "zaalID": 1,
+        "filmTechnologie": "2D",
+        "dag": "29/05/2022",
+        "tijd": "9-12",
+        "stoel": 5
       }
     ]
   },

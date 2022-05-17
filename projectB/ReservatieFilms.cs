@@ -305,7 +305,7 @@ public class ReservatieFilms
 									
 									if (tijd.tijd == tijdNaam)
 									{
-										tijd.tijd = jsonBeschikbaar;
+										tijd.beschikbaar = jsonBeschikbaar;
 									}
 								}
 							}
@@ -317,10 +317,6 @@ public class ReservatieFilms
 
 			}
 		}
-		//locatieList.Single(locatie => locatie.id == bioscoopNaam)
-		//	.dagen.Single(dag => dag.datum == datum && dag.naam == zaalNaam)
-		//	.tijden.Single(tijd => tijd.tijd == tijdNaam)
-		//	.beschikbaar = jsonBeschikbaar;
 
 		string changedLocatie = JsonConvert.SerializeObject(locatieList, Formatting.Indented);
 		//verander de hele file met de nieuwe json informatie
@@ -329,48 +325,28 @@ public class ReservatieFilms
 	}
 
 	private void stoelVrijMaken(int bioscoopID, string zaalNaam, string tijdNaam,string stoel, string datum)
-	{
-		//pak alle json informatie
+	{//pak alle json informatie
 		string url = "..\\..\\..\\locatie.json";
 		string locatieJson = File.ReadAllText(url);
 		List<Cinema_adress> locatieList = JsonConvert.DeserializeObject<List<Cinema_adress>>(locatieJson);
+
+		//maak een nieuwe dictionary om alle informatie op te slaan voor later
+		Dictionary<int, string> stoelen = new Dictionary<int, string>();
+
+		// vraag de input
+		bool wrong = true;
+		int row = 0;
 		string jsonBeschikbaar = "";
-		foreach (var locatie in locatieList)
-		{
-			if (locatie.id == bioscoopID)
-			{
-				foreach (var dag in locatie.dagen)
-				{
-                    foreach (var z in dag)
-                    {
-						if (z.datum == datum)
-						{
-							if (z.naam == zaalNaam)
-							{
-								foreach (var tijd in z.tijden)
-								{
-									jsonBeschikbaar = tijd.beschikbaar;
-								}
-							}
-						}
-					}
 
-				}
-
-			}
-		}
-		
-
-		StringBuilder nieuweBeschikbaar = new StringBuilder(jsonBeschikbaar);
-		nieuweBeschikbaar[Int32.Parse(stoel) - 1] = 'T';
-		jsonBeschikbaar = nieuweBeschikbaar.ToString();
-
-		//verander deze data met genomen in de json file
-		//locatieList.Single(locatie => locatie.id == bioscoopID)
-		//	.dagen.Single(dag => dag.datum == datum && dag.naam == zaalNaam)
-		//	.tijden.Single(tijd => tijd.tijd == tijdNaam)
-		//	.beschikbaar = jsonBeschikbaar;
-
+		/*
+		 * maak een forloop om te checken welke stoelen genomen, gebroken en beschikbaar zijn
+		 * voor elke locatie in de lijst van locaties check je of het overeenkomt met de bioscoopNaam
+		 * voor elke zaal in zalen van de locatie check je of het overeenkomt met de zaalNaam
+		 * voor elke tijd in tijden check je of het overeenkomt met tijdNaam
+		 * en nu pak je alle informatie en zet je het in de stoelen dictionary
+		 * 
+		 */
+		bool done = false;
 		foreach (var locatie in locatieList)
 		{
 			if (locatie.id == bioscoopID)
@@ -383,12 +359,93 @@ public class ReservatieFilms
 						{
 							if (z.naam == zaalNaam)
 							{
+
+								row = z.zitplekken / 10;
 								foreach (var tijd in z.tijden)
 								{
 
 									if (tijd.tijd == tijdNaam)
 									{
-										tijd.tijd = jsonBeschikbaar;
+										jsonBeschikbaar = tijd.beschikbaar;
+										for (int i = 0; i < tijd.beschikbaar.Length; i++)
+										{
+											if (tijd.beschikbaar[i] == 'T')
+											{
+												stoelen.Add(i + 1, "B");
+											}
+											else
+											{
+												stoelen.Add(i + 1, "O");
+											}
+										}
+										done = true;
+										break;
+
+									}
+									if (done)
+									{
+										break;
+									}
+								}
+								if (done)
+								{
+									break;
+								}
+							}
+							if (done)
+							{
+								break;
+							}
+						}
+						if (done)
+						{
+							break;
+						}
+					}
+					if (done)
+					{
+						break;
+					}
+
+
+				}
+				if (done)
+				{
+					break;
+				}
+
+			}
+			if (done)
+			{
+				break;
+			}
+		}
+
+		StringBuilder nieuweBeschikbaar = new StringBuilder(jsonBeschikbaar);
+		nieuweBeschikbaar[Int32.Parse(stoel) - 1] = 'T';
+		jsonBeschikbaar = nieuweBeschikbaar.ToString();
+
+		//verander deze data met genomen in de json file
+		foreach (var locatie in locatieList)
+		{
+			if (locatie.id == bioscoopID)
+			{
+				foreach (var dag in locatie.dagen)
+				{
+					foreach (var z in dag)
+					{
+						if (z.datum == datum)
+						{
+							if (z.naam == zaalNaam)
+							{
+
+								row = z.zitplekken / 10;
+								foreach (var tijd in z.tijden)
+								{
+
+									if (tijd.tijd == tijdNaam)
+									{
+										tijd.beschikbaar = jsonBeschikbaar;
 									}
 								}
 							}
@@ -404,7 +461,6 @@ public class ReservatieFilms
 		string changedLocatie = JsonConvert.SerializeObject(locatieList, Formatting.Indented);
 		//verander de hele file met de nieuwe json informatie
 		File.WriteAllText(url, changedLocatie);
-		
 	}
 
 	public void reserveren(string filmIdString, int accountID)
@@ -576,7 +632,7 @@ public class ReservatieFilms
 			}
 
 		}
-		dagenCounter = 1;
+		dagenCounter = 0;
 		bool extracheck = true;
 		string datumKeuze = "";
         while (extracheck)
@@ -587,7 +643,7 @@ public class ReservatieFilms
 				dagenCounter++;
 			}
 			datumKeuze = Console.ReadLine();
-			if (!(datumKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(datumKeuze) || Int32.Parse(datumKeuze) >= datums.Length || Int32.Parse(datumKeuze) <= 0)
+			if (!(datumKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(datumKeuze) || Int32.Parse(datumKeuze) >= datums.Length || Int32.Parse(datumKeuze) < 0)
 			{
 				dagenCounter = 0;
 				Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.\n");
@@ -595,7 +651,7 @@ public class ReservatieFilms
 			else
 			{
 
-				datumKeuze = datums[int.Parse(datumKeuze) - 1];
+				datumKeuze = datums[int.Parse(datumKeuze)];
 				break;
 			}
 		}
@@ -1067,7 +1123,7 @@ public class ReservatieFilms
 			Console.WriteLine("Bioscoop naam : " + bioscoopNaam );
 			Console.WriteLine("Zaal : " + zaalKeuze );
 			Console.WriteLine("Zaal technologie : " + technologie );
-			Console.WriteLine("Dag : " + dagKeuze );
+			Console.WriteLine("Datum : " + dagKeuze );
 			Console.WriteLine("Tijd : " + tijdKeuze );
 			Console.WriteLine("Stoel : " + stoelKeuze + "\n\n");
 
