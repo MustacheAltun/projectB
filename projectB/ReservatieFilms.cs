@@ -602,6 +602,7 @@ public class ReservatieFilms
 						if (z.film_ID == filmId)
 						{
 							dagenCounter++;
+							break;
 						}
 					}
 					
@@ -624,6 +625,7 @@ public class ReservatieFilms
 						{
 							datums[dagenCounter] = z.datum;
 							dagenCounter++;
+							break;
 						}
 					}
 					
