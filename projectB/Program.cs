@@ -21,6 +21,10 @@ namespace projectB
 
             Locatie locatie = new Locatie();
 
+            Catering catering = new Catering();
+
+            Gegevens AccGegevens = new Gegevens();
+
             // geef de url van de json
             string url = "..\\..\\..\\account.json";
 
@@ -97,6 +101,14 @@ namespace projectB
                 {
                     locatie.viewLocations(rol);
 
+                }
+                else if (page == "Eten & Drinken")
+                {
+                    catering.etenMenu(rol, id);
+                }
+                else if (page == "Account Gegevens")
+                {
+                    AccGegevens.showGegevens(jsonList, id);
                 }
             }
 
