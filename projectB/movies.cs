@@ -947,7 +947,8 @@ public class Movies
             {
                 case "2":
                     ReservatieFilms reservatie = new ReservatieFilms();
-                    reservatie.reserveren(filmID,id);
+                    reservatie.reserveren(filmID, id);
+                    Console.WriteLine("Reserveren");
                     Thread.Sleep(1000);
                     break;
             }
@@ -1091,89 +1092,61 @@ public class Movies
                 break;
         }
 
-        string[] beschikbaarTijden;
+        string[] beschikbaarDatum;
         string[] helper;
-        int countLength = 0;
-
-        foreach (dynamic item in locatieList)
+        int countlength = 0;
+        foreach(dynamic item in locatieList)
         {
-            if (item.id == bioscoopID)
+            if(item.id == bioscoopID)
             {
-                foreach (dynamic zalen in item.zalen)
+                foreach(dynamic dag in item.dagen)
                 {
-                    if (zalen.type == filmTechnologie)
+                    for(int i=0; i<dag.Count; i++)
                     {
-                        foreach(dynamic tijden in zalen.tijden)
+                        if(dag[i].type == filmTechnologie && dag[i].film_ID == null)
                         {
-                            if (tijden.film_ID == null)
-                            {
-                                countLength++;
-                            }
+                           
+                            countlength++;
+                            break;
                         }
-                        
                     }
                 }
-                
-            } 
-        }
-
-        beschikbaarTijden = new string[countLength];
-        helper = new string[countLength];
-
-        foreach (dynamic item in locatieList)
-        {
-            if (item.id == bioscoopID)
-            {
-                foreach (dynamic zalen in item.zalen)
-                {
-                    if (zalen.type == filmTechnologie)
-                    {
-                        int index = 0;
-                        int index2 = 0;
-                        foreach (dynamic tijden in zalen.tijden)
-                        {
-                            
-                            if (tijden.film_ID == null)
-                            {
-                                switch (tijden.tijd)
-                                {
-                                    case "9-12":
-                                        beschikbaarTijden[index++] = $"     [{index}] Tijd: 9:00 - 12:00\n\n";
-                                        helper[index2++] = tijden.tijd;
-                                        break;
-                                    case "12-15":
-                                        beschikbaarTijden[index++] = $"     [{index}] Tijd: 12:00 - 15:00\n\n";
-                                        helper[index2++] = tijden.tijd;
-                                        break;
-                                    case "15-18":
-                                        beschikbaarTijden[index++] = $"     [{index}] Tijd: 15:00 - 18:00\n\n";
-                                        helper[index2++] = tijden.tijd;
-                                        break;
-                                    case "18-21":
-                                        beschikbaarTijden[index++] = $"     [{index}] Tijd: 18:00 - 21:00\n\n";
-                                        helper[index2++] = tijden.tijd;
-                                        break;
-                                    case "21-24":
-                                        beschikbaarTijden[index++] = $"     [{index}] Tijd: 21:00 - 00:00\n\n";
-                                        helper[index2++] = tijden.tijd;
-                                        break;
-                                }
-                              
-                            }
-                        }
-                        
-                    }
-                }
-                
+                break;
             }
         }
+
+        beschikbaarDatum = new string[countlength];
+        helper = new string[countlength];
+
+        foreach (dynamic item in locatieList)
+        {
+            if (item.id == bioscoopID)
+            {
+                int index = 0;
+                int index2 = 0;
+                foreach (dynamic dag in item.dagen)
+                {
+                    for (int i = 0; i < dag.Count; i++)
+                    {
+                        if (dag[i].type == filmTechnologie && dag[i].film_ID == null)
+                        {
+                            beschikbaarDatum[index++] = $"[{index}] Datum: {dag[i].datum}\n\n";
+                            helper[index2++] = dag[i].datum;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+
         Console.WriteLine("-------------------------------------------------");
-        Console.WriteLine("| Beschikbare tijden: (typ '*' om te annuleren) |");
-        Console.WriteLine("-------------------------------------------------");
+        Console.WriteLine("| Beschikbare datums: (typ '*' om te annuleren) |");
+        Console.WriteLine("-------------------------------------------------\n");
 
         string Keuze;
-        string gekozenTijd = "";
-        if (beschikbaarTijden.Length == 0)
+        string gekozenDatum = "";
+        if (beschikbaarDatum.Length == 0)
         {
             Console.WriteLine("Er zijn geen tijden beschikbaar! (typ '*' om te annuleren) \n");
             Keuze = Console.ReadLine();
@@ -1182,6 +1155,7 @@ public class Movies
             {
                 Console.WriteLine("Er zijn geen tijden beschikbaar! (typ '*' om te annuleren) \n");
                 Keuze = Console.ReadLine();
+
             }
 
             if (Keuze.Trim() == "*")
@@ -1194,14 +1168,14 @@ public class Movies
         }
         else
         {
-            for(int i=0; i< beschikbaarTijden.Length; i++)
+            for (int i = 0; i < beschikbaarDatum.Length; i++)
             {
-                Console.WriteLine(beschikbaarTijden[i]);
+                Console.WriteLine(beschikbaarDatum[i]);
             }
 
             Keuze = Console.ReadLine();
-            
-            switch (beschikbaarTijden.Length)
+
+            switch (beschikbaarDatum.Length)
             {
                 case 1:
                     while (Keuze.Trim() != "1" && Keuze.Trim() != "*")
@@ -1216,7 +1190,7 @@ public class Movies
                         Console.Clear();
                         return;
                     }
-                    gekozenTijd = helper[Int32.Parse(Keuze) - 1];
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
                     break;
                 case 2:
                     while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "*")
@@ -1231,7 +1205,7 @@ public class Movies
                         Console.Clear();
                         return;
                     }
-                    gekozenTijd = helper[Int32.Parse(Keuze) - 1];
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
                     break;
                 case 3:
                     while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "*")
@@ -1246,7 +1220,7 @@ public class Movies
                         Console.Clear();
                         return;
                     }
-                    gekozenTijd = helper[Int32.Parse(Keuze) - 1];
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
                     break;
                 case 4:
                     while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "*")
@@ -1261,7 +1235,7 @@ public class Movies
                         Console.Clear();
                         return;
                     }
-                    gekozenTijd = helper[Int32.Parse(Keuze) - 1];
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
                     break;
                 case 5:
                     while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "*")
@@ -1276,37 +1250,390 @@ public class Movies
                         Console.Clear();
                         return;
                     }
-                    gekozenTijd = helper[Int32.Parse(Keuze) - 1];
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 6:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 7:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" 
+                        && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 8:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" 
+                        && Keuze.Trim() != "8" && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 9:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" 
+                        && Keuze.Trim() != "8" && Keuze.Trim() != "9" && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 10:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" 
+                        && Keuze.Trim() != "8" && Keuze.Trim() != "9" && Keuze.Trim() != "10"  && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 11:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" 
+                        && Keuze.Trim() != "8" && Keuze.Trim() != "9" && Keuze.Trim() != "10" && Keuze.Trim() != "11"  && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 12:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" 
+                        && Keuze.Trim() != "8" && Keuze.Trim() != "9" && Keuze.Trim() != "10" && Keuze.Trim() != "11" && Keuze.Trim() != "12"  && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 13:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" && Keuze.Trim() != "8" && Keuze.Trim() != "9" && Keuze.Trim() != "10" && Keuze.Trim() != "11" && Keuze.Trim() != "12" && Keuze.Trim() != "13" &&  Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 14:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" && Keuze.Trim() != "8" && Keuze.Trim() != "9" && Keuze.Trim() != "10" && Keuze.Trim() != "11" && Keuze.Trim() != "12" && Keuze.Trim() != "13" && Keuze.Trim() != "14" && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
                     break;
             }
 
         }
 
+        
         foreach (dynamic item in locatieList)
         {
             if (item.id == bioscoopID)
             {
-                foreach (dynamic zalen in item.zalen)
+                foreach (dynamic dag in item.dagen)
                 {
-                    if (zalen.type == filmTechnologie)
+                    for (int i = 0; i < dag.Count; i++)
                     {
-                        foreach (dynamic tijden in zalen.tijden)
+                        if (dag[i].type == filmTechnologie && dag[i].datum == gekozenDatum)
                         {
-                            if (tijden.tijd == gekozenTijd)
-                            {
-                                tijden.film_ID = filmIDplaceHolder;
-                            }
+                            dag[i].film_ID = filmId;
                         }
-                        
                     }
                 }
-               
             }
         }
 
+        
+        //string[] beschikbaarTijden;
+        //string[] helper;
+        //int countLength = 0;
+
+        //foreach (dynamic item in locatieList)
+        //{
+        //    if (item.id == bioscoopID)
+        //    {
+        //        foreach (dynamic zalen in item.zalen)
+        //        {
+        //            if (zalen.type == filmTechnologie)
+        //            {
+        //                foreach(dynamic tijden in zalen.tijden)
+        //                {
+        //                    if (tijden.film_ID == null)
+        //                    {
+        //                        countLength++;
+        //                    }
+        //                }
+
+        //            }
+        //        }
+
+        //    } 
+        //}
+
+        //beschikbaarTijden = new string[countLength];
+        //helper = new string[countLength];
+
+        //foreach (dynamic item in locatieList)
+        //{
+        //    if (item.id == bioscoopID)
+        //    {
+        //        foreach (dynamic zalen in item.zalen)
+        //        {
+        //            if (zalen.type == filmTechnologie)
+        //            {
+        //                int index = 0;
+        //                int index2 = 0;
+        //                foreach (dynamic tijden in zalen.tijden)
+        //                {
+
+        //                    if (tijden.film_ID == null)
+        //                    {
+        //                        switch (tijden.tijd)
+        //                        {
+        //                            case "9-12":
+        //                                beschikbaarTijden[index++] = $"     [{index}] Tijd: 9:00 - 12:00\n\n";
+        //                                helper[index2++] = tijden.tijd;
+        //                                break;
+        //                            case "12-15":
+        //                                beschikbaarTijden[index++] = $"     [{index}] Tijd: 12:00 - 15:00\n\n";
+        //                                helper[index2++] = tijden.tijd;
+        //                                break;
+        //                            case "15-18":
+        //                                beschikbaarTijden[index++] = $"     [{index}] Tijd: 15:00 - 18:00\n\n";
+        //                                helper[index2++] = tijden.tijd;
+        //                                break;
+        //                            case "18-21":
+        //                                beschikbaarTijden[index++] = $"     [{index}] Tijd: 18:00 - 21:00\n\n";
+        //                                helper[index2++] = tijden.tijd;
+        //                                break;
+        //                            case "21-24":
+        //                                beschikbaarTijden[index++] = $"     [{index}] Tijd: 21:00 - 00:00\n\n";
+        //                                helper[index2++] = tijden.tijd;
+        //                                break;
+        //                        }
+
+        //                    }
+        //                }
+
+        //            }
+        //        }
+
+        //    }
+        //}
+
+        //*****************************************************************************************************************************************************
+        //Console.WriteLine("-------------------------------------------------");
+        //Console.WriteLine("| Beschikbare tijden: (typ '*' om te annuleren) |");
+        //Console.WriteLine("-------------------------------------------------");
+
+        //string Keuze;
+        //string gekozenTijd = "";
+        //if (beschikbaarTijden.Length == 0)
+        //{
+        //    Console.WriteLine("Er zijn geen tijden beschikbaar! (typ '*' om te annuleren) \n");
+        //    Keuze = Console.ReadLine();
+
+        //    while (Keuze.Trim() != "*")
+        //    {
+        //        Console.WriteLine("Er zijn geen tijden beschikbaar! (typ '*' om te annuleren) \n");
+        //        Keuze = Console.ReadLine();
+        //    }
+
+        //    if (Keuze.Trim() == "*")
+        //    {
+        //        Console.WriteLine("Bewerking is geannuleerd!");
+        //        Thread.Sleep(3000);
+        //        Console.Clear();
+        //        return;
+        //    }
+        //}
+        //else
+        //{
+        //    for(int i=0; i< beschikbaarTijden.Length; i++)
+        //    {
+        //        Console.WriteLine(beschikbaarTijden[i]);
+        //    }
+
+        //    Keuze = Console.ReadLine();
+
+        //    switch (beschikbaarTijden.Length)
+        //    {
+        //        case 1:
+        //            while (Keuze.Trim() != "1" && Keuze.Trim() != "*")
+        //            {
+        //                Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+        //                Keuze = Console.ReadLine();
+        //            }
+        //            if (Keuze.Trim() == "*")
+        //            {
+        //                Console.WriteLine("Bewerking is geannuleerd!");
+        //                Thread.Sleep(3000);
+        //                Console.Clear();
+        //                return;
+        //            }
+        //            gekozenTijd = helper[Int32.Parse(Keuze) - 1];
+        //            break;
+        //        case 2:
+        //            while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "*")
+        //            {
+        //                Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+        //                Keuze = Console.ReadLine();
+        //            }
+        //            if (Keuze.Trim() == "*")
+        //            {
+        //                Console.WriteLine("Bewerking is geannuleerd!");
+        //                Thread.Sleep(3000);
+        //                Console.Clear();
+        //                return;
+        //            }
+        //            gekozenTijd = helper[Int32.Parse(Keuze) - 1];
+        //            break;
+        //        case 3:
+        //            while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "*")
+        //            {
+        //                Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+        //                Keuze = Console.ReadLine();
+        //            }
+        //            if (Keuze.Trim() == "*")
+        //            {
+        //                Console.WriteLine("Bewerking is geannuleerd!");
+        //                Thread.Sleep(3000);
+        //                Console.Clear();
+        //                return;
+        //            }
+        //            gekozenTijd = helper[Int32.Parse(Keuze) - 1];
+        //            break;
+        //        case 4:
+        //            while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "*")
+        //            {
+        //                Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+        //                Keuze = Console.ReadLine();
+        //            }
+        //            if (Keuze.Trim() == "*")
+        //            {
+        //                Console.WriteLine("Bewerking is geannuleerd!");
+        //                Thread.Sleep(3000);
+        //                Console.Clear();
+        //                return;
+        //            }
+        //            gekozenTijd = helper[Int32.Parse(Keuze) - 1];
+        //            break;
+        //        case 5:
+        //            while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "*")
+        //            {
+        //                Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+        //                Keuze = Console.ReadLine();
+        //            }
+        //            if (Keuze.Trim() == "*")
+        //            {
+        //                Console.WriteLine("Bewerking is geannuleerd!");
+        //                Thread.Sleep(3000);
+        //                Console.Clear();
+        //                return;
+        //            }
+        //            gekozenTijd = helper[Int32.Parse(Keuze) - 1];
+        //            break;
+        //    }
+
+        //}
+
+        //foreach (dynamic item in locatieList)
+        //{
+        //    if (item.id == bioscoopID)
+        //    {
+        //        foreach (dynamic zalen in item.zalen)
+        //        {
+        //            if (zalen.type == filmTechnologie)
+        //            {
+        //                foreach (dynamic tijden in zalen.tijden)
+        //                {
+        //                    if (tijden.tijd == gekozenTijd)
+        //                    {
+        //                        tijden.film_ID = filmIDplaceHolder;
+        //                    }
+        //                }
+
+        //            }
+        //        }
+
+        //    }
+        //}
+
         foreach (dynamic item in movielist)
         {
-            if(item.id == filmId)
+            if (item.id == filmId)
             {
                 item.showing = true;
                 break;
@@ -1317,7 +1644,7 @@ public class Movies
         //verander de hele file met de nieuwe json informatie
         File.WriteAllText(locatieUrl, JsonConvert.SerializeObject(locatieList, Formatting.Indented));
         File.WriteAllText(movieUrl, JsonConvert.SerializeObject(movielist, Formatting.Indented));
-        Console.WriteLine("Film is succesvol toegewezen!");
+        Console.WriteLine("Film is succesvol ingeroosterd!");
         Thread.Sleep(3000);
         Console.Clear();
 

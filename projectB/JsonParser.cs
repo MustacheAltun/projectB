@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 public class Account
 {
     public int id { get; set; }
@@ -8,6 +10,7 @@ public class Account
     public string rol { get; set; }
 #nullable enable
     public Ticket[]? tickets { get; set; }
+    public object etenBestelling { get; internal set; }
 #nullable disable
 }
 
@@ -50,40 +53,20 @@ public class Cinema_adress
     public string zipcode { get; set; }
     public string city { get; set; }
     public string telNr { get; set; }
-    public Dagen[] dagen { get; set; }
+    public List<List<Dagen>> dagen { get; set; }
 }
 
 public class Dagen
 {
-    public Dag[]? dag1 { get; set; }
-    public Dag[]? dag2 { get; set; }
-    public Dag[]? dag3 { get; set; }
-    public Dag[]? dag4 { get; set; }
-    public Dag[]? dag5 { get; set; }
-    public Dag[]? dag6 { get; set; }
-    public Dag[]? dag7 { get; set; }
-    public Dag[]? dag8 { get; set; }
-    public Dag[]? dag9 { get; set; }
-    public Dag[]? dag10 { get; set; }
-    public Dag[]? dag11 { get; set; }
-    public Dag[]? dag12 { get; set; }
-    public Dag[]? dag13 { get; set; }
-    public Dag[]? dag14 { get; set; }
-}
-
-public class Dag
-{
     public string naam { get; set; }
     public string type { get; set; }
     public int zitplekken { get; set; }
-    public Tijden[] tijden { get; set; }
+    public List<Tijden> tijden { get; set; }
     public string Create_Date { get; set; }
     public string datum { get; set; }
-    public string? film_ID { get; set; }
-    public string prijs { get; set; }
-
+    public int? film_ID { get; set; }
+    public double prijs { get; set; }
 }
-
 public class Tijden
 {
     public string tijd { get; set; }
@@ -91,7 +74,23 @@ public class Tijden
 
 }
 
+public class EtenBestelling
+{
+    public int orderID { get; set; }
+    public System.Collections.Generic.Dictionary<string, int> orderList { get; set; }
+    public double total { get; set; }
 
+}
+
+public class Eten
+{
+    public int productID { get; set; }
+    public string productName { get; set; }
+    public int amount { get; set; }
+    public double price { get; set; }
+    public string productType { get; set; }
+
+}
 
 
 

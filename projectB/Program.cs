@@ -31,15 +31,12 @@ namespace projectB
             // maak een lijst van alle informatie die er is
             List<Account> jsonList = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
 
-            //voeg een lijst van tickets toe als je dat wilt, het hoeft niet
-            //Ticket[] tickelijst = new Ticket[]
-            //{
-            //    new Ticket() { id = 3, name = "Red" },
-            //    new Ticket() { id = 4, name = "Black" },
-            //    new Ticket() { id = 5, name = "Yellow" }
-            //};
+            Catering catering = new Catering();
+
+            Gegevens AccGegevens = new Gegevens();
 
             HoofdScherm hoofdScherm = new HoofdScherm();
+
             bool gebruikerLoggedIn = false;
             bool adminLoggedIn = false;
             int id = -1;
@@ -97,6 +94,14 @@ namespace projectB
                 {
                     locatie.viewLocations(rol);
 
+                }
+                else if (page == "Eten & Drinken")
+                {
+                    catering.etenMenu(rol, id);
+                }
+                else if (page == "Account Gegevens")
+                {
+                    AccGegevens.showGegevens(jsonList, id);
                 }
             }
 
