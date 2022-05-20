@@ -79,7 +79,22 @@
         "stoel": 5
       }
     ],
-    "etenBestelling": null
+    "etenBestelling": [
+      {
+        "orderID": 1,
+        "orderList": {
+          "Sprite": 4
+        },
+        "total": 15.96
+      },
+      {
+        "orderID": 3,
+        "orderList": {
+          "Sprite": 50
+        },
+        "total": 199.5
+      }
+    ]
   },
   {
     "id": 1,
@@ -87,7 +102,20 @@
     "password": "test",
     "security": "ikweetniet",
     "rol": "gebruiker",
-    "tickets": null,
+    "tickets": [
+      {
+        "id": 0,
+        "filmID": "2",
+        "name": "Kawish",
+        "prijs": 14.99,
+        "bioscoopID": 1,
+        "zaalID": 3,
+        "filmTechnologie": "IMAX",
+        "dag": "zaterdag",
+        "tijd": "15-18",
+        "stoel": 113
+      }
+    ],
     "etenBestelling": null
   },
   {

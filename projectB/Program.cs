@@ -23,6 +23,8 @@ namespace projectB
 
             Catering catering = new Catering();
 
+            Gegevens AccGegevens = new Gegevens();
+
             // geef de url van de json
             string url = "..\\..\\..\\account.json";
 
@@ -96,6 +98,10 @@ namespace projectB
                 else if (page == "Eten & Drinken")
                 {
                     catering.etenMenu(rol, id);
+                }
+                else if (page  == "Account Gegevens")
+                {
+                    AccGegevens.showGegevens(jsonList,id);
                 }
             }
 

@@ -50,6 +50,7 @@ public class HoofdScherm
         }
         //Als je juiste input hebt gegeven dan return hij de naam van het scherm waar je naartoe wilt gaan door de index te gebruiken menuArr[Int32.Parse(Input)-1] 
         Console.WriteLine(menuArr[Int32.Parse(Input) - 1]);
+        /*Thread.Sleep(10000);*/
         return menuArr[Int32.Parse(Input)-1];
     }
 
