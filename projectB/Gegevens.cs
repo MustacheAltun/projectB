@@ -17,23 +17,57 @@ public class Gegevens
         Console.WriteLine("*-*-*-*-*-*-*-" + "\n" +
                                   "|  Gegevens  |" + "\n" +
                                   "*-*-*-*-*-*-*-" + "\n");
-        bool noTickets = false;
-        foreach (dynamic item in accountList)
-        {
-            //Check of gebruikersnaam en wachtwoord matchen
-            if (item.id == Accountid)
+        bool noTickets = true;
+        bool noFood = true;
+        if (accountList[Accountid].tickets != null) {
+            foreach (dynamic item in accountList)
             {
-                foreach(dynamic film in item.tickets)
+                //Check of gebruikersnaam en wachtwoord matchen
+                if (item.id == Accountid)
                 {
-                    string films = getMovieName(movieList, film.filmID);
-                    string locatie = getBioscoopName(locatieList, film.bioscoopID);
-                    Console.WriteLine("-------------------------------------------------------------------" + "\n" + $"id: {film.id}\n" + $"FilmID: {films} {film.filmTechnologie}\n" + $"Kijker: {film.name}\n" + $"prijs: {film.prijs}\n" + $"Locatie: Biscoop:{locatie} Zaal:{film.zaalID} stoel:{film.stoel}\n" + $"Datum: {film.dag} {film.tijd}\n");
+                    noTickets = false;
+                    foreach (dynamic film in item.tickets)
+                    {
+                        string films = getMovieName(movieList, film.filmID);
+                        string locatie = getBioscoopName(locatieList, film.bioscoopID);
+                        Console.WriteLine("----------------------------Ticket---------------------------------" + "\n" + $"id: {film.id}\n" + $"FilmID: {films} {film.filmTechnologie}\n" + $"Kijker: {film.name}\n" + $"prijs: {film.prijs}\n" + $"Locatie: Biscoop:{locatie} Zaal:{film.zaalID} stoel:{film.stoel}\n" + $"Datum: {film.dag} {film.tijd}\n");
+                    }
+                    Console.WriteLine("-------------------------------------------------------------------");
+                    break;
                 }
-                break;
-            }
 
+            }
         }
-        Console.WriteLine("-------------------------------------------------------------------");
+        if (noTickets)
+        {
+            Console.WriteLine("| Je hebt nog geen film kaartjes bestelt |\n");
+        }
+        if (accountList[Accountid].tickets != null) {
+            foreach (dynamic item in accountList)
+            {
+                //Check of gebruikersnaam en wachtwoord matchen
+                if (item.id == Accountid)
+                {
+                    noFood = false;
+                    foreach (dynamic eten in item.etenBestelling)
+                    {
+                        string foodList = "";
+                        foreach (dynamic foodItem in eten.orderList)
+                        {
+                            foodList += foodItem + " ";
+                        }
+                        Console.WriteLine("-----------------------------Eten----------------------------------" + "\n" + $"OrderID: {eten.orderID}\n" + $"Food Items: {foodList}\n" + $"Prijs: {eten.total}\n");
+                    }
+                    Console.WriteLine("-------------------------------------------------------------------");
+                    break;
+                }
+
+            }
+        }
+        if (noFood)
+        {
+            Console.WriteLine("| Je hebt nog geen eten bestelt |");
+        }
 
         string beans = Console.ReadLine();
         return;

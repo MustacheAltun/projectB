@@ -135,5 +135,45 @@
     "rol": "gebruiker",
     "tickets": null,
     "etenBestelling": null
+  },
+  {
+    "id": 4,
+    "username": "BeansWTFF",
+    "password": "BeansWTFF",
+    "security": "BeansWTFF",
+    "rol": "gebruiker",
+    "tickets": [
+      {
+        "id": 0,
+        "filmID": "2",
+        "name": "Beans",
+        "prijs": 14.99,
+        "bioscoopID": 1,
+        "zaalID": 3,
+        "filmTechnologie": "IMAX",
+        "dag": "zaterdag",
+        "tijd": "15-18",
+        "stoel": 163
+      }
+    ],
+    "etenBestelling": [
+      {
+        "orderID": 1,
+        "orderList": {
+          "Snickers": 40,
+          "Sprite": 2
+        },
+        "total": 127.58
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "username": "asdasdasd",
+    "password": "asdasdasd",
+    "security": "asdasdasd",
+    "rol": "gebruiker",
+    "tickets": null,
+    "etenBestelling": null
   }
 ]
