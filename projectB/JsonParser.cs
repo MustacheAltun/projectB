@@ -53,10 +53,10 @@ public class Cinema_adress
     public string zipcode { get; set; }
     public string city { get; set; }
     public string telNr { get; set; }
-    public List<List<Dagen>> dagen { get; set; }
+    public List<List<Zalen>> dagen { get; set; }
 }
 
-public class Dagen
+public class Zalen
 {
     public string naam { get; set; }
     public string type { get; set; }

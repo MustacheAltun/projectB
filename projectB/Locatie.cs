@@ -469,8 +469,8 @@ public class Locatie
 
         string date = DateTime.UtcNow.ToString("dd-MM-yyyy");
         
-        List<Dagen> dagenList = new List<Dagen>();
-        dagenList.Add(new Dagen()
+        List<Zalen> dag1 = new List<Zalen>();
+        dag1.Add(new Zalen()
         {
             naam = "zaal 1",
             type = "2D",
@@ -480,7 +480,7 @@ public class Locatie
             datum = date,
             prijs = 12.50
         });
-        dagenList.Add(new Dagen()
+        dag1.Add(new Zalen()
         {
             naam = "zaal 2",
             type = "3D",
@@ -490,7 +490,7 @@ public class Locatie
             datum = date,
             prijs = 15.00
         });
-        dagenList.Add(new Dagen()
+        dag1.Add(new Zalen()
         {
             naam = "zaal 3",
             type = "IMAX",
@@ -501,15 +501,440 @@ public class Locatie
             prijs = 17.50
         });
 
-
-        //DateTime.Today.AddDays(i).ToString("dd-MM-yyyy")
-
-        List<List<Dagen>> dagen = new List<List<Dagen>>();
-        for(int i=0; i<14; i++)
+        List<Zalen> dag2 = new List<Zalen>();
+        dag2.Add(new Zalen()
         {
-            dagen.Add(dagenList);
-            
-        }
+            naam = "zaal 1",
+            type = "2D",
+            zitplekken = 100,
+            tijden = tijdObj1,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(1).ToString("dd-MM-yyyy"),
+            prijs = 12.50
+        });
+        dag2.Add(new Zalen()
+        {
+            naam = "zaal 2",
+            type = "3D",
+            zitplekken = 150,
+            tijden = tijdObj2,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(1).ToString("dd-MM-yyyy"),
+            prijs = 15.00
+        });
+        dag2.Add(new Zalen()
+        {
+            naam = "zaal 3",
+            type = "IMAX",
+            zitplekken = 200,
+            tijden = tijdObj3,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(1).ToString("dd-MM-yyyy"),
+            prijs = 17.50
+        });
+
+        List<Zalen> dag3 = new List<Zalen>();
+        dag3.Add(new Zalen()
+        {
+            naam = "zaal 1",
+            type = "2D",
+            zitplekken = 100,
+            tijden = tijdObj1,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(2).ToString("dd-MM-yyyy"),
+            prijs = 12.50
+        });
+        dag3.Add(new Zalen()
+        {
+            naam = "zaal 2",
+            type = "3D",
+            zitplekken = 150,
+            tijden = tijdObj2,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(2).ToString("dd-MM-yyyy"),
+            prijs = 15.00
+        });
+        dag3.Add(new Zalen()
+        {
+            naam = "zaal 3",
+            type = "IMAX",
+            zitplekken = 200,
+            tijden = tijdObj3,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(2).ToString("dd-MM-yyyy"),
+            prijs = 17.50
+        });
+
+        List<Zalen> dag4 = new List<Zalen>();
+        dag4.Add(new Zalen()
+        {
+            naam = "zaal 1",
+            type = "2D",
+            zitplekken = 100,
+            tijden = tijdObj1,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(3).ToString("dd-MM-yyyy"),
+            prijs = 12.50
+        });
+        dag4.Add(new Zalen()
+        {
+            naam = "zaal 2",
+            type = "3D",
+            zitplekken = 150,
+            tijden = tijdObj2,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(3).ToString("dd-MM-yyyy"),
+            prijs = 15.00
+        });
+        dag4.Add(new Zalen()
+        {
+            naam = "zaal 3",
+            type = "IMAX",
+            zitplekken = 200,
+            tijden = tijdObj3,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(3).ToString("dd-MM-yyyy"),
+            prijs = 17.50
+        });
+
+        List<Zalen> dag5 = new List<Zalen>();
+        dag5.Add(new Zalen()
+        {
+            naam = "zaal 1",
+            type = "2D",
+            zitplekken = 100,
+            tijden = tijdObj1,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(4).ToString("dd-MM-yyyy"),
+            prijs = 12.50
+        });
+        dag5.Add(new Zalen()
+        {
+            naam = "zaal 2",
+            type = "3D",
+            zitplekken = 150,
+            tijden = tijdObj2,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(4).ToString("dd-MM-yyyy"),
+            prijs = 15.00
+        });
+        dag5.Add(new Zalen()
+        {
+            naam = "zaal 3",
+            type = "IMAX",
+            zitplekken = 200,
+            tijden = tijdObj3,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(4).ToString("dd-MM-yyyy"),
+            prijs = 17.50
+        });
+
+        List<Zalen> dag6 = new List<Zalen>();
+        dag6.Add(new Zalen()
+        {
+            naam = "zaal 1",
+            type = "2D",
+            zitplekken = 100,
+            tijden = tijdObj1,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(5).ToString("dd-MM-yyyy"),
+            prijs = 12.50
+        });
+        dag6.Add(new Zalen()
+        {
+            naam = "zaal 2",
+            type = "3D",
+            zitplekken = 150,
+            tijden = tijdObj2,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(5).ToString("dd-MM-yyyy"),
+            prijs = 15.00
+        });
+        dag6.Add(new Zalen()
+        {
+            naam = "zaal 3",
+            type = "IMAX",
+            zitplekken = 200,
+            tijden = tijdObj3,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(5).ToString("dd-MM-yyyy"),
+            prijs = 17.50
+        });
+
+        List<Zalen> dag7 = new List<Zalen>();
+        dag7.Add(new Zalen()
+        {
+            naam = "zaal 1",
+            type = "2D",
+            zitplekken = 100,
+            tijden = tijdObj1,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(6).ToString("dd-MM-yyyy"),
+            prijs = 12.50
+        });
+        dag7.Add(new Zalen()
+        {
+            naam = "zaal 2",
+            type = "3D",
+            zitplekken = 150,
+            tijden = tijdObj2,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(6).ToString("dd-MM-yyyy"),
+            prijs = 15.00
+        });
+        dag7.Add(new Zalen()
+        {
+            naam = "zaal 3",
+            type = "IMAX",
+            zitplekken = 200,
+            tijden = tijdObj3,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(6).ToString("dd-MM-yyyy"),
+            prijs = 17.50
+        });
+
+        List<Zalen> dag8 = new List<Zalen>();
+        dag8.Add(new Zalen()
+        {
+            naam = "zaal 1",
+            type = "2D",
+            zitplekken = 100,
+            tijden = tijdObj1,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(7).ToString("dd-MM-yyyy"),
+            prijs = 12.50
+        });
+        dag8.Add(new Zalen()
+        {
+            naam = "zaal 2",
+            type = "3D",
+            zitplekken = 150,
+            tijden = tijdObj2,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(7).ToString("dd-MM-yyyy"),
+            prijs = 15.00
+        });
+        dag8.Add(new Zalen()
+        {
+            naam = "zaal 3",
+            type = "IMAX",
+            zitplekken = 200,
+            tijden = tijdObj3,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(7).ToString("dd-MM-yyyy"),
+            prijs = 17.50
+        });
+
+        List<Zalen> dag9 = new List<Zalen>();
+        dag9.Add(new Zalen()
+        {
+            naam = "zaal 1",
+            type = "2D",
+            zitplekken = 100,
+            tijden = tijdObj1,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(8).ToString("dd-MM-yyyy"),
+            prijs = 12.50
+        });
+        dag9.Add(new Zalen()
+        {
+            naam = "zaal 2",
+            type = "3D",
+            zitplekken = 150,
+            tijden = tijdObj2,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(8).ToString("dd-MM-yyyy"),
+            prijs = 15.00
+        });
+        dag9.Add(new Zalen()
+        {
+            naam = "zaal 3",
+            type = "IMAX",
+            zitplekken = 200,
+            tijden = tijdObj3,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(8).ToString("dd-MM-yyyy"),
+            prijs = 17.50
+        });
+
+        List<Zalen> dag10 = new List<Zalen>();
+        dag10.Add(new Zalen()
+        {
+            naam = "zaal 1",
+            type = "2D",
+            zitplekken = 100,
+            tijden = tijdObj1,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(9).ToString("dd-MM-yyyy"),
+            prijs = 12.50
+        });
+        dag10.Add(new Zalen()
+        {
+            naam = "zaal 2",
+            type = "3D",
+            zitplekken = 150,
+            tijden = tijdObj2,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(9).ToString("dd-MM-yyyy"),
+            prijs = 15.00
+        });
+        dag10.Add(new Zalen()
+        {
+            naam = "zaal 3",
+            type = "IMAX",
+            zitplekken = 200,
+            tijden = tijdObj3,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(9).ToString("dd-MM-yyyy"),
+            prijs = 17.50
+        });
+
+        List<Zalen> dag11 = new List<Zalen>();
+        dag11.Add(new Zalen()
+        {
+            naam = "zaal 1",
+            type = "2D",
+            zitplekken = 100,
+            tijden = tijdObj1,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(10).ToString("dd-MM-yyyy"),
+            prijs = 12.50
+        });
+        dag11.Add(new Zalen()
+        {
+            naam = "zaal 2",
+            type = "3D",
+            zitplekken = 150,
+            tijden = tijdObj2,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(10).ToString("dd-MM-yyyy"),
+            prijs = 15.00
+        });
+        dag11.Add(new Zalen()
+        {
+            naam = "zaal 3",
+            type = "IMAX",
+            zitplekken = 200,
+            tijden = tijdObj3,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(10).ToString("dd-MM-yyyy"),
+            prijs = 17.50
+        });
+
+        List<Zalen> dag12 = new List<Zalen>();
+        dag12.Add(new Zalen()
+        {
+            naam = "zaal 1",
+            type = "2D",
+            zitplekken = 100,
+            tijden = tijdObj1,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(11).ToString("dd-MM-yyyy"),
+            prijs = 12.50
+        });
+        dag12.Add(new Zalen()
+        {
+            naam = "zaal 2",
+            type = "3D",
+            zitplekken = 150,
+            tijden = tijdObj2,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(11).ToString("dd-MM-yyyy"),
+            prijs = 15.00
+        });
+        dag12.Add(new Zalen()
+        {
+            naam = "zaal 3",
+            type = "IMAX",
+            zitplekken = 200,
+            tijden = tijdObj3,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(11).ToString("dd-MM-yyyy"),
+            prijs = 17.50
+        });
+
+        List<Zalen> dag13 = new List<Zalen>();
+        dag13.Add(new Zalen()
+        {
+            naam = "zaal 1",
+            type = "2D",
+            zitplekken = 100,
+            tijden = tijdObj1,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(12).ToString("dd-MM-yyyy"),
+            prijs = 12.50
+        });
+        dag13.Add(new Zalen()
+        {
+            naam = "zaal 2",
+            type = "3D",
+            zitplekken = 150,
+            tijden = tijdObj2,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(12).ToString("dd-MM-yyyy"),
+            prijs = 15.00
+        });
+        dag13.Add(new Zalen()
+        {
+            naam = "zaal 3",
+            type = "IMAX",
+            zitplekken = 200,
+            tijden = tijdObj3,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(12).ToString("dd-MM-yyyy"),
+            prijs = 17.50
+        });
+
+        List<Zalen> dag14 = new List<Zalen>();
+        dag14.Add(new Zalen()
+        {
+            naam = "zaal 1",
+            type = "2D",
+            zitplekken = 100,
+            tijden = tijdObj1,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(13).ToString("dd-MM-yyyy"),
+            prijs = 12.50
+        });
+        dag14.Add(new Zalen()
+        {
+            naam = "zaal 2",
+            type = "3D",
+            zitplekken = 150,
+            tijden = tijdObj2,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(13).ToString("dd-MM-yyyy"),
+            prijs = 15.00
+        });
+        dag14.Add(new Zalen()
+        {
+            naam = "zaal 3",
+            type = "IMAX",
+            zitplekken = 200,
+            tijden = tijdObj3,
+            Create_Date = date,
+            datum = DateTime.Now.AddDays(13).ToString("dd-MM-yyyy"),
+            prijs = 17.50
+        });
+
+        List<List<Zalen>> dagen = new List<List<Zalen>>();
+        
+        dagen.Add(dag1);
+        dagen.Add(dag2);
+        dagen.Add(dag3);
+        dagen.Add(dag4);
+        dagen.Add(dag5);
+        dagen.Add(dag6);
+        dagen.Add(dag7);
+        dagen.Add(dag8);
+        dagen.Add(dag9);
+        dagen.Add(dag10);
+        dagen.Add(dag11);
+        dagen.Add(dag12);
+        dagen.Add(dag13);
+        dagen.Add(dag14);
+
+
 
         lijst.Add(new Cinema_adress()
         {
@@ -532,33 +957,7 @@ public class Locatie
         Thread.Sleep(3000);
         Console.Clear();
 
-        foreach(var item in lijst)
-        {
-            if (item.id == lijst.Count - 1)
-            {
-
-                int beans = 0;  
-                //DateTime tomorrow = DateTime.Now.AddDays(beans);
-                foreach (var dag in item.dagen)
-                {
-                    DateTime tomorrow = DateTime.Now.AddDays(beans);
-                    foreach (var zaal in dag)
-                    {
-                        zaal.datum = tomorrow.ToString("dd-MM-yyyy");
-                  
-                    }
-
-                    beans++;
-                }
-             
-                
-            }
-            
-        }
-
         
-
-        File.WriteAllText(url, JsonConvert.SerializeObject(lijst, Formatting.Indented));
     }
 
     
@@ -1177,7 +1576,7 @@ public class Locatie
             {
                 foreach (var item in locatie.dagen)
                 {
-                    item.Add(new Dagen()
+                    item.Add(new Zalen()
                     {
                         naam = "zaal 1",
                         type = "2D",
@@ -1188,7 +1587,7 @@ public class Locatie
                         prijs = 12.50
                     });
 
-                    item.Add(new Dagen()
+                    item.Add(new Zalen()
                     {
                         naam = "zaal 2",
                         type = "3D",
@@ -1199,7 +1598,7 @@ public class Locatie
                         prijs = 15.00
                     });
 
-                    item.Add(new Dagen()
+                    item.Add(new Zalen()
                     {
                         naam = "zaal 3",
                         type = "IMAX",
