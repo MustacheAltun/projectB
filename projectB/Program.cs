@@ -101,7 +101,7 @@ namespace projectB
                 }
                 else if (page == "Account Gegevens")
                 {
-                    AccGegevens.showGegevens(jsonList, id);
+                    AccGegevens.showGegevens(url, id);
                 }
             }
 

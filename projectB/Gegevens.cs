@@ -6,12 +6,13 @@ using System.Threading;
 
 public class Gegevens
 {
-    public void showGegevens(List<Account> accountList, int Accountid)
+    public void showGegevens(string url, int Accountid)
     {
-        string Movies = "..\\..\\..\\movies.json";
-        string locaties = "..\\..\\..\\locatie.json";
-        List<movie> movieList = JsonConvert.DeserializeObject<List<movie>>(File.ReadAllText(Movies));
-        List<Cinema_adress> locatieList = JsonConvert.DeserializeObject<List<Cinema_adress>>(File.ReadAllText(locaties));
+        string strResultJson = File.ReadAllText("..\\..\\..\\account.json");
+
+
+        // maak een lijst van alle informatie die er is
+        List<Account> accountList = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
         Console.Clear();
         Console.WriteLine("*-*-*-*-*-*-*-" + "\n" +
                                   "|  Gegevens  |" + "\n" +
@@ -28,6 +29,10 @@ public class Gegevens
                     noTickets = false;
                     foreach (dynamic film in item.tickets)
                     {
+                        string Movies = "..\\..\\..\\movies.json";
+                        string locaties = "..\\..\\..\\locatie.json";
+                        List<movie> movieList = JsonConvert.DeserializeObject<List<movie>>(File.ReadAllText(Movies));
+                        List<Cinema_adress> locatieList = JsonConvert.DeserializeObject<List<Cinema_adress>>(File.ReadAllText(locaties));
                         string films = getMovieName(movieList, film.filmID);
                         string locatie = getBioscoopName(locatieList, film.bioscoopID);
                         Console.WriteLine("----------------------------Ticket---------------------------------" + "\n" + $"id: {film.id}\n" + $"FilmID: {films} {film.filmTechnologie}\n" + $"Kijker: {film.name}\n" + $"prijs: {film.prijs}\n" + $"Locatie: Biscoop:{locatie} Zaal:{film.zaalID} stoel:{film.stoel}\n" + $"Datum: {film.dag} {film.tijd}\n");
@@ -52,6 +57,10 @@ public class Gegevens
                     noFood = false;
                     foreach (dynamic eten in item.etenBestelling)
                     {
+                        string Movies = "..\\..\\..\\movies.json";
+                        string locaties = "..\\..\\..\\locatie.json";
+                        List<movie> movieList = JsonConvert.DeserializeObject<List<movie>>(File.ReadAllText(Movies));
+                        List<Cinema_adress> locatieList = JsonConvert.DeserializeObject<List<Cinema_adress>>(File.ReadAllText(locaties));
                         string foodList = "";
                         foreach (dynamic foodItem in eten.orderList)
                         {
