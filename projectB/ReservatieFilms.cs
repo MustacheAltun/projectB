@@ -764,13 +764,13 @@ public class ReservatieFilms
 		string searchZaal = "";
 		switch (zaalKeuze)
 		{
-			case "zaal 1":
+			case "zaal 1 2D : 12,5":
 				searchZaal = "zaal 1";
 				break;
-			case "zaal 2":
+			case "zaal 2 3D : 15,00":
 				searchZaal = "zaal 2";
 				break;
-			case "zaal 3":
+			case "zaal 3 IMAX : 17,50":
 				searchZaal = "zaal 3";
 				break;
 		}
