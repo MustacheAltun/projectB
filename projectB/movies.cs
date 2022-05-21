@@ -948,7 +948,6 @@ public class Movies
                 case "2":
                     ReservatieFilms reservatie = new ReservatieFilms();
                     reservatie.reserveren(filmID, id);
-                    Console.WriteLine("Reserveren");
                     Thread.Sleep(1000);
                     break;
             }
