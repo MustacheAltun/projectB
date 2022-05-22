@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 public class Account
@@ -91,7 +91,3 @@ public class Eten
     public string productType { get; set; }
 
 }
-
-
-
-
