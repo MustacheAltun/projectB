@@ -9,10 +9,16 @@ class Catering
 {
     public void etenMenu(string rol, int accountID)
     {
-
+        
         //Omzet van gegevens in Json bestand over naar string en daarna in een lijst zetten.
         string cateringUrl = "..\\..\\..\\Catering.json";
         List<Eten> etenMenu = JsonConvert.DeserializeObject<List<Eten>>(File.ReadAllText(cateringUrl));
+
+        /*
+         * Gebruiker ziet alle beschikbare eten en drinken items die te koop zijn.
+         * Gast mag niet bestellen.
+         * Als gebruiker kiest om selectie te maken wordt hij dan doorgestuurd naar orderFood functie.
+         */
 
         Console.Clear();
         string Keuze = "";
@@ -67,15 +73,15 @@ class Catering
 
             if (rol == "gebruiker")
             {
-                Console.WriteLine("\n" + "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n" +
-                                        "| [1] Terug | [2] Bestellen |" + "\n" +
-                                        "-----------------------------");
+                Console.WriteLine("\n" + "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n" +
+                                        "| [1] Terug | [2] Selectie maken |" + "\n" +
+                                        "----------------------------------");
             }
             else if (rol == "admin")
             {
-                Console.WriteLine("\n" + "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n" +
-                                        "| [1] Terug | [2] Bestellen |" + "\n" +
-                                        "-----------------------------");
+                Console.WriteLine("\n" + "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n" +
+                                        "| [1] Terug | [2] Selectie maken |" + "\n" +
+                                        "----------------------------------");
             }
             else
             {

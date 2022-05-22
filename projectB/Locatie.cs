@@ -12,7 +12,16 @@ public class Locatie
     
     public void viewLocations(string rol)
     {
+        //Functie update schedule wordt later geimplementeerd
         //updateSchedule();
+        /*
+		 * Deze functie zorg ervoer dat de weekelijkse geschema wordt geupdate in json bestand om de 2 weken afhankelijk van de huidige datum.
+		 */
+
+        /*
+         * Elke gebruiker heeft een andere weergave. Admin heeft meer rechten dan een normale gebruiker.
+         */
+
         string input = "";
         //While loop dat blijft runnen tenzij gebruiker "1" invoert.
         while (input != "1")
@@ -120,6 +129,9 @@ public class Locatie
     {
         /*
          * geef alle informatie dus bioscoop naam postcode adres etc etc
+         * alle velden hier zijn verplicht om in te vullen.
+         * de functie kan geannuleerd worden door * in te toetsen.
+         * gebruiker krijgt een melding als een veld een ongeldig invoer bevat.
          */
         Console.Clear();
         Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
@@ -368,7 +380,7 @@ public class Locatie
             }
         }
 
-
+        //Hier wordt 3 tijdsobjecten gemaakt met de verschillende tijdstippen waarop een film gedraaid kan worden. 
         string zitplekken1 = "";
         for(int i=0; i<100; i++)
         {
@@ -466,9 +478,10 @@ public class Locatie
         });
 
 
-
+        //Huidige datum in dag-maand-jaar format
         string date = DateTime.UtcNow.ToString("dd-MM-yyyy");
         
+        //Hier wordt 14 lijsten gemaakt van dagen die 3 verschillende zalen bevatten.
         List<Zalen> dag1 = new List<Zalen>();
         dag1.Add(new Zalen()
         {
@@ -935,7 +948,7 @@ public class Locatie
         dagen.Add(dag14);
 
 
-
+        //alle gegevens is hier toegoevoegd bij de nieuwe locatie object om serialized te worden naar json format.
         lijst.Add(new Cinema_adress()
         {
             id = id,
@@ -960,9 +973,16 @@ public class Locatie
         
     }
 
-    
     public void editLocation(List<Cinema_adress> lijst, string url)
     {
+        /*
+         * Met deze kan de admin een bestaande locatie gegevens wijzigen.
+         * Het invoeren van een geldige locatie ID is verplicht.
+         * Als ID niet gevond is krijgt gebruiker een melding.
+         * Gebruiker kan gevens velden overslaan door / in te toetsen
+         * Gebruiker kan functie annuleren door * in te toetsen.
+         * Er wordt gecheckt of gebruiker een gelding invoer heeft ingevuld, of niet krijgt hij dan een melding.
+         */
         Console.Clear();
         Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
         Console.WriteLine("|          Locatie gegevens aanpassen         |");
@@ -1000,6 +1020,7 @@ public class Locatie
                 {
                     foreach(dynamic item in lijst)
                     {
+                        //Als ID is gevonden en klotp met invoer dat wordt de geselecteerde locatie weergegeven.
                         if (item.id == bioscoopNr)
                         {
                             Console.WriteLine("-----------------------------------------------");
@@ -1187,6 +1208,8 @@ public class Locatie
         while (check)
         {
             postcode = Console.ReadLine();
+
+            //Checkt of postcode veld invoer een geldige postcode is.
             if (postcode.Trim().Length == 6)
             {
                 postcodeNr = postcode.Substring(0, 4);
@@ -1392,8 +1415,7 @@ public class Locatie
             string placeHolder = Console.ReadLine();
             if (int.TryParse(placeHolder, out bioscoopNr))
             {
-                //Console.WriteLine();
-                //bioscoopNr--;
+                
                 if (!bioscoopNrArray.Contains(bioscoopNr))
                 {
                     Console.WriteLine("Er is geen film voor de ingevoerde ID!\n");

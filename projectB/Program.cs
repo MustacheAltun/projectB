@@ -10,32 +10,29 @@ namespace projectB
     {
         static void Main(string[] args)
         {
+            //Kleur van tekst in console en grote van console aangepast.
             Console.ForegroundColor = ConsoleColor.Blue;
+            Console.SetWindowSize(130, 40);
+
             //instantiate de class
-            //List<movie> movieList = JsonConvert.DeserializeObject<List<movie>>(File.ReadAllText("..\\..\\..\\movies.json"));
             Movies overview = new Movies();
             Registratie accountMaken = new Registratie();
-
-            //object gemaakt van class Login
             Login accountInloggen = new Login();
-
             Locatie locatie = new Locatie();
+            Catering catering = new Catering();
+            Gegevens AccGegevens = new Gegevens();
+            HoofdScherm hoofdScherm = new HoofdScherm();
 
-            // geef de url van de json
+            // geef de url van de account json
             string url = "..\\..\\..\\account.json";
 
             // lees de file en zet alles in een string
             string strResultJson = File.ReadAllText("..\\..\\..\\account.json");
 
-
             // maak een lijst van alle informatie die er is
             List<Account> jsonList = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
 
-            Catering catering = new Catering();
-
-            Gegevens AccGegevens = new Gegevens();
-
-            HoofdScherm hoofdScherm = new HoofdScherm();
+            
 
             bool gebruikerLoggedIn = false;
             bool adminLoggedIn = false;
