@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,10 +9,16 @@ class Catering
 {
     public void etenMenu(string rol, int accountID)
     {
-
+        
         //Omzet van gegevens in Json bestand over naar string en daarna in een lijst zetten.
         string cateringUrl = "..\\..\\..\\Catering.json";
         List<Eten> etenMenu = JsonConvert.DeserializeObject<List<Eten>>(File.ReadAllText(cateringUrl));
+
+        /*
+         * Gebruiker ziet alle beschikbare eten en drinken items die te koop zijn.
+         * Gast mag niet bestellen.
+         * Als gebruiker kiest om selectie te maken wordt hij dan doorgestuurd naar orderFood functie.
+         */
 
         Console.Clear();
         string Keuze = "";
@@ -24,7 +30,7 @@ class Catering
             Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
             Console.WriteLine("|                                               Snacks                                              |");
             Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
-            foreach(dynamic item in etenMenu)
+            foreach (dynamic item in etenMenu)
             {
                 if (item.productType == "Eten")
                 {
@@ -38,7 +44,7 @@ class Catering
                 }
             }
 
-            if(snacksCount == 0)
+            if (snacksCount == 0)
             {
                 Console.WriteLine("Er zijn geen snacks beschikbaar!\n");
             }
@@ -67,22 +73,22 @@ class Catering
 
             if (rol == "gebruiker")
             {
-                Console.WriteLine("\n" + "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n" +
-                                        "| [1] Terug | [2] Bestellen |" + "\n" +
-                                        "-----------------------------");
+                Console.WriteLine("\n" + "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n" +
+                                        "| [1] Terug | [2] Selectie maken |" + "\n" +
+                                        "----------------------------------");
             }
-            else if(rol == "admin")
+            else if (rol == "admin")
             {
-                Console.WriteLine("\n" + "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n" +
-                                        "| [1] Terug | [2] Bestellen |" + "\n" +
-                                        "-----------------------------");
+                Console.WriteLine("\n" + "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n" +
+                                        "| [1] Terug | [2] Selectie maken |" + "\n" +
+                                        "----------------------------------");
             }
             else
             {
                 Console.WriteLine("\n" + "*-*-*-*-*-*-*" + "\n" + "| [1] Terug |" + "\n" + "-------------");
             }
 
-            
+
             Keuze = Console.ReadLine();
 
             if (rol == "gebruiker")
@@ -264,9 +270,15 @@ class Catering
                     {
                         foreach (dynamic item in etenMenu)
                         {
-                            if (item.amount < productAmount)
+                            if (item.amount < productAmount && item.productID ==  productID)
                             {
                                 Console.WriteLine("Excuses, niet genoeg van deze product in voorraad!");
+                                Console.WriteLine("Probeer nogmaals a.u.b!");
+                                break;
+                            }
+                            else if (productAmount <= 0)
+                            {
+                                Console.WriteLine("Ongelding invoer!");
                                 Console.WriteLine("Probeer nogmaals a.u.b!");
                                 break;
                             }
@@ -343,7 +355,7 @@ class Catering
                 Thread.Sleep(1000);
             }
 
-            if(orderList.Count > 0)
+            if (orderList.Count > 0)
             {
                 Console.WriteLine("     [1] Voeg meer items toe\n");
                 Console.WriteLine("     [2] Bevestigen\n");
@@ -391,26 +403,26 @@ class Catering
             }
 
         }
-        
+
     }
 
     public void confirmOrder(int accountID, List<Eten> etenMenu, Dictionary<int, int> orderList)
     {
         string url = "..\\..\\..\\account.json";
         List<Account> accounts = JsonConvert.DeserializeObject<List<Account>>(File.ReadAllText("..\\..\\..\\account.json"));
-        List<EtenBestelling> order =  new List<EtenBestelling>();
+        List<EtenBestelling> order = new List<EtenBestelling>();
         Console.Clear();
         Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
         Console.WriteLine("|                                             Bevestigen                                            |");
         Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
-        
+
 
         double total = 0.0;
         Console.WriteLine("Uw Bestelling:\n");
         foreach (dynamic item in orderList)
         {
-            
-            foreach(dynamic item2 in etenMenu)
+
+            foreach (dynamic item2 in etenMenu)
             {
                 if (item2.productID == item.Key)
                 {
@@ -421,7 +433,7 @@ class Catering
                     total = total + (item.Value * item2.price);
                 }
             }
-            
+
         }
         Console.WriteLine("         Totaal: $" + Math.Round(total, 2));
 
@@ -465,7 +477,7 @@ class Catering
 
 
             Dictionary<string, int> orderConfirmation = new Dictionary<string, int>();
-            foreach(dynamic item in etenMenu)
+            foreach (dynamic item in etenMenu)
             {
                 if (orderList.ContainsKey(item.productID))
                 {
@@ -473,8 +485,8 @@ class Catering
                 }
             }
 
-            
-            foreach(dynamic account in accounts)
+
+            foreach (dynamic account in accounts)
             {
                 if (account.id == accountID)
                 {
@@ -509,14 +521,14 @@ class Catering
                         account.etenBestelling = etenBestelling;
                     }
                 }
-                
+
             }
 
             string bestelling = JsonConvert.SerializeObject(accounts, Formatting.Indented);
             //verander de hele file met de nieuwe json informatie
             File.WriteAllText(url, bestelling);
 
-            foreach(dynamic item in orderList)
+            foreach (dynamic item in orderList)
             {
                 for (int i = 0; i < etenMenu.Count(); i++)
                 {
@@ -526,7 +538,7 @@ class Catering
                     }
                 }
             }
-            
+
             File.WriteAllText("..\\..\\..\\Catering.json", JsonConvert.SerializeObject(etenMenu, Formatting.Indented));
 
             Console.WriteLine("Bedankt voor uw bestelling!");
@@ -543,4 +555,3 @@ class Catering
         }
     }
 }
-

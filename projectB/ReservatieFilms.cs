@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 
 public class ReservatieFilms
 {
-	private void showBeschikbaar(int bioscoopNaam, string zaalNaam, string tijdNaam)
+	private void showBeschikbaar(int bioscoopNaam, string zaalNaam, string tijdNaam, string datum)
 	{
 		//pak alle json informatie
 		string url = "..\\..\\..\\locatie.json";
@@ -17,7 +18,7 @@ public class ReservatieFilms
 		List<Cinema_adress> locatieList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Cinema_adress>>(locatieJson);
 
 		// vraag de input
-		Console.WriteLine("B: Beschikbaar		O: Onbeschikbaar		G:Gebroken");
+		Console.WriteLine("B: Beschikbaar		O: Onbeschikbaar		");
 		Console.WriteLine("------------------------------------------------SCHERM------------------------------------------------");
 		int counter = 0;
 		Dictionary<int, string> stoelen = new Dictionary<int, string>();
@@ -32,81 +33,105 @@ public class ReservatieFilms
 		 * en nu pak je alle informatie en zet je het in de stoelen dictionary
 		 * 
 		 */
+		bool done = false;
 		foreach (var locatie in locatieList)
 		{
 			if (locatie.id == bioscoopNaam)
-			{ 
-				foreach (var zaal in locatie.zalen)
+			{
+				foreach (var dag in locatie.dagen)
 				{
-					if (zaal.naam == zaalNaam)
+					foreach (var item in dag)
 					{
-						row = zaal.zitplekken/10;
-						foreach (var tijd in zaal.tijden)
+						if (item.datum == datum)
 						{
-							if (tijd.tijd == tijdNaam)
+							if (item.naam == zaalNaam)
 							{
-								foreach (var number in tijd.gebroken)
+								row = item.zitplekken / 10;
+								foreach (var tijd in item.tijden)
 								{
-									if (!stoelen.ContainsKey(Int32.Parse(number.Key)))
+									if (tijd.tijd == tijdNaam)
 									{
-										if (number.Value == true)
+										for (int i = 0; i < tijd.beschikbaar.Length; i++)
 										{
-											stoelen.Add(Int32.Parse(number.Key), "G");
+											if (tijd.beschikbaar[i] == 'T')
+											{
+												stoelen.Add(i + 1, "B");
+											}
+											else
+											{
+												stoelen.Add(i + 1, "O");
+											}
 										}
+										done = true;
+										break;
+
 									}
-
-
+									if (done)
+									{
+										break;
+									}
 								}
-								foreach (var number in tijd.beschikbaar)
+								if (done)
 								{
-									if (!stoelen.ContainsKey(Int32.Parse(number.Key)))
-									{
-										if (number.Value == true)
-										{
-											stoelen.Add(Int32.Parse(number.Key), "B");
-										}
-										else
-										{
-											stoelen.Add(Int32.Parse(number.Key), "O");
-										}
-
-									}
-
+									break;
 								}
 							}
+							if (done)
+							{
+								break;
+							}
+						}
+						if (done)
+						{
+							break;
 						}
 					}
+					if (done)
+					{
+						break;
+					}
+
+
 				}
+				if (done)
+				{
+					break;
+				}
+
+			}
+			if (done)
+			{
+				break;
 			}
 		}
 
 		//nu moet je alles filteren op nummer en laten zien
 		foreach (var stoel in stoelen.OrderBy(x => x.Key))
-        {
-            if (stoel.Value == "G")
-            {
+		{
+			if (stoel.Value == "G")
+			{
 				chairResult += stoel.Key + " : G	";
 			}
-            else if (stoel.Value == "O")
-            {
+			else if (stoel.Value == "O")
+			{
 				chairResult += stoel.Key + " : O	";
 			}
-            else
-            {
+			else
+			{
 				chairResult += stoel.Key + " : B	";
 
 			}
 			counter++;
-            if (counter % row == 0)
-            {
+			if (counter % row == 0)
+			{
 				chairResult += "\n";
-            }
-        }
+			}
+		}
 		Console.WriteLine(chairResult);
 		Console.WriteLine("------------------------------------------------ACHTERKANT------------------------------------------------");
 	}
 
-	private string stoelKiezen(int bioscoopNaam, string zaalNaam, string tijdNaam)
+	private string stoelKiezen(int bioscoopNaam, string zaalNaam, string tijdNaam, string datum)
 	{
 		//pak alle json informatie
 		string url = "..\\..\\..\\locatie.json";
@@ -117,10 +142,12 @@ public class ReservatieFilms
 		Dictionary<int, string> stoelen = new Dictionary<int, string>();
 
 		// vraag de input
-		Console.WriteLine("\nWelke stoel wilt u, geef de nummer aan:");
+		Console.WriteLine("\nWelke stoel wilt u, geef de nummer aan (u kunt '/' typen om al uw keuzes opnieuw te maken):");
 		string input = Console.ReadLine();
+		
 		bool wrong = true;
-
+		int row = 0;
+		string jsonBeschikbaar = "";
 
 		/*
 		 * maak een forloop om te checken welke stoelen genomen, gebroken en beschikbaar zijn
@@ -130,50 +157,71 @@ public class ReservatieFilms
 		 * en nu pak je alle informatie en zet je het in de stoelen dictionary
 		 * 
 		 */
+		bool done = false;
+		int stoelencounter = 0;
 		foreach (var locatie in locatieList)
 		{
 			if (locatie.id == bioscoopNaam)
 			{
-				foreach (var zaal in locatie.zalen)
+				foreach (var dag in locatie.dagen)
 				{
-					if (zaal.naam == zaalNaam)
+					foreach (var z in dag)
 					{
-						foreach (var tijd in zaal.tijden)
+						if (z.datum == datum)
 						{
-							if (tijd.tijd == tijdNaam)
+							if (z.naam == zaalNaam)
 							{
-								foreach (var number in tijd.gebroken)
+
+								row = z.zitplekken / 10;
+								foreach (var tijd in z.tijden)
 								{
-									if (!stoelen.ContainsKey(Int32.Parse(number.Key)))
+
+									if (tijd.tijd == tijdNaam)
 									{
-										if (number.Value == true)
+										jsonBeschikbaar = tijd.beschikbaar;
+										for (int i = 0; i < tijd.beschikbaar.Length; i++)
 										{
-											stoelen.Add(Int32.Parse(number.Key), "G");
+											if (tijd.beschikbaar[i] == 'T')
+											{
+												stoelen.Add(i + 1, "B");
+											}
+											else
+											{
+												stoelen.Add(i + 1, "O");
+											}
 										}
+                                        if (stoelencounter == tijd.beschikbaar.Length)
+                                        {
+											done = true;
+											break;
+										}
+										
+
 									}
-
-
+									if (done)
+									{
+										break;
+									}
 								}
-								foreach (var number in tijd.beschikbaar)
+								if (done)
 								{
-									if (!stoelen.ContainsKey(Int32.Parse(number.Key)))
-									{
-										if (number.Value == true)
-										{
-											stoelen.Add(Int32.Parse(number.Key), "B");
-										}
-										else
-										{
-											stoelen.Add(Int32.Parse(number.Key), "O");
-										}
-
-									}
-
+									break;
 								}
-							}
+							}	
 						}
 					}
+					if (done)
+					{
+						break;
+					}
+
+
 				}
+				if (done)
+				{
+					break;
+				}
+
 			}
 		}
 		/*
@@ -182,7 +230,12 @@ public class ReservatieFilms
 		 */
 		while (wrong)
 		{
-			if (!input.All(Char.IsDigit))
+			if (input.Trim() == "/")
+			{
+				return input;
+
+			}
+			else if (!input.All(Char.IsDigit))
 			{
 				Console.WriteLine("\nU moet de nummer aangeven van de stoel zonder letters, probeer nogmaals:");
 				input = Console.ReadLine();
@@ -227,11 +280,42 @@ public class ReservatieFilms
 			}
 		}
 
+		StringBuilder nieuweBeschikbaar = new StringBuilder(jsonBeschikbaar);
+		nieuweBeschikbaar[Int32.Parse(input) - 1] = 'F';
+		jsonBeschikbaar = nieuweBeschikbaar.ToString();
+
 		//verander deze data met genomen in de json file
-		locatieList.Single(locatie => locatie.id == bioscoopNaam)
-			.zalen.Single(zaal => zaal.naam == zaalNaam)
-			.tijden.Single(tijd => tijd.tijd == tijdNaam)
-			.beschikbaar[input] = false;
+		foreach (var locatie in locatieList)
+		{
+			if (locatie.id == bioscoopNaam)
+			{
+				foreach (var dag in locatie.dagen)
+				{
+					foreach (var z in dag)
+					{
+						if (z.datum == datum)
+						{
+							if (z.naam == zaalNaam)
+							{
+
+								row = z.zitplekken / 10;
+								foreach (var tijd in z.tijden)
+								{
+
+									if (tijd.tijd == tijdNaam)
+									{
+										tijd.beschikbaar = jsonBeschikbaar;
+									}
+								}
+							}
+						}
+					}
+
+
+				}
+
+			}
+		}
 
 		string changedLocatie = JsonConvert.SerializeObject(locatieList, Formatting.Indented);
 		//verander de hele file met de nieuwe json informatie
@@ -239,32 +323,151 @@ public class ReservatieFilms
 		return input;
 	}
 
-	private void stoelVrijMaken(int bioscoopID, string zaalNaam, string tijdNaam,string stoel)
-	{
-		//pak alle json informatie
+	private void stoelVrijMaken(int bioscoopID, string zaalNaam, string tijdNaam, string stoel, string datum)
+	{//pak alle json informatie
 		string url = "..\\..\\..\\locatie.json";
 		string locatieJson = File.ReadAllText(url);
 		List<Cinema_adress> locatieList = JsonConvert.DeserializeObject<List<Cinema_adress>>(locatieJson);
 
+		//maak een nieuwe dictionary om alle informatie op te slaan voor later
+		Dictionary<int, string> stoelen = new Dictionary<int, string>();
+
+		// vraag de input
+		bool wrong = true;
+		int row = 0;
+		string jsonBeschikbaar = "";
+
+		/*
+		 * maak een forloop om te checken welke stoelen genomen, gebroken en beschikbaar zijn
+		 * voor elke locatie in de lijst van locaties check je of het overeenkomt met de bioscoopNaam
+		 * voor elke zaal in zalen van de locatie check je of het overeenkomt met de zaalNaam
+		 * voor elke tijd in tijden check je of het overeenkomt met tijdNaam
+		 * en nu pak je alle informatie en zet je het in de stoelen dictionary
+		 * 
+		 */
+		bool done = false;
+		foreach (var locatie in locatieList)
+		{
+			if (locatie.id == bioscoopID)
+			{
+				foreach (var dag in locatie.dagen)
+				{
+					foreach (var z in dag)
+					{
+						if (z.datum == datum)
+						{
+							if (z.naam == zaalNaam)
+							{
+
+								row = z.zitplekken / 10;
+								foreach (var tijd in z.tijden)
+								{
+
+									if (tijd.tijd == tijdNaam)
+									{
+										jsonBeschikbaar = tijd.beschikbaar;
+										for (int i = 0; i < tijd.beschikbaar.Length; i++)
+										{
+											if (tijd.beschikbaar[i] == 'T')
+											{
+												stoelen.Add(i + 1, "B");
+											}
+											else
+											{
+												stoelen.Add(i + 1, "O");
+											}
+										}
+										done = true;
+										break;
+
+									}
+									if (done)
+									{
+										break;
+									}
+								}
+								if (done)
+								{
+									break;
+								}
+							}
+							if (done)
+							{
+								break;
+							}
+						}
+						if (done)
+						{
+							break;
+						}
+					}
+					if (done)
+					{
+						break;
+					}
+
+
+				}
+				if (done)
+				{
+					break;
+				}
+
+			}
+			if (done)
+			{
+				break;
+			}
+		}
+
+		StringBuilder nieuweBeschikbaar = new StringBuilder(jsonBeschikbaar);
+		nieuweBeschikbaar[Int32.Parse(stoel) - 1] = 'T';
+		jsonBeschikbaar = nieuweBeschikbaar.ToString();
+
 		//verander deze data met genomen in de json file
-		locatieList.Single(locatie => locatie.id == bioscoopID)
-			.zalen.Single(zaal => zaal.naam == zaalNaam)
-			.tijden.Single(tijd => tijd.tijd == tijdNaam)
-			.beschikbaar[stoel] = true;
+		foreach (var locatie in locatieList)
+		{
+			if (locatie.id == bioscoopID)
+			{
+				foreach (var dag in locatie.dagen)
+				{
+					foreach (var z in dag)
+					{
+						if (z.datum == datum)
+						{
+							if (z.naam == zaalNaam)
+							{
+
+								row = z.zitplekken / 10;
+								foreach (var tijd in z.tijden)
+								{
+
+									if (tijd.tijd == tijdNaam)
+									{
+										tijd.beschikbaar = jsonBeschikbaar;
+									}
+								}
+							}
+						}
+					}
+
+
+				}
+
+			}
+		}
 
 		string changedLocatie = JsonConvert.SerializeObject(locatieList, Formatting.Indented);
 		//verander de hele file met de nieuwe json informatie
 		File.WriteAllText(url, changedLocatie);
-		
 	}
 
-	public void reserveren(string filmId, int accountID)
+	public void reserveren(string filmIdString, int accountID)
 	{
+
 		Console.Clear();
-		double filmPrijs = 14.99;
-		int bioscopenMetFilm = 0;
-		int tijdenMetFilm = 0;
-		int zalenMetFilm = 0;
+		bool loopBack = true;
+		
 
 		// lees de file en zet alles in een string
 		string strResultJson = File.ReadAllText("..\\..\\..\\account.json");
@@ -276,336 +479,76 @@ public class ReservatieFilms
 
 		Console.WriteLine("wat is jouw volledige naam?");
 		string fullName = Console.ReadLine();
-
-		foreach (var locatie in locaties)
+		while (loopBack)
 		{
-			bool check = false;
-			foreach (var zaal in locatie.zalen)
+			Console.Clear();
+			string filmPrijs = "";
+			int bioscopenMetFilm = 0;
+			int tijdenMetFilm = 0;
+			int zalenMetFilm = 0;
+			int dagenCounter = 0;
+			int filmId = Int32.Parse(filmIdString);
+			bool loopBackChecker = false;
+
+			foreach (var locatie in locaties)
 			{
-
-				foreach (var tijd in zaal.tijden)
+				bool checklocatie = false;
+				foreach (var zaal in locatie.dagen)
 				{
-
-					if (tijd.film_ID == filmId)
+					foreach (var z in zaal)
 					{
-						bioscopenMetFilm++;
-						check = true;
-						break;
-					}
-
-				}
-                if (check)
-                {
-					break;
-                }
-			}
-
-		}
-		string[] bioscoopNamen = new string[bioscopenMetFilm];
-		int[] bioscoopNamenID = new int[bioscopenMetFilm];
-
-
-		int bioscoopNamenCounter = 0;
-		int filmtijdenCounter = 0;
-		foreach (var locatie in locaties)
-		{
-			bool check = false;
-			foreach (var zaal in locatie.zalen)
-			{
-
-				foreach (var tijd in zaal.tijden)
-				{
-
-					if (tijd.film_ID == filmId)
-					{
-						bioscoopNamen[bioscoopNamenCounter] = locatie.name + " " + locatie.address;
-						bioscoopNamenID[bioscoopNamenCounter] = locatie.id;
-						check = true;
-						bioscoopNamenCounter++;
-						break;
-					}
-
-				}
-				if (check)
-				{
-					break;
-				}
-			}
-
-		}
-
-		bioscoopNamenCounter = 0;
-		filmtijdenCounter = 0;
-		string bioscoopKeuze;
-		string bioscoopNaam = "";
-		string tijdKeuze;
-		string zaalKeuze;
-		string technologie = "";
-		string dagKeuze;
-		string stoelKeuze;
-		while (true)
-		{
-			Console.WriteLine("Kies de bioscoop waarin u de film wilt bekijken.\n");
-			foreach (var item in bioscoopNamen)
-			{
-
-				Console.WriteLine("[" + bioscoopNamenCounter + "] : " + item + "\n");
-				bioscoopNamenCounter++;
-			}
-			bioscoopKeuze = Console.ReadLine();
-			if (!(bioscoopKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(bioscoopKeuze) || Int32.Parse(bioscoopKeuze) >= bioscoopNamen.Length || Int32.Parse(bioscoopKeuze) < 0)
-			{
-				bioscoopNamenCounter = 0;
-				Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.\n");
-			}
-			else
-			{
-
-				bioscoopKeuze = bioscoopNamenID[int.Parse(bioscoopKeuze)].ToString();
-				foreach (var item in locaties)
-				{
-					if (int.Parse(bioscoopKeuze) == item.id)
-					{
-						bioscoopNaam = item.name;
-						break;
-					}
-				}
-				break;
-			}
-		}
-
-
-
-		foreach (var locatie in locaties)
-		{
-			if (locatie.id == int.Parse(bioscoopKeuze))
-			{
-				foreach (var zaal in locatie.zalen)
-				{
-
-					foreach (var tijd in zaal.tijden)
-					{
-						if (filmId == tijd.film_ID)
+						if (z.film_ID == filmId)
 						{
-							zalenMetFilm++;
+							bioscopenMetFilm++;
+							checklocatie = true;
+							break;
+						}
+
+					}
+					if (checklocatie)
+					{
+						break;
+					}
+
+				}
+
+			}
+
+
+			string[] bioscoopNamen = new string[bioscopenMetFilm];
+			int[] bioscoopNamenID = new int[bioscopenMetFilm];
+
+
+
+			int bioscoopNamenCounter = 0;
+			int filmtijdenCounter = 0;
+			foreach (var locatie in locaties)
+			{
+				bool check = false;
+				foreach (var zaal in locatie.dagen)
+				{
+					foreach (var z in zaal)
+					{
+						if (z.film_ID == filmId)
+						{
+							foreach (var tijd in z.tijden)
+							{
+								bioscoopNamen[bioscoopNamenCounter] = locatie.name + " " + locatie.address;
+								bioscoopNamenID[bioscoopNamenCounter] = locatie.id;
+								check = true;
+								bioscoopNamenCounter++;
+								break;
+
+
+							}
+						}
+						if (check)
+						{
 							break;
 						}
 					}
-				}
-			}
-
-		}
-		string[] zalenTechnoligien = new string[zalenMetFilm];
-		zalenMetFilm = 0;
-		foreach (var locatie in locaties)
-		{
-			if (locatie.id == int.Parse(bioscoopKeuze))
-			{
-				foreach (var zaal in locatie.zalen)
-				{
-
-					foreach (var tijd in zaal.tijden)
+					if (check)
 					{
-						if (filmId == tijd.film_ID)
-						{
-							zalenTechnoligien[zalenMetFilm] = zaal.naam+" "+zaal.type;
-							zalenMetFilm++;
-							break;
-						}
-					}
-				}
-			}
-
-		}
-		zalenMetFilm = 0;
-		while (true)
-		{
-			Console.WriteLine("Kies de zaal waarin u de film wilt bekijken.\n");
-			foreach (var item in zalenTechnoligien)
-			{
-				Console.WriteLine("[" + zalenMetFilm + "] : " + item + "\n");
-				zalenMetFilm++;
-			}
-			zaalKeuze = Console.ReadLine();
-			if (!(zaalKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(zaalKeuze) || Int32.Parse(zaalKeuze) >= zalenTechnoligien.Length || Int32.Parse(zaalKeuze) < 0)
-			{
-				Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.\n");
-				zalenMetFilm = 0;
-			}
-			else
-			{
-				zaalKeuze = zalenTechnoligien[Int32.Parse(zaalKeuze)];
-				switch (zaalKeuze)
-				{
-					case "zaal 1 2D":
-						zaalKeuze = "zaal 1";
-						technologie = "2D";
-						break;
-					case "zaal 2 3D":
-						zaalKeuze = "zaal 2";
-						technologie = "3D";
-						break;
-					case "zaal 3 IMAX":
-						zaalKeuze = "zaal 3";
-						technologie = "IMAX";
-						break;
-
-				}
-				break;
-
-			}
-		}
-		tijdenMetFilm = 0;
-
-		string searchZaal = "";
-		switch (zaalKeuze)
-		{
-			case "zaal 1":
-				searchZaal = "zaal 1";
-				break;
-			case "zaal 2":
-				searchZaal = "zaal 2";
-				break;
-			case "zaal 3":
-				searchZaal = "zaal 3";
-				break;
-		}
-		foreach (var locatie in locaties)
-		{
-			if (locatie.id == int.Parse(bioscoopKeuze))
-			{
-				foreach (var zaal in locatie.zalen)
-				{
-					if (searchZaal == zaal.naam)
-					{
-						foreach (var tijd in zaal.tijden)
-						{
-
-							if (tijd.film_ID == filmId)
-							{
-								tijdenMetFilm++;
-							}
-
-						}
-						break;
-					}
-				}
-			}
-		}
-		string[] filmtijden = new string[tijdenMetFilm];
-		
-		tijdenMetFilm = 0;
-		filmtijdenCounter = 0;
-		foreach (var locatie in locaties)
-		{
-			if (locatie.id == int.Parse(bioscoopKeuze))
-			{
-				foreach (var zaal in locatie.zalen)
-				{
-					if (searchZaal == zaal.naam)
-					{
-						foreach (var tijd in zaal.tijden)
-						{
-
-							if (tijd.film_ID == filmId)
-							{
-								filmtijden[filmtijdenCounter] = tijd.tijd;
-								filmtijdenCounter++;
-							}
-
-						}
-						break;
-					}
-				}
-			}
-		}
-		tijdenMetFilm = 0;
-		filmtijdenCounter = 0;
-		while (true)
-		{
-			Console.WriteLine("Kies de tijd waarin u de film wilt bekijken.");
-			foreach (var item in filmtijden)
-			{
-				Console.WriteLine("[" + filmtijdenCounter + "] : " + item + "\n");
-				filmtijdenCounter++;
-			}
-			tijdKeuze = Console.ReadLine();
-			if (!(tijdKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(tijdKeuze) || Int32.Parse(tijdKeuze) >= filmtijden.Length || Int32.Parse(tijdKeuze) < 0)
-			{
-				filmtijdenCounter = 0;
-				Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.");
-			}
-			else
-			{
-				for (int counter = 0; counter < filmtijden.Length; counter++)
-				{
-					if (counter == Int32.Parse(tijdKeuze))
-					{
-						tijdKeuze = filmtijden[counter];
-						break;
-					}
-				}
-				break;
-			}
-		}
-
-		while (true)
-		{
-			Console.WriteLine("Kies de dag waarop u de film wilt bekijken.");
-			Console.WriteLine("[1] : maandag\n");
-			Console.WriteLine("[2] : dinsdag\n");
-			Console.WriteLine("[3] : woensdag\n");
-			Console.WriteLine("[4] : donderdag\n");
-			Console.WriteLine("[5] : vrijdag\n");
-			Console.WriteLine("[6] : zaterdag\n");
-			Console.WriteLine("[7] : zondag\n");
-			dagKeuze = Console.ReadLine();
-			if (dagKeuze == "1" || dagKeuze == "2" || dagKeuze == "3" || dagKeuze == "4" || dagKeuze == "5" || dagKeuze == "6" || dagKeuze == "7")
-			{
-				switch (dagKeuze)
-				{
-					case "1":
-						dagKeuze = "maandag";
-						break;
-					case "2":
-						dagKeuze = "dinsdag";
-						break;
-					case "3":
-						dagKeuze = "woensdag";
-						break;
-					case "4":
-						dagKeuze = "donderdag";
-						break;
-					case "5":
-						dagKeuze = "vrijdag";
-						break;
-					case "6":
-						dagKeuze = "zaterdag";
-						break;
-					case "7":
-						dagKeuze = "zondag";
-						break;
-
-				}
-				break;
-			}
-			else
-			{
-				Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.");
-			}
-		}
-
-		foreach (var locatie in locaties)
-		{
-			foreach (var zaal in locatie.zalen)
-			{
-
-				foreach (var tijd in zaal.tijden)
-				{
-
-					if (tijd.film_ID == filmId)
-					{
-						bioscoopNaam = locatie.name;
 						break;
 					}
 
@@ -613,78 +556,551 @@ public class ReservatieFilms
 
 			}
 
-		}
-
-		showBeschikbaar(Int32.Parse(bioscoopKeuze), zaalKeuze, tijdKeuze);
-		stoelKeuze = stoelKiezen(Int32.Parse(bioscoopKeuze), zaalKeuze, tijdKeuze);
-		if (bevestiging(filmId, fullName, filmPrijs, bioscoopKeuze, zaalKeuze, technologie, dagKeuze, tijdKeuze, stoelKeuze,locaties))
-		{
-
-		
-		switch (zaalKeuze)
-		{
-			case "zaal 1":
-				zaalKeuze = "1";
-				break;
-			case "zaal 2":
-				zaalKeuze = "2";
-				break;
-			case "zaal 3":
-				zaalKeuze = "3";
-				break;
-		}
-
-		foreach (var item in accounts)
-		{
-			if (item.id == accountID)
-			{
-				if (item.tickets == null)
-				{
-					item.tickets = new Ticket[]
-					{
-						new Ticket() { id = 0, filmID = filmId,name = fullName, prijs = filmPrijs, bioscoopID = Int32.Parse(bioscoopKeuze), zaalID = Int32.Parse(zaalKeuze),filmTechnologie = technologie, dag = dagKeuze, stoel = Int32.Parse(stoelKeuze),tijd = tijdKeuze}
-					};
-
-				}
-				else
-				{
-					var tickets = new Ticket[item.tickets.Length + 1];
-					int ticketcounter = 0;
-					foreach (var item2 in item.tickets)
-					{
-						tickets[ticketcounter] = item2;
-						ticketcounter++;
-					}
-					tickets[tickets.Length - 1] = new Ticket() { id = item.tickets.Length, filmID = filmId, name = fullName, prijs = filmPrijs, bioscoopID = Int32.Parse(bioscoopKeuze), zaalID = Int32.Parse(zaalKeuze), filmTechnologie = technologie, dag = dagKeuze, tijd = tijdKeuze, stoel = Int32.Parse(stoelKeuze) };
-					item.tickets = tickets;
-				}
-			}
-		}
-		string convertedJson = JsonConvert.SerializeObject(accounts, Formatting.Indented);
-		//verander de hele file met de nieuwe json informatie
-		File.WriteAllText("..\\..\\..\\account.json", convertedJson);
-        }
-        else
-        {
-            switch (zaalKeuze)
+			bioscoopNamenCounter = 0;
+			filmtijdenCounter = 0;
+			string bioscoopKeuze = "-1";
+			string bioscoopNaam = "";
+			string tijdKeuze = "";
+			string zaalKeuze = "";
+			string technologie = "";
+			string dagKeuze = "";
+			string stoelKeuze = "";
+            if (loopBackChecker == false)
             {
-                case "zaal 1":
-                    zaalKeuze = "zaal 1";
-                    break;
-                case "zaal 2":
-                    zaalKeuze = "zaal 2";
-                    break;
-                case "zaal 3":
-                    zaalKeuze = "zaal 3";
-                    break;
-            }
-            stoelVrijMaken(Int32.Parse(bioscoopKeuze), zaalKeuze,tijdKeuze,stoelKeuze);
+				while (true)
+				{
+					Console.Clear();
+					Console.WriteLine("Kies de bioscoop waarin u de film wilt bekijken(u kunt '/' typen om al uw keuzes opnieuw te maken).\n");
+					foreach (var item in bioscoopNamen)
+					{
 
+						Console.WriteLine("[" + bioscoopNamenCounter + "] : " + item + "\n");
+						bioscoopNamenCounter++;
+					}
+					bioscoopKeuze = Console.ReadLine();
+                    if (bioscoopKeuze.Trim() == "/")
+                    {
+						loopBackChecker = true;
+						break;
+
+					}
+					else if (!(bioscoopKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(bioscoopKeuze) || Int32.Parse(bioscoopKeuze) >= bioscoopNamen.Length || Int32.Parse(bioscoopKeuze) < 0)
+					{
+						bioscoopNamenCounter = 0;
+						Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.\n");
+						Thread.Sleep(1000);
+					}
+					else
+					{
+
+						bioscoopKeuze = bioscoopNamenID[int.Parse(bioscoopKeuze)].ToString();
+						foreach (var item in locaties)
+						{
+							if (int.Parse(bioscoopKeuze) == item.id)
+							{
+								bioscoopNaam = item.name;
+								break;
+							}
+						}
+						break;
+					}
+				}
+			}
+
+			if (loopBackChecker == false)
+			{
+				foreach (var locatie in locaties)
+				{
+					if (int.Parse(bioscoopKeuze) == locatie.id)
+					{
+						foreach (var zaal in locatie.dagen)
+						{
+							foreach (var z in zaal)
+							{
+								if (z.film_ID == filmId)
+								{
+									dagenCounter++;
+									break;
+								}
+							}
+
+
+						}
+						break;
+					}
+				}
+			}
+			string[] datums = new string[dagenCounter];
+			if (loopBackChecker == false)
+            {
+				
+				dagenCounter = 0;
+				foreach (var locatie in locaties)
+				{
+					if (int.Parse(bioscoopKeuze) == locatie.id)
+					{
+						foreach (var zaal in locatie.dagen)
+						{
+							foreach (var z in zaal)
+							{
+								if (z.film_ID == filmId)
+								{
+									datums[dagenCounter] = z.datum;
+									dagenCounter++;
+									break;
+								}
+							}
+
+						}
+						break;
+					}
+
+				}
+			}
+			string datumKeuze = "";
+			if (loopBackChecker == false)
+			{
+
+
+				dagenCounter = 0;
+				bool extracheck = true;
+				
+				while (extracheck)
+				{
+					Console.Clear();
+					Console.WriteLine("Kies de datum waarin u de film wilt bekijken(u kunt '/' typen om al uw keuzes opnieuw te maken).\n");
+					foreach (var datum in datums)
+					{
+						Console.WriteLine("[" + dagenCounter + "] : " + datum);
+						dagenCounter++;
+					}
+					datumKeuze = Console.ReadLine();
+					if (datumKeuze.Trim() == "/")
+					{
+						loopBackChecker = true;
+						break;
+
+					}
+					else if (!(datumKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(datumKeuze) || Int32.Parse(datumKeuze) >= datums.Length || Int32.Parse(datumKeuze) < 0)
+					{
+						dagenCounter = 0;
+						Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.\n");
+						Thread.Sleep(1000);
+					}
+					else
+					{
+
+						datumKeuze = datums[int.Parse(datumKeuze)];
+						break;
+					}
+				}
+			}
+			if (loopBackChecker == false)
+			{
+				foreach (var locatie in locaties)
+				{
+					if (locatie.id == int.Parse(bioscoopKeuze))
+					{
+						foreach (var zaal in locatie.dagen)
+						{
+							foreach (var z in zaal)
+							{
+								if (datumKeuze == z.datum)
+								{
+									if (filmId == z.film_ID)
+									{
+										foreach (var tijd in z.tijden)
+										{
+
+											zalenMetFilm++;
+											break;
+
+										}
+									}
+								}
+							}
+
+
+						}
+					}
+
+				}
+			}
+			string[] zalenTechnoligien = new string[zalenMetFilm];
+			zalenMetFilm = 0;
+            if (loopBackChecker == false)
+            {
+				foreach (var locatie in locaties)
+				{
+					if (locatie.id == int.Parse(bioscoopKeuze))
+					{
+						foreach (var zaal in locatie.dagen)
+						{
+							foreach (var z in zaal)
+							{
+								if (datumKeuze == z.datum)
+								{
+									if (filmId == z.film_ID)
+									{
+										foreach (var tijd in z.tijden)
+										{
+
+											zalenTechnoligien[zalenMetFilm] = z.naam + " " + z.type + " : " + z.prijs;
+											zalenMetFilm++;
+											break;
+
+										}
+									}
+								}
+							}
+
+
+						}
+					}
+
+				}
+			}
+			
+			zalenMetFilm = 0;
+			if (loopBackChecker == false)
+			{
+
+
+				while (true)
+				{
+					Console.Clear();
+					Console.WriteLine("Kies de zaal waarin u de film wilt bekijken(u kunt '/' typen om al uw keuzes opnieuw te maken).\n");
+					foreach (var item in zalenTechnoligien)
+					{
+						Console.WriteLine("[" + zalenMetFilm + "] : " + item + "\n");
+						zalenMetFilm++;
+					}
+					zaalKeuze = Console.ReadLine();
+					if (zaalKeuze.Trim() == "/")
+					{
+						loopBackChecker = true;
+						break;
+
+					}
+					else if (!(zaalKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(zaalKeuze) || Int32.Parse(zaalKeuze) >= zalenTechnoligien.Length || Int32.Parse(zaalKeuze) < 0)
+					{
+						Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.\n");
+						zalenMetFilm = 0;
+						Thread.Sleep(1000);
+					}
+					else
+					{
+						zaalKeuze = zalenTechnoligien[Int32.Parse(zaalKeuze)];
+                        break;
+
+					}
+				}
+			}
+			tijdenMetFilm = 0;
+			string searchZaal = "";
+			bool tijdChecker = false;
+			if (loopBackChecker == false)
+            {
+
+            
+			switch (zaalKeuze)
+			{
+				case "zaal 1 2D : 12,5":
+					searchZaal = "zaal 1";
+					break;
+				case "zaal 2 3D : 15,00":
+					searchZaal = "zaal 2";
+					break;
+				case "zaal 3 IMAX : 17,50":
+					searchZaal = "zaal 3";
+					break;
+			}
+			
+			foreach (var locatie in locaties)
+			{
+				if (locatie.id == int.Parse(bioscoopKeuze))
+				{
+					foreach (var zaal in locatie.dagen)
+					{
+						foreach (var z in zaal)
+						{
+							if (z.datum == datumKeuze)
+							{
+								if (searchZaal == z.naam)
+								{
+									//if (z.film_ID == filmId)
+									//{
+									foreach (var tijd in z.tijden)
+									{
+
+
+										tijdenMetFilm++;
+
+
+									}
+									//}
+									tijdChecker = true;
+									break;
+								}
+								if (tijdChecker)
+								{
+									break;
+								}
+							}
+							if (tijdChecker)
+							{
+								break;
+							}
+							if (tijdChecker)
+							{
+								break;
+							}
+						}
+
+						if (tijdChecker)
+						{
+							break;
+						}
+					}
+					if (tijdChecker)
+					{
+						break;
+					}
+				}
+			}
+			}
+			string[] filmtijden = new string[tijdenMetFilm];
+
+			tijdenMetFilm = 0;
+			filmtijdenCounter = 0;
+			tijdChecker = false;
+			if (loopBackChecker == false)
+			{
+				foreach (var locatie in locaties)
+				{
+					if (locatie.id == int.Parse(bioscoopKeuze))
+					{
+						foreach (var zaal in locatie.dagen)
+						{
+							foreach (var z in zaal)
+							{
+								if (z.datum == datumKeuze)
+								{
+									if (searchZaal == z.naam)
+									{
+										//if (z.film_ID == filmId)
+										//{
+										foreach (var tijd in z.tijden)
+										{
+
+
+											filmtijden[filmtijdenCounter] = tijd.tijd;
+											filmtijdenCounter++;
+
+
+										}
+										//}
+										tijdChecker = true;
+										break;
+									}
+									if (tijdChecker)
+									{
+										break;
+									}
+
+								}
+								if (tijdChecker)
+								{
+									break;
+								}
+							}
+							if (tijdChecker)
+							{
+								break;
+							}
+						}
+						if (tijdChecker)
+						{
+							break;
+						}
+					}
+				}
+			}
+			tijdenMetFilm = 0;
+			filmtijdenCounter = 0;
+			if (loopBackChecker == false)
+			{
+
+
+				while (true)
+				{
+					Console.Clear();
+					Console.WriteLine("Kies de tijd waarin u de film wilt bekijken(u kunt '/' typen om al uw keuzes opnieuw te maken).");
+					foreach (var item in filmtijden)
+					{
+						Console.WriteLine("[" + filmtijdenCounter + "] : " + item + "\n");
+						filmtijdenCounter++;
+					}
+					tijdKeuze = Console.ReadLine();
+                    if (tijdKeuze.Trim() == "/")
+                    {
+						loopBackChecker = true;
+						break;
+                    }
+					else if (!(tijdKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(tijdKeuze) || Int32.Parse(tijdKeuze) >= filmtijden.Length || Int32.Parse(tijdKeuze) < 0)
+					{
+						filmtijdenCounter = 0;
+						Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.");
+						Thread.Sleep(1000);
+					}
+					else
+					{
+						for (int counter = 0; counter < filmtijden.Length; counter++)
+						{
+							if (counter == Int32.Parse(tijdKeuze))
+							{
+								tijdKeuze = filmtijden[counter];
+								break;
+							}
+						}
+						break;
+					}
+				}
+			}
+			if (loopBackChecker == false)
+			{
+				foreach (var locatie in locaties)
+				{
+					foreach (var zaal in locatie.dagen)
+					{
+						foreach (var z in zaal)
+						{
+							if (z.datum == datumKeuze)
+							{
+								if (z.film_ID == filmId)
+								{
+									foreach (var tijd in z.tijden)
+									{
+
+
+										bioscoopNaam = locatie.name;
+										break;
+
+
+									}
+								}
+							}
+						}
+
+
+					}
+
+				}
+			}
+			if (loopBackChecker == false)
+			{
+
+				Console.Clear();
+				showBeschikbaar(Int32.Parse(bioscoopKeuze), searchZaal, tijdKeuze, datumKeuze);
+				stoelKeuze = stoelKiezen(Int32.Parse(bioscoopKeuze), searchZaal, tijdKeuze, datumKeuze);
+                if (stoelKeuze.Trim() == "/")
+                {
+					loopBackChecker = true;
+
+				}
+				if (loopBackChecker == false)
+				{
+					switch (zaalKeuze)
+					{
+						case "zaal 1 2D : 12,5":
+							zaalKeuze = "zaal 1";
+							technologie = "2D";
+							filmPrijs = "12,50";
+							break;
+						case "zaal 2 3D : 15,0":
+							zaalKeuze = "zaal 2";
+							technologie = "3D";
+							filmPrijs = "15,00";
+							break;
+						case "zaal 3 IMAX : 17,5":
+							zaalKeuze = "zaal 3";
+							technologie = "IMAX";
+							filmPrijs = "17,50";
+							break;
+
+					}
+					if (bevestiging(filmId, fullName, double.Parse(filmPrijs), bioscoopKeuze, zaalKeuze, technologie, datumKeuze, tijdKeuze, stoelKeuze, locaties))
+					{
+
+
+						switch (zaalKeuze)
+						{
+							case "zaal 1":
+								zaalKeuze = "1";
+								break;
+							case "zaal 2":
+								zaalKeuze = "2";
+								break;
+							case "zaal 3":
+								zaalKeuze = "3";
+								break;
+						}
+
+						foreach (var item in accounts)
+						{
+							if (item.id == accountID)
+							{
+								if (item.tickets == null)
+								{
+									item.tickets = new Ticket[]
+									{
+						new Ticket() { id = 0, filmID = filmId.ToString(),name = fullName, prijs = double.Parse(filmPrijs), bioscoopID = Int32.Parse(bioscoopKeuze), zaalID = Int32.Parse(zaalKeuze),filmTechnologie = technologie, dag = datumKeuze, stoel = Int32.Parse(stoelKeuze),tijd = tijdKeuze}
+									};
+
+								}
+								else
+								{
+									var tickets = new Ticket[item.tickets.Length + 1];
+									int ticketcounter = 0;
+									foreach (var item2 in item.tickets)
+									{
+										tickets[ticketcounter] = item2;
+										ticketcounter++;
+									}
+									tickets[tickets.Length - 1] = new Ticket() { id = item.tickets.Length, filmID = filmId.ToString(), name = fullName, prijs = double.Parse(filmPrijs), bioscoopID = Int32.Parse(bioscoopKeuze), zaalID = Int32.Parse(zaalKeuze), filmTechnologie = technologie, dag = datumKeuze, tijd = tijdKeuze, stoel = Int32.Parse(stoelKeuze) };
+									item.tickets = tickets;
+								}
+							}
+						}
+						string convertedJson = JsonConvert.SerializeObject(accounts, Formatting.Indented);
+						//verander de hele file met de nieuwe json informatie
+						File.WriteAllText("..\\..\\..\\account.json", convertedJson);
+						loopBack = false;
+					}
+					else
+					{
+						switch (zaalKeuze)
+						{
+							case "zaal 1":
+								zaalKeuze = "zaal 1";
+								break;
+							case "zaal 2":
+								zaalKeuze = "zaal 2";
+								break;
+							case "zaal 3":
+								zaalKeuze = "zaal 3";
+								break;
+						}
+						stoelVrijMaken(Int32.Parse(bioscoopKeuze), zaalKeuze, tijdKeuze, stoelKeuze, datumKeuze);
+						loopBack = false;
+					}
+				}
+			}
 		}
 	}
 
-    private bool bevestiging(string filmId, string fullName, double filmPrijs, string bioscoopKeuze, string zaalKeuze, string technologie, string dagKeuze, string tijdKeuze, string stoelKeuze, List<Cinema_adress> bioscopenLijst)
-    {
+	private bool bevestiging(int filmId, string fullName, double filmPrijs, string bioscoopKeuze, string zaalKeuze, string technologie, string dagKeuze, string tijdKeuze, string stoelKeuze, List<Cinema_adress> bioscopenLijst)
+	{
 		string bevestiging = "";
 		string filmNaam = "";
 		string bioscoopNaam = "";
@@ -692,14 +1108,14 @@ public class ReservatieFilms
 
 		// maak een lijst van alle informatie die er is
 		List<movie> films = JsonConvert.DeserializeObject<List<movie>>(strResultJson);
-		
-        foreach (var item in films)
-        {
-            if (item.id == Int32.Parse(filmId))
-            {
+
+		foreach (var item in films)
+		{
+			if (item.id == filmId)
+			{
 				filmNaam = item.name;
-            }
-        }
+			}
+		}
 		foreach (var item in bioscopenLijst)
 		{
 			if (item.id == Int32.Parse(bioscoopKeuze))
@@ -707,8 +1123,8 @@ public class ReservatieFilms
 				bioscoopNaam = item.name;
 			}
 		}
-        switch (zaalKeuze)
-        {
+		switch (zaalKeuze)
+		{
 			case "zaal 1":
 				zaalKeuze = "1";
 				break;
@@ -738,34 +1154,35 @@ public class ReservatieFilms
 				break;
 		}
 		while (true)
-        {
+		{
 			Console.Clear();
-			Console.WriteLine("Film ID : "+filmId);
+			Console.WriteLine("Film ID : " + filmId);
 			Console.WriteLine("Film naam : " + filmNaam);
 			Console.WriteLine("Volledige naam : " + fullName);
 			Console.WriteLine("Prijs : " + filmPrijs);
-			Console.WriteLine("Bioscoop naam : " + bioscoopNaam );
-			Console.WriteLine("Zaal : " + zaalKeuze );
-			Console.WriteLine("Zaal technologie : " + technologie );
-			Console.WriteLine("Dag : " + dagKeuze );
-			Console.WriteLine("Tijd : " + tijdKeuze );
+			Console.WriteLine("Bioscoop naam : " + bioscoopNaam);
+			Console.WriteLine("Zaal : " + zaalKeuze);
+			Console.WriteLine("Zaal technologie : " + technologie);
+			Console.WriteLine("Datum : " + dagKeuze);
+			Console.WriteLine("Tijd : " + tijdKeuze);
 			Console.WriteLine("Stoel : " + stoelKeuze + "\n\n");
 
 			Console.WriteLine("Wilt u een bestelling plaatsen met deze informatie?");
 			Console.WriteLine("Beantwoordt de vraag met 'ja' of 'nee'.\n");
 			bevestiging = Console.ReadLine();
-            if (bevestiging == "ja")
-            {
+			if (bevestiging == "ja")
+			{
 				return true;
-            }else if (bevestiging == "nee")
-            {
+			}
+			else if (bevestiging == "nee")
+			{
 				return false;
-            }
-            else
-            {
+			}
+			else
+			{
 				Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.");
 				Thread.Sleep(2000);
 			}
 		}
-    }
+	}
 }

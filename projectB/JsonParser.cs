@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+
 public class Account
 {
     public int id { get; set; }
@@ -6,25 +8,15 @@ public class Account
     public string password { get; set; }
     public string security { get; set; }
     public string rol { get; set; }
-    #nullable enable
+#nullable enable
     public Ticket[]? tickets { get; set; }
-    #nullable disable
-    public EtenBestelling[] etenBestelling { get; set; }
-    
+    public object etenBestelling { get; internal set; }
+#nullable disable
 }
-
-public class EtenBestelling
-{
-    public int orderID { get; set; }
-    public System.Collections.Generic.Dictionary<string, int> orderList { get; set; }
-    public double total { get; set; }
-
-}
-
 
 public class Ticket
 {
-    #nullable enable
+#nullable enable
     public int id { get; set; }
     public string filmID { get; set; }
     public string name { get; set; }
@@ -50,6 +42,7 @@ public class movie
     public bool showing { get; set; }
 }
 
+
 public class Cinema_adress
 {
     public int id { get; set; }
@@ -60,7 +53,7 @@ public class Cinema_adress
     public string zipcode { get; set; }
     public string city { get; set; }
     public string telNr { get; set; }
-    public Zalen[] zalen { get; set; }
+    public List<List<Zalen>> dagen { get; set; }
 }
 
 public class Zalen
@@ -68,18 +61,26 @@ public class Zalen
     public string naam { get; set; }
     public string type { get; set; }
     public int zitplekken { get; set; }
-    public Tijden[] tijden { get; set; }
-    
+    public List<Tijden> tijden { get; set; }
+    public string Create_Date { get; set; }
+    public string datum { get; set; }
+    public int? film_ID { get; set; }
+    public double prijs { get; set; }
 }
-
 public class Tijden
 {
     public string tijd { get; set; }
-    public string film_ID  { get; set; }
-    public System.Collections.Generic.Dictionary<string, bool> beschikbaar { get; set; }
-    public System.Collections.Generic.Dictionary<string, bool> gebroken { get; set; }
+    public string beschikbaar { get; set; }
+
 }
 
+public class EtenBestelling
+{
+    public int orderID { get; set; }
+    public System.Collections.Generic.Dictionary<string, int> orderList { get; set; }
+    public double total { get; set; }
+
+}
 
 public class Eten
 {
@@ -90,9 +91,3 @@ public class Eten
     public string productType { get; set; }
 
 }
-
-
-
-
-
-

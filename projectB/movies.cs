@@ -20,6 +20,7 @@ public class Movies
         Console.Clear();
         string Keuze = "";
 
+        //Pagina blijft runnen zolang keuze is niet gelijk aan 1
         while (Keuze != "1")
         {
             Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
@@ -49,7 +50,7 @@ public class Movies
                         showing = "MOMENTEEL NIET TE ZIEN";
 
                 }
-                //print alles uit
+                //print alle films
                 
                 Console.WriteLine("-----------------------------------------------------------------------------------------------------");
                 Console.WriteLine("                                         Film-ID : " + item.id);
@@ -62,10 +63,11 @@ public class Movies
 
             }
 
+            //Elke rol heeft een ander weergave van het menu.
             if (rol == "gebruiker")
             {
                 Console.WriteLine("\n" +"*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" + "\n" + 
-                                        "| [1] Terug | [2] Kijk Film | [3] Zoeken | [4] Filtreren |" + "\n" + 
+                                        "| [1] Terug | [2] Kijk Film | [3] Zoeken | [4] Filteren |" + "\n" + 
                                         "----------------------------------------------------------");
                 Console.WriteLine("----------------------------------------------------------------");
                 Console.WriteLine("| Toets 1 om terug te keren naar het hoofdmenu.                |" + "\n" +
@@ -77,7 +79,7 @@ public class Movies
             else if (rol == "admin")
             {
                 Console.WriteLine("\n" + "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n" +
-                                         "| [1] Terug | [2] Toevoegen | [3] Aanpassen | [4] Verwijderen | [5] Kijk Film | [6] Zoeken | [7] Filtreren | [8] Film toewijzen |" + "\n" +
+                                         "| [1] Terug | [2] Toevoegen | [3] Aanpassen | [4] Verwijderen | [5] Kijk Film | [6] Zoeken | [7] Filteren | [8] Film toewijzen |" + "\n" +
                                          "---------------------------------------------------------------------------------------------------------------------------------");
                 Console.WriteLine("----------------------------------------------------------------");
                 Console.WriteLine("| Toets 1 om terug te keren naar het hoofdmenu.                |" + "\n" +
@@ -98,10 +100,9 @@ public class Movies
             }
                 
 
-
-
             Keuze = Console.ReadLine();
-
+            
+            //Check of the gebruiker heeft een van de weergegeven keuzes ingevoerd.
             if (rol == "gebruiker")
             {
                 while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4")
@@ -123,6 +124,7 @@ public class Movies
                         break;
                 }
             }
+            //Check of the admin heeft een van de weergegeven keuzes ingevoerd.
             else if (rol =="admin")
             {
                 while (Keuze.Trim() != "1"  && Keuze.Trim() != "2"  && Keuze.Trim() != "3"  && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" && Keuze.Trim() != "8")
@@ -168,14 +170,21 @@ public class Movies
 
     private static void addFilm(List<movie> movieList, string url)
     {
+        /*
+		 * In deze functie kan de admin een nieuwe film toevoegen aan de lijst van films.
+		 * Alle velden zijn verplicht om in te vullen
+		 * Als de gebruiker een ongeldig invoer invult krijgt hij dan een melding
+		 * Er wordt gechekt of een veld een lege string bevat (Alleen spaties)
+		 * Er is ook een optie om functie te annuleren door * in te toetsen.
+		 */
+
         Console.Clear();
         int id = 0;
         foreach (dynamic item in movieList)
         {
-            //Check de laatste id
+            //Genereert een nieuwe uniek ID voor een nieuwe film
             id = item.id + 1;
         }
-
 
         Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
         Console.WriteLine("|          Nieuwe film toevoegen              |");
@@ -184,12 +193,15 @@ public class Movies
         Console.WriteLine("|    Voer de filmtitel in: (typ '*' om te annuleren)   |");
         Console.WriteLine("--------------------------------------------------------" + "\n");
         string name = Console.ReadLine();
+
+        //Check of gebruiker spatie heeft ingevoerd.
         while (string.IsNullOrEmpty(name) || name.Trim().Length == 0)
         {
             Console.WriteLine("Vul in een geldige naam a.u.b!");
             Thread.Sleep(3000);
             name = Console.ReadLine();
         }
+        //Als input is gelijk aan * wordt de functie geannuleerd.
         if(name.Trim() == "*")
         {
             Console.WriteLine("Bewerking is geannuleerd!");
@@ -209,6 +221,7 @@ public class Movies
         while (check)
         {
             year = Console.ReadLine();
+            //Check of jaar een nummer is dat gelijk of groter is dan 1888 en niet groter that huidige jaar.
             if (int.TryParse(year, out yearPlaceholder))
             {
                 if (yearPlaceholder < 1888 || yearPlaceholder > @DateTime.Now.Year)
@@ -376,9 +389,9 @@ public class Movies
             Console.Clear();
             return;
         }
-        
 
 
+        //Na invullen van alle gegevens wordt het toegevoegd in het lijst van films.
         movieList.Add(new movie()
         {
 
@@ -391,9 +404,8 @@ public class Movies
             releasedate = releasedate.Trim(),
             showing = false
 
-
         });
-
+        
 
         //verdander de lijst naar een json type
         var convertedJson = JsonConvert.SerializeObject(movieList, Formatting.Indented);
@@ -407,6 +419,15 @@ public class Movies
 
     private static void editFilm(List<movie> movieList, string url)
     {
+        /*
+		 * In deze functie kan de admin een bestande film gegevens wijzigen
+		 * Alle velden zijn niet verplicht om in te vullen
+		 * Gebruiker kan / in toetsen om een veld over te slaan (Dus hij kan kiezen welke veld hij wil wijzigen en welke niet.)
+		 * Als de gebruiker een ongeldig invoer invult krijgt hij dan een melding.
+		 * Er wordt gechekt of een veld een lege string bevat (Alleen spaties)
+		 * Er is ook een optie om functie te annuleren door * in te toetsen.
+		 */
+
         Console.Clear();
         Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
         Console.WriteLine("|                     Aanpassen                   |");
@@ -748,15 +769,20 @@ public class Movies
 
     private static void removeFilm(List<movie> movieList, string url)
     {
-        
+        /*
+		 * In deze functie kan de admin een film uit het lijst verwijderen.
+		 * Er wordt gevraagd voor de ID van de film
+		 * Als de ID niet in het lijst voorkomt krijgt de admin een melding te zien zien dat  film ID niet bestaat.
+		 * Als ID gevonden is wordt het film verwijdert uit het lijst
+		 * Er is ook een optie om functie te annuleren door * in te toetsen.
+		 */
+
         int[] filmArray = new int[movieList.Count()];
         for (int i = 0; i < movieList.Count(); i++)
         {
             filmArray[i] = movieList[i].id;
         }
         int filmNr = int.MinValue;
-        //bool check = true;
-        //string intCheck = "";
         Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
         Console.WriteLine("|                   Verwijderen                     |");
         Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
@@ -797,10 +823,8 @@ public class Movies
 
             }
             
-
-            
         }
-        //movieList.RemoveAt(filmNr);
+        //Film in lijst dat overeenkomt met ID wordt verwijdert
         for (int i = 0; i < movieList.Count; i++)
         {
             if (movieList[i].id == filmNr)
@@ -821,9 +845,14 @@ public class Movies
 
     private static void viewFilm(List<movie> movieList,int id)
     {
+        /*
+		 * In deze functie kan de gebruiker invoeren welke film hij wilt kijken.
+		 * Alle velden zijn verplicht om in te vullen
+		 * Als de gebruiker een ongeldig invoer invult krijgt hij dan een melding of als keuze een optie die niet bestaat.
+		 * Er is ook een optie om functie te annuleren door * in te toetsen.
+		 */
         string Keuze = "";
         
-
         int[] filmIdArr = new int[movieList.Count()];
             for (int i = 0; i < movieList.Count(); i++)
             {
@@ -955,7 +984,7 @@ public class Movies
             {
                 case "2":
                     ReservatieFilms reservatie = new ReservatieFilms();
-                    reservatie.reserveren(filmID,id);
+                    reservatie.reserveren(filmID, id);
                     Thread.Sleep(1000);
                     break;
             }
@@ -1099,89 +1128,61 @@ public class Movies
                 break;
         }
 
-        string[] beschikbaarTijden;
+        string[] beschikbaarDatum;
         string[] helper;
-        int countLength = 0;
-
-        foreach (dynamic item in locatieList)
+        int countlength = 0;
+        foreach(dynamic item in locatieList)
         {
-            if (item.id == bioscoopID)
+            if(item.id == bioscoopID)
             {
-                foreach (dynamic zalen in item.zalen)
+                foreach(dynamic dag in item.dagen)
                 {
-                    if (zalen.type == filmTechnologie)
+                    for(int i=0; i<dag.Count; i++)
                     {
-                        foreach(dynamic tijden in zalen.tijden)
+                        if(dag[i].type == filmTechnologie && dag[i].film_ID == null)
                         {
-                            if (tijden.film_ID == null)
-                            {
-                                countLength++;
-                            }
-                        }
-                        
-                    }
-                }
-                
-            } 
-        }
-
-        beschikbaarTijden = new string[countLength];
-        helper = new string[countLength];
-
-        foreach (dynamic item in locatieList)
-        {
-            if (item.id == bioscoopID)
-            {
-                foreach (dynamic zalen in item.zalen)
-                {
-                    if (zalen.type == filmTechnologie)
-                    {
-                        int index = 0;
-                        int index2 = 0;
-                        foreach (dynamic tijden in zalen.tijden)
-                        {
+                           
+                            countlength++;
                             
-                            if (tijden.film_ID == null)
-                            {
-                                switch (tijden.tijd)
-                                {
-                                    case "9-12":
-                                        beschikbaarTijden[index++] = $"     [{index}] Tijd: 9:00 - 12:00\n\n";
-                                        helper[index2++] = tijden.tijd;
-                                        break;
-                                    case "12-15":
-                                        beschikbaarTijden[index++] = $"     [{index}] Tijd: 12:00 - 15:00\n\n";
-                                        helper[index2++] = tijden.tijd;
-                                        break;
-                                    case "15-18":
-                                        beschikbaarTijden[index++] = $"     [{index}] Tijd: 15:00 - 18:00\n\n";
-                                        helper[index2++] = tijden.tijd;
-                                        break;
-                                    case "18-21":
-                                        beschikbaarTijden[index++] = $"     [{index}] Tijd: 18:00 - 21:00\n\n";
-                                        helper[index2++] = tijden.tijd;
-                                        break;
-                                    case "21-24":
-                                        beschikbaarTijden[index++] = $"     [{index}] Tijd: 21:00 - 00:00\n\n";
-                                        helper[index2++] = tijden.tijd;
-                                        break;
-                                }
-                              
-                            }
                         }
-                        
                     }
                 }
                 
             }
         }
+
+        beschikbaarDatum = new string[countlength];
+        helper = new string[countlength];
+
+        foreach (dynamic item in locatieList)
+        {
+            if (item.id == bioscoopID)
+            {
+                int index = 0;
+                int index2 = 0;
+                foreach (dynamic dag in item.dagen)
+                {
+                    for (int i = 0; i < dag.Count; i++)
+                    {
+                        if (dag[i].type == filmTechnologie && dag[i].film_ID == null)
+                        {
+                            beschikbaarDatum[index++] = $"[{index}] Datum: {dag[i].datum}\n\n";
+                            helper[index2++] = dag[i].datum;
+                        }
+                    }
+                    
+                }
+            }
+        }
+
+
         Console.WriteLine("-------------------------------------------------");
-        Console.WriteLine("| Beschikbare tijden: (typ '*' om te annuleren) |");
-        Console.WriteLine("-------------------------------------------------");
+        Console.WriteLine("| Beschikbare datums: (typ '*' om te annuleren) |");
+        Console.WriteLine("-------------------------------------------------\n");
 
         string Keuze;
-        string gekozenTijd = "";
-        if (beschikbaarTijden.Length == 0)
+        string gekozenDatum = "";
+        if (beschikbaarDatum.Length == 0)
         {
             Console.WriteLine("Er zijn geen tijden beschikbaar! (typ '*' om te annuleren) \n");
             Keuze = Console.ReadLine();
@@ -1190,6 +1191,7 @@ public class Movies
             {
                 Console.WriteLine("Er zijn geen tijden beschikbaar! (typ '*' om te annuleren) \n");
                 Keuze = Console.ReadLine();
+
             }
 
             if (Keuze.Trim() == "*")
@@ -1202,14 +1204,14 @@ public class Movies
         }
         else
         {
-            for(int i=0; i< beschikbaarTijden.Length; i++)
+            for (int i = 0; i < beschikbaarDatum.Length; i++)
             {
-                Console.WriteLine(beschikbaarTijden[i]);
+                Console.WriteLine(beschikbaarDatum[i]);
             }
 
             Keuze = Console.ReadLine();
-            
-            switch (beschikbaarTijden.Length)
+
+            switch (beschikbaarDatum.Length)
             {
                 case 1:
                     while (Keuze.Trim() != "1" && Keuze.Trim() != "*")
@@ -1224,7 +1226,7 @@ public class Movies
                         Console.Clear();
                         return;
                     }
-                    gekozenTijd = helper[Int32.Parse(Keuze) - 1];
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
                     break;
                 case 2:
                     while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "*")
@@ -1239,7 +1241,7 @@ public class Movies
                         Console.Clear();
                         return;
                     }
-                    gekozenTijd = helper[Int32.Parse(Keuze) - 1];
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
                     break;
                 case 3:
                     while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "*")
@@ -1254,7 +1256,7 @@ public class Movies
                         Console.Clear();
                         return;
                     }
-                    gekozenTijd = helper[Int32.Parse(Keuze) - 1];
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
                     break;
                 case 4:
                     while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "*")
@@ -1269,7 +1271,7 @@ public class Movies
                         Console.Clear();
                         return;
                     }
-                    gekozenTijd = helper[Int32.Parse(Keuze) - 1];
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
                     break;
                 case 5:
                     while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "*")
@@ -1284,37 +1286,176 @@ public class Movies
                         Console.Clear();
                         return;
                     }
-                    gekozenTijd = helper[Int32.Parse(Keuze) - 1];
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 6:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 7:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" 
+                        && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 8:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" 
+                        && Keuze.Trim() != "8" && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 9:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" 
+                        && Keuze.Trim() != "8" && Keuze.Trim() != "9" && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 10:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" 
+                        && Keuze.Trim() != "8" && Keuze.Trim() != "9" && Keuze.Trim() != "10"  && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 11:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" 
+                        && Keuze.Trim() != "8" && Keuze.Trim() != "9" && Keuze.Trim() != "10" && Keuze.Trim() != "11"  && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 12:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" 
+                        && Keuze.Trim() != "8" && Keuze.Trim() != "9" && Keuze.Trim() != "10" && Keuze.Trim() != "11" && Keuze.Trim() != "12"  && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 13:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" && Keuze.Trim() != "8" && Keuze.Trim() != "9" && Keuze.Trim() != "10" && Keuze.Trim() != "11" && Keuze.Trim() != "12" && Keuze.Trim() != "13" &&  Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
+                    break;
+                case 14:
+                    while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4" && Keuze.Trim() != "5" && Keuze.Trim() != "6" && Keuze.Trim() != "7" && Keuze.Trim() != "8" && Keuze.Trim() != "9" && Keuze.Trim() != "10" && Keuze.Trim() != "11" && Keuze.Trim() != "12" && Keuze.Trim() != "13" && Keuze.Trim() != "14" && Keuze.Trim() != "*")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        Keuze = Console.ReadLine();
+                    }
+                    if (Keuze.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        return;
+                    }
+                    gekozenDatum = helper[Int32.Parse(Keuze) - 1];
                     break;
             }
 
         }
 
+        
         foreach (dynamic item in locatieList)
         {
             if (item.id == bioscoopID)
             {
-                foreach (dynamic zalen in item.zalen)
+                foreach (dynamic dag in item.dagen)
                 {
-                    if (zalen.type == filmTechnologie)
+                    for (int i = 0; i < dag.Count; i++)
                     {
-                        foreach (dynamic tijden in zalen.tijden)
+                        if (dag[i].type == filmTechnologie && dag[i].datum == gekozenDatum)
                         {
-                            if (tijden.tijd == gekozenTijd)
-                            {
-                                tijden.film_ID = filmIDplaceHolder;
-                            }
+                            dag[i].film_ID = filmId;
                         }
-                        
                     }
                 }
-               
             }
         }
 
+        
+
         foreach (dynamic item in movielist)
         {
-            if(item.id == filmId)
+            if (item.id == filmId)
             {
                 item.showing = true;
                 break;
@@ -1325,7 +1466,7 @@ public class Movies
         //verander de hele file met de nieuwe json informatie
         File.WriteAllText(locatieUrl, JsonConvert.SerializeObject(locatieList, Formatting.Indented));
         File.WriteAllText(movieUrl, JsonConvert.SerializeObject(movielist, Formatting.Indented));
-        Console.WriteLine("Film is succesvol toegewezen!");
+        Console.WriteLine("Film is succesvol ingeroosterd!");
         Thread.Sleep(3000);
         Console.Clear();
 
