@@ -130,8 +130,12 @@ public class Gegevens
 
         // maak een lijst van alle informatie die er is
         List<Account> accountList = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
-        Console.WriteLine("Voer de ID in van de ticket die u wilt annuleren:");
+        Console.WriteLine("Voer de ID in van de ticket die u wilt annuleren of voer * in om terug te gaan:");
         string ticketId = Console.ReadLine();
+        if(ticketId == "*")
+        {
+            return;
+        }
         bool foundID = false;
         var biosID = 0;
         var zaalID = "";
@@ -140,6 +144,12 @@ public class Gegevens
         var tID = 0;
         var zitString = "";
         var stoel = 0;
+        if(accountList[Accountid].tickets == null)
+        {
+            Console.WriteLine("U heeft geen tickets gereserveerd");
+            Thread.Sleep(2000);
+            return;
+        }
         foreach(var item in accountList){
             if (item.id == Accountid)
             {
@@ -183,12 +193,10 @@ public class Gegevens
                                         if (tijd.tijd == t)
                                         {
                                             zitString = tijd.beschikbaar;
-                                            Console.WriteLine(zitString);
                                             StringBuilder sb = new StringBuilder(zitString);
                                             sb[stoel - 1] = 'T';
                                             zitString = sb.ToString();
                                             tijd.beschikbaar = zitString;
-                                            Console.WriteLine(tijd.beschikbaar);
                                             string convertedJson = JsonConvert.SerializeObject(locatieList, Formatting.Indented);
                                             //verander de hele file met de nieuwe json informatie
                                             File.WriteAllText(locaties, convertedJson);
@@ -212,6 +220,10 @@ public class Gegevens
                         {
                             ticketList.Remove(ticket);
                             account.tickets = ticketList.ToArray();
+                            if(account.tickets.Length == 0)
+                            {
+                                account.tickets = null;
+                            }
                             break;
                         }
                     }
@@ -223,6 +235,9 @@ public class Gegevens
                     break;
                 }
             }
+            Console.WriteLine("Reservering succesvol geannuleerd");
+            Thread.Sleep(2000);
+            return;
         }
 
         else
@@ -231,7 +246,7 @@ public class Gegevens
             Thread.Sleep(2000);
             return;
         }
-        Thread.Sleep(15000);
+        Thread.Sleep(1000);
         Console.Clear();
 
     }

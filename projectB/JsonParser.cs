@@ -27,7 +27,6 @@ public class Ticket
     public string dag { get; set; }
     public string tijd { get; set; }
     public int stoel { get; set; }
-#nullable disable
 }
 
 public class movie
