@@ -5,9 +5,7 @@
     "password": "hello",
     "security": "hi",
     "rol": "gebruiker",
-    "tickets": [
-      null
-    ],
+    "tickets": null,
     "etenBestelling": null
   },
   {

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 public class Gegevens
@@ -204,8 +205,18 @@ public class Gegevens
             {
                 if(account.id == Accountid)
                 {
-                    var tickets = account.tickets;
-                    tickets[tID] = null;
+                    List<Ticket> ticketList = account.tickets.ToList();
+                    foreach (var ticket in account.tickets)
+                    {
+                        if (tID == ticket.id)
+                        {
+                            ticketList.Remove(ticket);
+                            account.tickets = ticketList.ToArray();
+                            break;
+                        }
+                    }
+                    
+                    
                     string convertedJson2 = JsonConvert.SerializeObject(accountList, Formatting.Indented);
                     //verander de hele file met de nieuwe json informatie
                     File.WriteAllText("..\\..\\..\\account.json", convertedJson2);
