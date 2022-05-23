@@ -58,6 +58,8 @@ public class Cinema_adress
 
 public class Zalen
 {
+    internal bool beschikbaar;
+
     public string naam { get; set; }
     public string type { get; set; }
     public int zitplekken { get; set; }
