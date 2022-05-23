@@ -1209,17 +1209,17 @@ public class ReservatieFilms
 						case "zaal 1 2D : 12.5":
 							zaalKeuze = "zaal 1";
 							technologie = "2D";
-							filmPrijs = "12,50";
+							filmPrijs = "12.50";
 							break;
 						case "zaal 2 3D : 15":
 							zaalKeuze = "zaal 2";
 							technologie = "3D";
-							filmPrijs = "15,00";
+							filmPrijs = "15.00";
 							break;
 						case "zaal 3 IMAX : 17.5":
 							zaalKeuze = "zaal 3";
 							technologie = "IMAX";
-							filmPrijs = "17,50";
+							filmPrijs = "17.50";
 							break;
 
 					}
