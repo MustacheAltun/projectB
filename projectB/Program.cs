@@ -32,7 +32,6 @@ namespace projectB
             // maak een lijst van alle informatie die er is
             List<Account> jsonList = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
 
-            
             bool gebruikerLoggedIn = false;
             bool adminLoggedIn = false;
             int id = -1;
