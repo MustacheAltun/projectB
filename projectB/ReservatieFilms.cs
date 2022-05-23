@@ -576,7 +576,7 @@ public class ReservatieFilms
 		while (loopBack)
 		{
 			Console.Clear();
-			string filmPrijs = "";
+			double filmPrijs = 0;
 			int bioscopenMetFilm = 0;
 			int tijdenMetFilm = 0;
 			int zalenMetFilm = 0;
@@ -926,7 +926,13 @@ public class ReservatieFilms
 				case "zaal 3 IMAX : 17.5":
 					searchZaal = "zaal 3";
 					break;
-			}
+				case "zaal 1 2D : 12,5":
+					searchZaal = "zaal 1";
+					break;
+				case "zaal 3 IMAX : 17,5":
+					searchZaal = "zaal 3";
+					break;
+				}
 			
 			foreach (var locatie in locaties)
 			{
@@ -1209,21 +1215,31 @@ public class ReservatieFilms
 						case "zaal 1 2D : 12.5":
 							zaalKeuze = "zaal 1";
 							technologie = "2D";
-							filmPrijs = "12.50";
+							filmPrijs = 12.5;
 							break;
 						case "zaal 2 3D : 15":
 							zaalKeuze = "zaal 2";
 							technologie = "3D";
-							filmPrijs = "15.00";
+							filmPrijs = 15.0;
 							break;
 						case "zaal 3 IMAX : 17.5":
 							zaalKeuze = "zaal 3";
 							technologie = "IMAX";
-							filmPrijs = "17.50";
+							filmPrijs = 17.5;
+							break;
+						case "zaal 1 2D : 12,5":
+							zaalKeuze = "zaal 1";
+							technologie = "2D";
+							filmPrijs = 12.5;
+							break;
+						case "zaal 3 IMAX : 17,5":
+							zaalKeuze = "zaal 3";
+							technologie = "IMAX";
+							filmPrijs = 17.5;
 							break;
 
 					}
-					if (bevestiging(filmId, fullName, double.Parse(filmPrijs), bioscoopKeuze, zaalKeuze, technologie, datumKeuze, tijdKeuze, stoelen, locaties))
+					if (bevestiging(filmId, fullName, filmPrijs, bioscoopKeuze, zaalKeuze, technologie, datumKeuze, tijdKeuze, stoelen, locaties))
 					{
 
 
@@ -1250,7 +1266,7 @@ public class ReservatieFilms
 									{
 										item.tickets = new Ticket[]
 										{
-										new Ticket() { id = 0, filmID = filmId.ToString(),name = fullName, prijs = double.Parse(filmPrijs), bioscoopID = Int32.Parse(bioscoopKeuze), zaalID = Int32.Parse(zaalKeuze),filmTechnologie = technologie, dag = datumKeuze, stoel = Int32.Parse(eenStoel),tijd = tijdKeuze}
+										new Ticket() { id = 0, filmID = filmId.ToString(),name = fullName, prijs = filmPrijs, bioscoopID = Int32.Parse(bioscoopKeuze), zaalID = Int32.Parse(zaalKeuze),filmTechnologie = technologie, dag = datumKeuze, stoel = Int32.Parse(eenStoel),tijd = tijdKeuze}
 										};
 
 									}
@@ -1263,7 +1279,7 @@ public class ReservatieFilms
 											tickets[ticketcounter] = item2;
 											ticketcounter++;
 										}
-										tickets[tickets.Length - 1] = new Ticket() { id = item.tickets.Length, filmID = filmId.ToString(), name = fullName, prijs = double.Parse(filmPrijs), bioscoopID = Int32.Parse(bioscoopKeuze), zaalID = Int32.Parse(zaalKeuze), filmTechnologie = technologie, dag = datumKeuze, tijd = tijdKeuze, stoel = Int32.Parse(eenStoel) };
+										tickets[tickets.Length - 1] = new Ticket() { id = item.tickets.Length, filmID = filmId.ToString(), name = fullName, prijs = filmPrijs, bioscoopID = Int32.Parse(bioscoopKeuze), zaalID = Int32.Parse(zaalKeuze), filmTechnologie = technologie, dag = datumKeuze, tijd = tijdKeuze, stoel = Int32.Parse(eenStoel) };
 										item.tickets = tickets;
 									}
 								}
@@ -1360,7 +1376,7 @@ public class ReservatieFilms
 			Console.WriteLine("Film ID : " + filmId);
 			Console.WriteLine("Film naam : " + filmNaam);
 			Console.WriteLine("Volledige naam : " + fullName);
-			Console.WriteLine("Prijs : " + filmPrijs* stoelKeuze.Length);
+			Console.WriteLine("Prijs : $" + filmPrijs* stoelKeuze.Length);
 			Console.WriteLine("Bioscoop naam : " + bioscoopNaam);
 			Console.WriteLine("Zaal : " + zaalKeuze);
 			Console.WriteLine("Zaal technologie : " + technologie);
