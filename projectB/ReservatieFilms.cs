@@ -917,13 +917,13 @@ public class ReservatieFilms
             
 			switch (zaalKeuze)
 			{
-				case "zaal 1 2D : 12,5":
+				case "zaal 1 2D : 12.5":
 					searchZaal = "zaal 1";
 					break;
 				case "zaal 2 3D : 15":
 					searchZaal = "zaal 2";
 					break;
-				case "zaal 3 IMAX : 17,5":
+				case "zaal 3 IMAX : 17.5":
 					searchZaal = "zaal 3";
 					break;
 			}
