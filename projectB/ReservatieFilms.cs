@@ -920,10 +920,10 @@ public class ReservatieFilms
 				case "zaal 1 2D : 12,5":
 					searchZaal = "zaal 1";
 					break;
-				case "zaal 2 3D : 15,00":
+				case "zaal 2 3D : 15":
 					searchZaal = "zaal 2";
 					break;
-				case "zaal 3 IMAX : 17,50":
+				case "zaal 3 IMAX : 17,5":
 					searchZaal = "zaal 3";
 					break;
 			}
@@ -1211,7 +1211,7 @@ public class ReservatieFilms
 							technologie = "2D";
 							filmPrijs = "12,50";
 							break;
-						case "zaal 2 3D : 15,0":
+						case "zaal 2 3D : 15":
 							zaalKeuze = "zaal 2";
 							technologie = "3D";
 							filmPrijs = "15,00";
