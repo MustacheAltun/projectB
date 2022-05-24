@@ -10,7 +10,7 @@ public class Account
     public string rol { get; set; }
 #nullable enable
     public Ticket[]? tickets { get; set; }
-    public object etenBestelling { get; internal set; }
+    public EtenBestelling[] etenBestelling { get; set; }
 #nullable disable
 }
 
@@ -27,7 +27,6 @@ public class Ticket
     public string dag { get; set; }
     public string tijd { get; set; }
     public int stoel { get; set; }
-#nullable disable
 }
 
 public class movie
@@ -58,6 +57,8 @@ public class Cinema_adress
 
 public class Zalen
 {
+    internal bool beschikbaar;
+
     public string naam { get; set; }
     public string type { get; set; }
     public int zitplekken { get; set; }
