@@ -154,14 +154,20 @@ public class Gegevens
                     int input;
                     if (int.TryParse(ticketId, out input))
                     {
-                        foundID = true;
-                        biosID = item2.bioscoopID;
-                        zaalID = "zaal " + item2.zaalID;
-                        dag = item2.dag;
-                        t = item2.tijd;
-                        stoel = item2.stoel;
-                        tID = item2.id;
+                        if(int.Parse(ticketId) == item2.id)
+                        {
+                        
+                                foundID = true;
+                                biosID = item2.bioscoopID;
+                                zaalID = "zaal " + item2.zaalID;
+                                dag = item2.dag;
+                                t = item2.tijd;
+                                stoel = item2.stoel;
+                                tID = item2.id;
+                        
+                        }
                     }
+
                 }
             }
         }
