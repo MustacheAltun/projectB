@@ -79,9 +79,9 @@ public class Gegevens
             Console.WriteLine("| Je hebt nog geen eten bestelt |");
         }
         Console.WriteLine("\n" +
-                          "----------------------------------------------------------------------------------");
-        Console.WriteLine("| [1] Terug | [2] Ticket reservering annuleren | [3] Snack reservering annuleren |" + "\n" +
-                          "----------------------------------------------------------------------------------");
+                          "------------------------------------------------");
+        Console.WriteLine("| [1] Terug | [2] Ticket reservering annuleren |" + "\n" +
+                          "------------------------------------------------");
         string keuze = Console.ReadLine();
         if(keuze == "1")
         {
@@ -90,10 +90,6 @@ public class Gegevens
         else if(keuze == "2")
         {
             removeTicket(url, Accountid);
-        }
-        else if(keuze == "3")
-        {
-            Console.WriteLine("Keuze 2");
         }
         else
         {
@@ -155,7 +151,8 @@ public class Gegevens
             {
                 foreach (dynamic item2 in item.tickets)
                 {
-                    if (item2.id == int.Parse(ticketId))
+                    int input;
+                    if (int.TryParse(ticketId, out input))
                     {
                         foundID = true;
                         biosID = item2.bioscoopID;

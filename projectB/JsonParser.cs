@@ -10,7 +10,7 @@ public class Account
     public string rol { get; set; }
 #nullable enable
     public Ticket[]? tickets { get; set; }
-    public object etenBestelling { get; internal set; }
+    public EtenBestelling[] etenBestelling { get; set; }
 #nullable disable
 }
 
