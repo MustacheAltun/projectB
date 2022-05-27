@@ -668,9 +668,9 @@ public class Movies
         }
             
 
-        Console.WriteLine("----------------------------------------------------------------------------------------------");
-        Console.WriteLine("|    Voer de verhaal van de film in: (typ '/' om over te slaan of '*' om te annuleren)   |");
-        Console.WriteLine("----------------------------------------------------------------------------------------------");
+        Console.WriteLine("---------------------------------------------------------------------------------------------");
+        Console.WriteLine("|    Voer de verhaal van de film in: (typ '/' om over te slaan of '*' om te annuleren)      |");
+        Console.WriteLine("---------------------------------------------------------------------------------------------");
         string storyLine = Console.ReadLine();
 
         while (string.IsNullOrEmpty(storyLine) || storyLine.Trim().Length == 0)
