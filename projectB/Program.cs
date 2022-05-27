@@ -3,7 +3,9 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 namespace projectB
 {
     class Program
@@ -31,6 +33,22 @@ namespace projectB
 
             // maak een lijst van alle informatie die er is
             List<Account> jsonList = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
+            string strOmzet = File.ReadAllText("..\\..\\..\\omzet.json");
+            List<WeeklyEarning> OmzetList = JsonConvert.DeserializeObject<List<WeeklyEarning>>(strOmzet);
+            DateTime today = DateTime.Now;
+
+            if (OmzetList.Count == 0)
+            {
+                OmzetList.Add(new WeeklyEarning()
+                {
+                    weekendDate = (today.AddDays(7)).ToString("dd/MM/yyyy"),
+                    amountEarned = 0,
+                    dailyEarnings = null
+                }) ;
+                string OmzetJson = JsonConvert.SerializeObject(OmzetList, Formatting.Indented);
+                //verander de hele file met de nieuwe json informatie
+                File.WriteAllText("..\\..\\..\\omzet.json", OmzetJson);
+            }
 
             bool gebruikerLoggedIn = false;
             bool adminLoggedIn = false;
