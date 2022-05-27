@@ -77,6 +77,7 @@ public class EtenBestelling
 {
     public int orderID { get; set; }
     public System.Collections.Generic.Dictionary<string, int> orderList { get; set; }
+    public string date { get; set; }
     public double total { get; set; }
 
 }
