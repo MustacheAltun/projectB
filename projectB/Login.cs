@@ -54,14 +54,14 @@ public class Login
                     Console.WriteLine("*-*-*-*-*-*-*-*-*" + "\n" +
                                       "|   Inloggen    |" + "\n" +
                                       "*-*-*-*-*-*-*-*-*" + "\n");
-                    Console.WriteLine("Voer uw gebruikersnaam in of voer * in om te annuleren:");
+                    Console.WriteLine("Voer uw gebruikersnaam in of voer * in om terug te gaan:");
                     string Username = Console.ReadLine();
                     if (Username == "*")
                     {
                         return LoginScherm(accountList);
                     }
 
-                    Console.WriteLine("Voer uw wachtwoord in of voer * in om te annuleren::");
+                    Console.WriteLine("Voer uw wachtwoord in of voer * in om terug te gaan:");
                     string Password = Console.ReadLine();
                     if (Password == "*")
                     {
@@ -97,11 +97,26 @@ public class Login
                                   "*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n");
                 Console.WriteLine("Voor uw gebruikersnaam in of voer * in om the annuleren:");
                 string oldName = Console.ReadLine();
-                Console.WriteLine("Voor uw beveligingswoord in of voer * in om the annuleren:");
-                string oldSec = Console.ReadLine();
-                ChangePass(accountList, oldName, oldSec);
+                if (oldName != "*")
+                {
+                    Console.WriteLine("Voor uw beveligingswoord in of voer * in om the annuleren:");
+                    string oldSec = Console.ReadLine();
+                    if (oldSec != "*")
+                    {
+                        ChangePass(accountList, oldName, oldSec);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Actie geannuleerd");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Actie geannuleerd");
+                }
+                Thread.Sleep(2000);
+                keuze = "";
             }
-            return -1;
 
         }
         return -1;
