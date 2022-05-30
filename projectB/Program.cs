@@ -33,11 +33,10 @@ namespace projectB
 
             // maak een lijst van alle informatie die er is
             List<Account> jsonList = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
-            for(int i = 0; i < 100; i++)
+            for(int i = 0; i < 10; i++)
             {
                UpdateOmzet();
             }
-            AddOmzet(500.0);
             bool gebruikerLoggedIn = false;
             bool adminLoggedIn = false;
             int id = -1;
