@@ -16,7 +16,7 @@ public class Movies
 
         string locatieUrl = "..\\..\\..\\locatie.json";
         List<Cinema_adress> locatieList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Cinema_adress>>(File.ReadAllText(locatieUrl));
-
+        
         Console.Clear();
         string Keuze = "";
 
@@ -26,42 +26,8 @@ public class Movies
             Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
             Console.WriteLine("|                                                Films                                              |");
             Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
-            // pak alle informatie per film
-            string showing = "";
-            foreach (dynamic item in movieList)
-            {
-                //maak een string voor alle categorieen
-                string categories = "";
-                //voeg alle categorieen toe aan categories
-                foreach (string item2 in item.categories)
-                {
-
-                    if (item2 == item.categories[item.categories.Length - 1])
-                    {
-                        categories += item2;
-                    }
-                    else
-                    {
-                        categories += item2 + "\n                                   ";
-                    }
-                    if (item.showing)
-                        showing = "NU TE ZIEN";
-                    else
-                        showing = "MOMENTEEL NIET TE ZIEN";
-
-                }
-                //print alle films
-                
-                Console.WriteLine("-----------------------------------------------------------------------------------------------------");
-                Console.WriteLine("                                         Film-ID : " + item.id);
-                Console.WriteLine("                           Naam: " + item.name);
-                Console.WriteLine("                           Publicatiejaar: " + item.year);
-                Console.WriteLine("                           Genres: " + categories);
-                Console.WriteLine("                           Status: " + showing);
-                Console.WriteLine("-----------------------------------------------------------------------------------------------------");
-
-
-            }
+            //// pak alle informatie per film
+            filmsOverview(movieList);
 
             //Elke rol heeft een ander weergave van het menu.
             if (rol == "gebruiker")
@@ -120,7 +86,7 @@ public class Movies
                         
                         break;
                     case "4":
-                        
+                        filterFilms(movieList, accountID);
                         break;
                 }
             }
@@ -150,6 +116,7 @@ public class Movies
                     case "6":
                         break;
                     case "7":
+                        filterFilms(movieList, accountID);
                         break;
                     case "8":
                         assignFilm(movieList, url, locatieList, locatieUrl);
@@ -186,9 +153,12 @@ public class Movies
             id = item.id + 1;
         }
 
-        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
-        Console.WriteLine("|          Nieuwe film toevoegen              |");
-        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n");
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+        Console.WriteLine("|                                          Nieuwe film toevoegen                                    |");
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
+
+        filmsOverview(movieList);
+
         Console.WriteLine("--------------------------------------------------------");
         Console.WriteLine("|    Voer de filmtitel in: (typ '*' om te annuleren)   |");
         Console.WriteLine("--------------------------------------------------------" + "\n");
@@ -293,11 +263,11 @@ public class Movies
             Console.WriteLine("---------------------------------------------");
             Console.WriteLine("|               Kies een genre:             |");
             Console.WriteLine("---------------------------------------------");
-            Console.WriteLine("| [1] Actie | [2] Misdaad | [3] Avontuur | [4] SciFi | [5] KinderFilm | [6] Documentaire | [7] Romance | [8] Komedie |\n");
+            Console.WriteLine("| [1] Actie | [2] Misdaad | [3] Avontuur | [4] Sci-Fi | [5] KinderFilm | [6] Documentaire | [7] Romance | [8] Komedie | [9] Fantasie |\n");
 
             string genreKeuze = Console.ReadLine();
 
-            while (genreKeuze != "1" && genreKeuze != "2" && genreKeuze != "3" && genreKeuze != "4" && genreKeuze != "5" && genreKeuze != "6" && genreKeuze != "7" && genreKeuze != "8")
+            while (genreKeuze != "1" && genreKeuze != "2" && genreKeuze != "3" && genreKeuze != "4" && genreKeuze != "5" && genreKeuze != "6" && genreKeuze != "7" && genreKeuze != "8" && genreKeuze != "9")
             {
                 Console.WriteLine("Ongeldig keuze!");
                 Console.WriteLine("Probeer opnieuw a.u.b!");
@@ -315,7 +285,7 @@ public class Movies
                     genreKeuze = "Avontuur";
                     break;
                 case "4":
-                    genreKeuze = "Scifi";
+                    genreKeuze = "Sci-fi";
                     break;
                 case "5":
                     genreKeuze = "KinderFilm";
@@ -328,6 +298,9 @@ public class Movies
                     break;
                 case "8":
                     genreKeuze = "Komedie";
+                    break;
+                case "9":
+                    genreKeuze = "Fantasie";
                     break;
             }
 
@@ -416,6 +389,43 @@ public class Movies
         Console.Clear();
     }
 
+    private static void filmsOverview(List<movie> movieList)
+    {
+        // pak alle informatie per film
+        string showing = "";
+        foreach (dynamic item in movieList)
+        {
+            //maak een string voor alle categorieen
+            string categories = "";
+            //voeg alle categorieen toe aan categories
+            foreach (string item2 in item.categories)
+            {
+
+                if (item2 == item.categories[item.categories.Length - 1])
+                {
+                    categories += item2;
+                }
+                else
+                {
+                    categories += item2 + "\n                                   ";
+                }
+                if (item.showing)
+                    showing = "NU TE ZIEN";
+                else
+                    showing = "MOMENTEEL NIET TE ZIEN";
+
+            }
+            //print alle films
+
+            Console.WriteLine("-----------------------------------------------------------------------------------------------------");
+            Console.WriteLine("                                         Film-ID : " + item.id);
+            Console.WriteLine("                           Naam: " + item.name);
+            Console.WriteLine("                           Publicatiejaar: " + item.year);
+            Console.WriteLine("                           Genres: " + categories);
+            Console.WriteLine("                           Status: " + showing);
+            Console.WriteLine("-----------------------------------------------------------------------------------------------------");
+        }
+    }
 
     private static void editFilm(List<movie> movieList, string url)
     {
@@ -429,10 +439,10 @@ public class Movies
 		 */
 
         Console.Clear();
-        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
-        Console.WriteLine("|                     Aanpassen                   |");
-        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
-        
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+        Console.WriteLine("|                                              Aanpassen                                            |");
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
+        filmsOverview(movieList);
         int[] filmIdArr = new int[movieList.Count()];
         for(int i=0; i<movieList.Count(); i++)
         {
@@ -613,11 +623,11 @@ public class Movies
                 Console.WriteLine("---------------------------------------------");
                 Console.WriteLine("|               Kies een genre:             |");
                 Console.WriteLine("---------------------------------------------");
-                Console.WriteLine("| [1] Actie | [2] Misdaad | [3] Avontuur | [4] SciFi | [5] KinderFilm | [6] Documentaire | [7] Romance | [8] Komedie |\n");
+                Console.WriteLine("| [1] Actie | [2] Misdaad | [3] Avontuur | [4] Sci-Fi | [5] KinderFilm | [6] Documentaire | [7] Romance | [8] Komedie | [9] Fantasie |\n");
 
                 string genreKeuze = Console.ReadLine();
 
-                while (genreKeuze != "1" && genreKeuze != "2" && genreKeuze != "3" && genreKeuze != "4" && genreKeuze != "5" && genreKeuze != "6" && genreKeuze != "7" && genreKeuze != "8")
+                while (genreKeuze != "1" && genreKeuze != "2" && genreKeuze != "3" && genreKeuze != "4" && genreKeuze != "5" && genreKeuze != "6" && genreKeuze != "7" && genreKeuze != "8" && genreKeuze != "9")
                 {
                     Console.WriteLine("Ongeldig keuze!");
                     Console.WriteLine("Probeer opnieuw a.u.b!");
@@ -635,7 +645,7 @@ public class Movies
                         genreKeuze = "Avontuur";
                         break;
                     case "4":
-                        genreKeuze = "Scifi";
+                        genreKeuze = "Sci-fi";
                         break;
                     case "5":
                         genreKeuze = "KinderFilm";
@@ -648,6 +658,9 @@ public class Movies
                         break;
                     case "8":
                         genreKeuze = "Komedie";
+                        break;
+                    case "9":
+                        genreKeuze = "Fantasie";
                         break;
                 }
 
@@ -783,9 +796,13 @@ public class Movies
             filmArray[i] = movieList[i].id;
         }
         int filmNr = int.MinValue;
-        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
-        Console.WriteLine("|                   Verwijderen                     |");
-        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+        Console.Clear();
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+        Console.WriteLine("|                                             Verwijderen                                           |");
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
+
+        filmsOverview(movieList);
+
         while (!filmArray.Contains(filmNr))
         {
             
@@ -995,9 +1012,11 @@ public class Movies
     private static void assignFilm(List<movie> movielist,string movieUrl, List<Cinema_adress>locatieList, string locatieUrl)
     {
         Console.Clear();
-        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
-        Console.WriteLine("|               Film toewijzen              |");
-        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n");
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+        Console.WriteLine("|                                           Film toewijzen                                          |");
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
+
+        filmsOverview(movielist);
 
         int[] filmIdArr = new int[movielist.Count()];
         for (int i = 0; i < movielist.Count(); i++)
@@ -1474,6 +1493,169 @@ public class Movies
     private static bool IsNullOrEmpty(string name)
     {
         throw new NotImplementedException();
+    }
+
+    private static void filterFilms(List<movie> movielist, int id)
+    {
+        string choice = "";
+        while(choice.Trim() != "1")
+        {
+            Console.Clear();
+            Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            Console.WriteLine("|                                             Filteren                                              |");
+            Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
+
+            filmsOverview(movielist);
+
+            Console.WriteLine("| [1] Terug | [2] Actie | [3] Misdaad | [4] Avontuur | [5] Sci-Fi | [6] KinderFilm | [7] Documentaire | [8] Romance | [9] Komedie | [10] Fantasie |\n");
+
+            Console.WriteLine("--------------------------------------------------");
+            Console.WriteLine("| Kies een van de genres waarop u wilt filteren: |");
+            Console.WriteLine("--------------------------------------------------");
+            choice = Console.ReadLine();
+            string genre = "";
+            while (choice.Trim() != "1" && choice.Trim() != "2" && choice.Trim() != "3" && choice.Trim() != "4" && choice.Trim() != "5" && choice.Trim() != "6" && choice.Trim() != "7" && choice.Trim() != "8" && choice.Trim() != "9" && choice.Trim() != "10")
+            {
+                Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                choice = Console.ReadLine();
+            }
+            switch (choice.Trim())
+            {
+                case "2":
+                    genre = "Actie";
+                    break;
+                case "3":
+                    genre = "Misdaad";
+                    break;
+                case "4":
+                    genre = "Avontuur";
+                    break;
+                case "5":
+                    genre = "Sci-Fi";
+                    break;
+                case "6":
+                    genre = "KinderFilm";
+                    break;
+                case "7":
+                    genre = "Documentaire";
+                    break;
+                case "8":
+                    genre = "Romance";
+                    break;
+                case "9":
+                    genre = "Komedie";
+                    break;
+                case "10":
+                    genre = "Fantasie";
+                    break;
+
+            }
+            if(choice.Trim() != "1")
+                filteredFilmsOverview(movielist, genre, id);
+        }
+        
+    }
+    private static void filteredFilmsOverview(List<movie> movielist, string genre, int id)
+    {
+        string choice = "";
+        while(choice != "1")
+        {
+            Console.Clear();
+            Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            Console.WriteLine("|                                             Filteren                                              |");
+            Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
+            int count = 0;
+            // pak alle informatie per film
+            string showing = "";
+            foreach (dynamic item in movielist)
+            {
+                //maak een string voor alle categorieen
+                string categories = "";
+                //voeg alle categorieen toe aan categories
+                string [] array = item.categories;
+                if (array.Contains(genre))
+                {
+                    foreach (string item2 in item.categories)
+                    {
+
+                        if (item2 == item.categories[item.categories.Length - 1])
+                        {
+                            categories += item2;
+                        }
+                        else
+                        {
+                            categories += item2 + "\n                                   ";
+                        }
+                        if (item.showing)
+                            showing = "NU TE ZIEN";
+                        else
+                            showing = "MOMENTEEL NIET TE ZIEN";
+
+                    }
+                    //print alle films
+
+                    Console.WriteLine("-----------------------------------------------------------------------------------------------------");
+                    Console.WriteLine("                                         Film-ID : " + item.id);
+                    Console.WriteLine("                           Naam: " + item.name);
+                    Console.WriteLine("                           Publicatiejaar: " + item.year);
+                    Console.WriteLine("                           Genres: " + categories);
+                    Console.WriteLine("                           Status: " + showing);
+                    Console.WriteLine("-----------------------------------------------------------------------------------------------------");
+
+                    count++;
+                }
+            }
+
+            if (count == 0)
+            {
+                Console.WriteLine("Geen resultaten gevonden!");
+            }
+
+            Console.WriteLine("| [1] Terug | [2] Kijk film |");
+            choice = Console.ReadLine();
+            while(choice.Trim() != "1" && choice.Trim() != "2")
+            {
+                Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                choice = Console.ReadLine();
+            }
+            switch (choice.Trim())
+            {
+                case "2":
+                    viewFilm(movielist, id);
+                    break;
+            }
+        }
+        
+    }
+
+    public static void updateShowingFilm(List<movie> movielist, List<Cinema_adress> locatieLijst)
+    {
+        foreach(var movie in movielist)
+        {
+            bool isAssigned = false;
+            if (movie.showing)
+            {
+                foreach(var locatie in locatieLijst)
+                {
+                    foreach(var dag in locatie.dagen)
+                    {
+                        foreach(var zaal in dag)
+                        {
+                            if(zaal.film_ID == movie.id)
+                            {
+                                isAssigned = true;
+                            }
+                        }
+                    }
+                }
+            }
+            if (!isAssigned)
+            {
+                movie.showing = false;
+            }
+        }
+
+        File.WriteAllText("..\\..\\..\\movies.json", JsonConvert.SerializeObject(movielist, Formatting.Indented));
     }
 
 }

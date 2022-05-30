@@ -1460,7 +1460,7 @@ public class Locatie
         Console.Clear();
     }
 
-    private static bool hasSpecialChar(string input)
+    public static bool hasSpecialChar(string input)
     {
         string specialChar = @"\|!#$%&/()=?»«@£§€{}.-;'<>_,*";
         foreach (var item in specialChar)
