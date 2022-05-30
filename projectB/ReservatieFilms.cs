@@ -1241,7 +1241,34 @@ public class ReservatieFilms
 					}
 					if (bevestiging(filmId, fullName, filmPrijs, bioscoopKeuze, zaalKeuze, technologie, datumKeuze, tijdKeuze, stoelen, locaties))
 					{
+						Console.Clear();
+						Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+						Console.WriteLine("|                                             Betaal opties                                         |");
+						Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
+						Console.WriteLine("         [1] iDEAL\n");
+						Console.WriteLine("         [2] PayPal\n");
+						Console.WriteLine("         [3] CreditCard\n");
+						Console.WriteLine("         [*] Annuleren\n");
 
+						string betaalKeuze = Console.ReadLine();
+
+						while (betaalKeuze.Trim() != "1" && betaalKeuze.Trim() != "2" && betaalKeuze.Trim() != "3" && betaalKeuze.Trim() != "*")
+						{
+							Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+							betaalKeuze = Console.ReadLine();
+						}
+
+						if (betaalKeuze.Trim() == "*")
+						{
+							for (int i = 0; i < aantalStoelenKeuzeInt; i++)
+							{
+								stoelVrijMaken(Int32.Parse(bioscoopKeuze), searchZaal, tijdKeuze, stoelen[i], datumKeuze);
+							}
+							Console.WriteLine("reservatie is geannuleerd!");
+							Thread.Sleep(2000);
+							Console.Clear();
+							return;
+						}
 
 						switch (zaalKeuze)
 						{
