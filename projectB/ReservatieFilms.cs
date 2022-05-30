@@ -468,7 +468,7 @@ public class ReservatieFilms
 		File.WriteAllText(url, changedLocatie);
 	}
 
-	public int aantalVrijeStoelen(int bioscoopNaam, string zaalNaam, string tijdNaam, string datum)
+	private int aantalVrijeStoelen(int bioscoopNaam, string zaalNaam, string tijdNaam, string datum)
     {
 		//pak alle json informatie
 		string url = "..\\..\\..\\locatie.json";
@@ -573,6 +573,13 @@ public class ReservatieFilms
 
 		Console.WriteLine("wat is jouw volledige naam?");
 		string fullName = Console.ReadLine();
+
+        while (string.IsNullOrEmpty(fullName) || Locatie.hasSpecialChar(fullName) || fullName.Any(char.IsDigit) || fullName.Length < 7)
+        {
+			Console.WriteLine("Dit is niet uw volledige naam, voer uw volledige naam in aub.");
+			fullName = Console.ReadLine();
+		}
+
 		while (loopBack)
 		{
 			Console.Clear();
