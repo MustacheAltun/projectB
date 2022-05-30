@@ -77,6 +77,7 @@ public class EtenBestelling
 {
     public int orderID { get; set; }
     public System.Collections.Generic.Dictionary<string, int> orderList { get; set; }
+    public string date { get; set; }
     public double total { get; set; }
 
 }
@@ -89,4 +90,16 @@ public class Eten
     public double price { get; set; }
     public string productType { get; set; }
 
+}
+public class DailyEarning
+{
+    public string date { get; set; }
+    public double dailyEarned { get; set; }
+
+}
+public class WeeklyEarning
+{
+    public string weekendDate { get; set; }
+    public double amountEarned { get; set; }
+    public List<DailyEarning> dailyEarnings { get; set; }
 }

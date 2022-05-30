@@ -49,7 +49,7 @@ public class HoofdScherm
             //Thread.Sleep(2500);
         }
         //Als je juiste input hebt gegeven dan return hij de naam van het scherm waar je naartoe wilt gaan door de index te gebruiken menuArr[Int32.Parse(Input)-1] 
-        Console.WriteLine(menuArr[Int32.Parse(Input) - 1]);
+        
         return menuArr[Int32.Parse(Input)-1];
     }
 
@@ -78,10 +78,10 @@ public class HoofdScherm
                 Console.WriteLine("Toets a.u.b. een van de bovenstaande nummers in.");
             }
             //1 sec cooldown totdat hij alles wat was geprint weghaald
-            Thread.Sleep(2000);
+            /*Thread.Sleep(2000);*/
         }
         //Als je juiste input hebt gegeven dan return hij de naam van het scherm waar je naartoe wilt gaan door de index te gebruiken menuArr[Int32.Parse(Input)-1] 
-        Console.WriteLine(menuArr[Int32.Parse(Input) - 1]);
+        
         return menuArr[Int32.Parse(Input) - 1];
     }
 
