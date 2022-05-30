@@ -33,7 +33,11 @@ namespace projectB
 
             // maak een lijst van alle informatie die er is
             List<Account> jsonList = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
-            UpdateOmzet();
+            for(int i = 0; i < 100; i++)
+            {
+               UpdateOmzet();
+            }
+            AddOmzet(500.0);
             bool gebruikerLoggedIn = false;
             bool adminLoggedIn = false;
             int id = -1;
@@ -131,52 +135,110 @@ namespace projectB
 
             if (OmzetList.Count == 0)
             {
+                List<Dictionary<string, double>> Earning = new List<Dictionary<string, double>>();
+                Dictionary<string, double> D1 = new Dictionary<string, double>();
+                D1.Add((today.AddDays(0)).ToString("dd-MM-yyyy"), 0.0);
+                Dictionary<string, double> D2 = new Dictionary<string, double>();
+                D2.Add((today.AddDays(1)).ToString("dd-MM-yyyy"), 0.0);
+                Dictionary<string, double> D3 = new Dictionary<string, double>();
+                D3.Add((today.AddDays(2)).ToString("dd-MM-yyyy"), 0.0);
+                Dictionary<string, double> D4 = new Dictionary<string, double>();
+                D4.Add((today.AddDays(3)).ToString("dd-MM-yyyy"), 0.0);
+                Dictionary<string, double> D5 = new Dictionary<string, double>();
+                D5.Add((today.AddDays(4)).ToString("dd-MM-yyyy"), 0.0);
+                Dictionary<string, double> D6 = new Dictionary<string, double>();
+                D6.Add((today.AddDays(5)).ToString("dd-MM-yyyy"), 0.0);
+                Dictionary<string, double> D7 = new Dictionary<string, double>();
+                D7.Add((today.AddDays(6)).ToString("dd-MM-yyyy"), 0.0);
+                Dictionary<string, double> D8 = new Dictionary<string, double>();
+                D8.Add((today.AddDays(7)).ToString("dd-MM-yyyy"), 0.0);
+                Earning.Add(D1);
+                Earning.Add(D2);
+                Earning.Add(D3);
+                Earning.Add(D4);
+                Earning.Add(D5);
+                Earning.Add(D6);
+                Earning.Add(D7);
+                Earning.Add(D8);
                 OmzetList.Add(new WeeklyEarning()
                 {
                     weekendDate = (today.AddDays(7)).ToString("dd-MM-yyyy"),
                     amountEarned = 0,
-                    dailyEarnings = null
+                    dailyEarnings = Earning
                 });
                 string OmzetJson = JsonConvert.SerializeObject(OmzetList, Formatting.Indented);
                 //verander de hele file met de nieuwe json informatie
                 File.WriteAllText("..\\..\\..\\omzet.json", OmzetJson);
             }
-            foreach (var WekenlijkseOmzet in OmzetList)
+            else
             {
-                DateTime WekenlijkseConvert = Convert.ToDateTime(WekenlijkseOmzet.weekendDate);
-                today = today;
-                TimeSpan ts = today - WekenlijkseConvert;
-                int differenceInDays = ts.Days;
-                if (differenceInDays > 0)
-                {
-                    OmzetList.Add(new WeeklyEarning()
+                int i = 1;
+                foreach (var WekenlijkseOmzet in OmzetList)
+                {   
+                    if(i == OmzetList.Count)
                     {
-                        weekendDate = (WekenlijkseConvert.AddDays(7)).ToString("dd-MM-yyyy"),
-                        amountEarned = 0,
-                        dailyEarnings = null
-                    });
-                    string OmzetJson = JsonConvert.SerializeObject(OmzetList, Formatting.Indented);
-                    //verander de hele file met de nieuwe json informatie
-                    File.WriteAllText("..\\..\\..\\omzet.json", OmzetJson);
-                    break;
+                        DateTime WekenlijkseConvert = Convert.ToDateTime(WekenlijkseOmzet.weekendDate);
+                        today = today;
+                        TimeSpan ts = today - WekenlijkseConvert;
+                        int differenceInDays = ts.Days;
+
+                        List<Dictionary<string, double>> Earning = new List<Dictionary<string, double>>();
+                        Dictionary<string, double> D1 = new Dictionary<string, double>();
+                        D1.Add((WekenlijkseConvert.AddDays(0)).ToString("dd-MM-yyyy"), 0.0);
+                        Dictionary<string, double> D2 = new Dictionary<string, double>();
+                        D2.Add((WekenlijkseConvert.AddDays(1)).ToString("dd-MM-yyyy"), 0.0);
+                        Dictionary<string, double> D3 = new Dictionary<string, double>();
+                        D3.Add((WekenlijkseConvert.AddDays(2)).ToString("dd-MM-yyyy"), 0.0);
+                        Dictionary<string, double> D4 = new Dictionary<string, double>();
+                        D4.Add((WekenlijkseConvert.AddDays(3)).ToString("dd-MM-yyyy"), 0.0);
+                        Dictionary<string, double> D5 = new Dictionary<string, double>();
+                        D5.Add((WekenlijkseConvert.AddDays(4)).ToString("dd-MM-yyyy"), 0.0);
+                        Dictionary<string, double> D6 = new Dictionary<string, double>();
+                        D6.Add((WekenlijkseConvert.AddDays(5)).ToString("dd-MM-yyyy"), 0.0);
+                        Dictionary<string, double> D7 = new Dictionary<string, double>();
+                        D7.Add((WekenlijkseConvert.AddDays(6)).ToString("dd-MM-yyyy"), 0.0);
+                        Dictionary<string, double> D8 = new Dictionary<string, double>();
+                        D8.Add((WekenlijkseConvert.AddDays(7)).ToString("dd-MM-yyyy"), 0.0);
+                        Earning.Add(D1);
+                        Earning.Add(D2);
+                        Earning.Add(D3);
+                        Earning.Add(D4);
+                        Earning.Add(D5);
+                        Earning.Add(D6);
+                        Earning.Add(D7);
+                        Earning.Add(D8);
+
+                        if (differenceInDays > 0)
+                        {
+                            OmzetList.Add(new WeeklyEarning()
+                            {
+                                weekendDate = (WekenlijkseConvert.AddDays(7)).ToString("dd-MM-yyyy"),
+                                amountEarned = 0,
+                                dailyEarnings = Earning
+                            });
+                            string OmzetJson = JsonConvert.SerializeObject(OmzetList, Formatting.Indented);
+                            //verander de hele file met de nieuwe json informatie
+                            File.WriteAllText("..\\..\\..\\omzet.json", OmzetJson);
+                            break;
+                        }
+                    }
+                    i++;
                 }
             }
         }
-        public static void AddOmzet(double add)
+        /*public static void AddOmzet(double add)
         {
             string strOmzet = File.ReadAllText("..\\..\\..\\omzet.json");
             List<WeeklyEarning> OmzetList = JsonConvert.DeserializeObject<List<WeeklyEarning>>(strOmzet);
             DateTime today = DateTime.Now;
-            foreach (var WekenlijkseOmzet in OmzetList)
+            string dateT = today.ToString("dd-MM-yyyy");
+            foreach(var Weeklies in OmzetList)
             {
-                DateTime WekenlijkseConvert = Convert.ToDateTime(WekenlijkseOmzet.weekendDate);
-                today = today;
-                TimeSpan ts = today - WekenlijkseConvert;
-                int differenceInDays = ts.Days;
-                if (differenceInDays >= -7 && differenceInDays <= 0)
+                foreach(var dailies in Weeklies.dailyEarnings)
                 {
+                    
                 }
             }
-        }
+        }*/
     }
 }
