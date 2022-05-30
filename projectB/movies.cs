@@ -16,7 +16,7 @@ public class Movies
 
         string locatieUrl = "..\\..\\..\\locatie.json";
         List<Cinema_adress> locatieList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Cinema_adress>>(File.ReadAllText(locatieUrl));
-        updateShowingFilm(movieList, locatieList);
+        
         Console.Clear();
         string Keuze = "";
 
