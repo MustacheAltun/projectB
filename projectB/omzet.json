@@ -1,7 +1,13 @@
 [
   {
-    "weekendDate": "03/06/2022",
+    "weekendDate": "03-06-2022",
     "amountEarned": 0.0,
-    "dailyEarnings": null
+    "dailyEarnings": 
+    [
+      {
+        "datum": "30-5-2022"
+        "earnings" : 500.0
+      }
+    ]
   }
 ]

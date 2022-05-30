@@ -33,23 +33,7 @@ namespace projectB
 
             // maak een lijst van alle informatie die er is
             List<Account> jsonList = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
-            string strOmzet = File.ReadAllText("..\\..\\..\\omzet.json");
-            List<WeeklyEarning> OmzetList = JsonConvert.DeserializeObject<List<WeeklyEarning>>(strOmzet);
-            DateTime today = DateTime.Now;
-
-            if (OmzetList.Count == 0)
-            {
-                OmzetList.Add(new WeeklyEarning()
-                {
-                    weekendDate = (today.AddDays(7)).ToString("dd/MM/yyyy"),
-                    amountEarned = 0,
-                    dailyEarnings = null
-                }) ;
-                string OmzetJson = JsonConvert.SerializeObject(OmzetList, Formatting.Indented);
-                //verander de hele file met de nieuwe json informatie
-                File.WriteAllText("..\\..\\..\\omzet.json", OmzetJson);
-            }
-
+            UpdateOmzet();
             bool gebruikerLoggedIn = false;
             bool adminLoggedIn = false;
             int id = -1;
@@ -138,6 +122,61 @@ namespace projectB
             }
 
             return page;
+        }
+        public static void UpdateOmzet()
+        {
+            string strOmzet = File.ReadAllText("..\\..\\..\\omzet.json");
+            List<WeeklyEarning> OmzetList = JsonConvert.DeserializeObject<List<WeeklyEarning>>(strOmzet);
+            DateTime today = DateTime.Now;
+
+            if (OmzetList.Count == 0)
+            {
+                OmzetList.Add(new WeeklyEarning()
+                {
+                    weekendDate = (today.AddDays(7)).ToString("dd-MM-yyyy"),
+                    amountEarned = 0,
+                    dailyEarnings = null
+                });
+                string OmzetJson = JsonConvert.SerializeObject(OmzetList, Formatting.Indented);
+                //verander de hele file met de nieuwe json informatie
+                File.WriteAllText("..\\..\\..\\omzet.json", OmzetJson);
+            }
+            foreach (var WekenlijkseOmzet in OmzetList)
+            {
+                DateTime WekenlijkseConvert = Convert.ToDateTime(WekenlijkseOmzet.weekendDate);
+                today = today;
+                TimeSpan ts = today - WekenlijkseConvert;
+                int differenceInDays = ts.Days;
+                if (differenceInDays > 0)
+                {
+                    OmzetList.Add(new WeeklyEarning()
+                    {
+                        weekendDate = (WekenlijkseConvert.AddDays(7)).ToString("dd-MM-yyyy"),
+                        amountEarned = 0,
+                        dailyEarnings = null
+                    });
+                    string OmzetJson = JsonConvert.SerializeObject(OmzetList, Formatting.Indented);
+                    //verander de hele file met de nieuwe json informatie
+                    File.WriteAllText("..\\..\\..\\omzet.json", OmzetJson);
+                    break;
+                }
+            }
+        }
+        public static void AddOmzet(double add)
+        {
+            string strOmzet = File.ReadAllText("..\\..\\..\\omzet.json");
+            List<WeeklyEarning> OmzetList = JsonConvert.DeserializeObject<List<WeeklyEarning>>(strOmzet);
+            DateTime today = DateTime.Now;
+            foreach (var WekenlijkseOmzet in OmzetList)
+            {
+                DateTime WekenlijkseConvert = Convert.ToDateTime(WekenlijkseOmzet.weekendDate);
+                today = today;
+                TimeSpan ts = today - WekenlijkseConvert;
+                int differenceInDays = ts.Days;
+                if (differenceInDays >= -7 && differenceInDays <= 0)
+                {
+                }
+            }
         }
     }
 }
