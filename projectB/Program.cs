@@ -37,7 +37,10 @@ namespace projectB
             
             List<movie> movieList = JsonConvert.DeserializeObject<List<movie>>(File.ReadAllText("..\\..\\..\\movies.json"));
             List<Cinema_adress> locatieList = JsonConvert.DeserializeObject<List<Cinema_adress>>(File.ReadAllText("..\\..\\..\\locatie.json"));
+
+            //Updaten van de schema op de huidige datum.
             Movies.updateShowingFilm(movieList, locatieList);
+            Locatie.updateSchedule();
 
             bool gebruikerLoggedIn = false;
             bool adminLoggedIn = false;

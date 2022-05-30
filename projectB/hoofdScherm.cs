@@ -49,7 +49,7 @@ public class HoofdScherm
             //Thread.Sleep(2500);
         }
         //Als je juiste input hebt gegeven dan return hij de naam van het scherm waar je naartoe wilt gaan door de index te gebruiken menuArr[Int32.Parse(Input)-1] 
-        Console.WriteLine(menuArr[Int32.Parse(Input) - 1]);
+        
         return menuArr[Int32.Parse(Input)-1];
     }
 
@@ -81,7 +81,7 @@ public class HoofdScherm
             /*Thread.Sleep(2000);*/
         }
         //Als je juiste input hebt gegeven dan return hij de naam van het scherm waar je naartoe wilt gaan door de index te gebruiken menuArr[Int32.Parse(Input)-1] 
-        Console.WriteLine(menuArr[Int32.Parse(Input) - 1]);
+        
         return menuArr[Int32.Parse(Input) - 1];
     }
 
