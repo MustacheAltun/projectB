@@ -34,6 +34,11 @@ namespace projectB
             // maak een lijst van alle informatie die er is
             List<Account> jsonList = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
             UpdateOmzet();
+            
+            List<movie> movieList = JsonConvert.DeserializeObject<List<movie>>(File.ReadAllText("..\\..\\..\\movies.json"));
+            List<Cinema_adress> locatieList = JsonConvert.DeserializeObject<List<Cinema_adress>>(File.ReadAllText("..\\..\\..\\locatie.json"));
+            Movies.updateShowingFilm(movieList, locatieList);
+
             bool gebruikerLoggedIn = false;
             bool adminLoggedIn = false;
             int id = -1;
