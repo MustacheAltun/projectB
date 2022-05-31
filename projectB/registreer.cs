@@ -43,7 +43,7 @@ public class Registratie
         {
             //Check de laatste id
             //id = item.id + 1;
-            if (item.username.ToLower() == naam.ToLower())
+            if (item.username == naam)
             {
                 return true;
             }

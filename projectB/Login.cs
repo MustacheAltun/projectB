@@ -7,14 +7,14 @@ using System.Threading;
 
 public class Login
 {
-    public bool loginMethod (List<Account> accountList, string username, string password)
+    public static bool loginMethod (List<Account> accountList, string username, string password)
     {
         
         //Itereren door elke item van Json list.
         foreach(dynamic item in accountList)
         {
             //Check of gebruikersnaam en wachtwoord matchen
-            if(item.username.ToLower() == username.ToLower() && item.password == password)
+            if(item.username == username && item.password == password)
                return true;
         }
         return false;
@@ -54,16 +54,26 @@ public class Login
                     Console.WriteLine("*-*-*-*-*-*-*-*-*" + "\n" +
                                       "|   Inloggen    |" + "\n" +
                                       "*-*-*-*-*-*-*-*-*" + "\n");
-                    Console.WriteLine("Voer uw gebruikersnaam in of voer * in om terug te gaan:");
+                    Console.WriteLine("Voer uw gebruikersnaam in of voer '*' in om terug te gaan:");
                     string Username = Console.ReadLine();
-                    if (Username == "*")
+                    while (Username.Trim().Length == 0)
+                    {
+                        Console.WriteLine("Voer in een geldige gebruikersnaam a.u.b!");
+                        Username = Console.ReadLine();
+                    }
+                    if (Username.Trim() == "*")
                     {
                         return LoginScherm(accountList);
                     }
 
-                    Console.WriteLine("Voer uw wachtwoord in of voer * in om terug te gaan:");
+                    Console.WriteLine("Voer uw wachtwoord in of voer '*' in om terug te gaan:");
                     string Password = Console.ReadLine();
-                    if (Password == "*")
+                    while (Password.Trim().Length == 0)
+                    {
+                        Console.WriteLine("Voer in een geldige wachtwoord a.u.b!");
+                        Password = Console.ReadLine();
+                    }
+                    if (Password.Trim() == "*")
                     {
                         break;
                     }
@@ -129,13 +139,13 @@ public class Login
 
 
 
-    private int getId(List<Account> accountList, string username, string password)
+    public static int getId(List<Account> accountList, string username, string password)
     {
         //Itereren door elke item van Json list.
         foreach (dynamic item in accountList)
         {
             //Check of gebruikersnaam en wachtwoord matchen
-            if (item.username.ToLower() == username.ToLower() && item.password == password)
+            if (item.username == username && item.password == password)
                 return item.id;
         }
         return -1;
@@ -150,7 +160,7 @@ public class Login
         {
             //Check of gebruikersnaam en wachtwoord matchen
 
-            if (item.username.ToLower() == username.ToLower() && item.security == security)
+            if (item.username == username && item.security == security)
             {
                 InJson = true;
                 i = item.id;

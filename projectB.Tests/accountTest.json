@@ -1,0 +1,29 @@
+[
+  {
+    "id": 0,
+    "username": "test123",
+    "password": "test123",
+    "security": "test123",
+    "rol": "gebruiker",
+    "tickets": null,
+    "etenBestelling": null
+  },
+  {
+    "id": 101,
+    "username": "Kawish",
+    "password": "test123",
+    "security": "test123",
+    "rol": "gebruiker",
+    "tickets": null,
+    "etenBestelling": null
+  },
+  {
+    "id": 102,
+    "username": "Marc-Shaquille",
+    "password": "test123456789",
+    "security": "test123",
+    "rol": "gebruiker",
+    "tickets": null,
+    "etenBestelling": null
+  }
+]
