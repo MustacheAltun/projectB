@@ -14,7 +14,7 @@ namespace projectB
         {
             //Kleur van tekst in console en grote van console aangepast.
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.SetWindowSize(130, 40);
+            Console.SetWindowSize(160, 40);
 
             //instantiate de class
             Movies overview = new Movies();

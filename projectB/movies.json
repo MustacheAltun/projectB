@@ -4,9 +4,8 @@
     "name": "Jurassic Park",
     "year": "1993",
     "categories": [
-      "Sciencefiction",
-      "actie",
-      "sci-fi"
+      "Actie",
+      "Sci-fi"
     ],
     "releasedate": null,
     "director": "Steven Spielberg",
@@ -36,6 +35,6 @@
     "releasedate": "sadasd",
     "director": "sadasd",
     "storyline": "asdas",
-    "showing": true
+    "showing": false
   }
 ]
