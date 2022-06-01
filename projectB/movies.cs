@@ -33,7 +33,7 @@ public class Movies
             if (rol == "gebruiker")
             {
                 Console.WriteLine("\n" +"*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" + "\n" + 
-                                        "| [1] Terug | [2] Kijk Film | [3] Zoeken | [4] Filteren |" + "\n" + 
+                                        "| [1] Terug | [2] Reserveren | [3] Zoeken | [4] Filteren |" + "\n" + 
                                         "----------------------------------------------------------");
                 Console.WriteLine("----------------------------------------------------------------");
                 Console.WriteLine("| Toets 1 om terug te keren naar het hoofdmenu.                |" + "\n" +
@@ -45,14 +45,14 @@ public class Movies
             else if (rol == "admin")
             {
                 Console.WriteLine("\n" + "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n" +
-                                         "| [1] Terug | [2] Toevoegen | [3] Aanpassen | [4] Verwijderen | [5] Kijk Film | [6] Zoeken | [7] Filteren | [8] Film toewijzen |" + "\n" +
+                                         "| [1] Terug | [2] Toevoegen | [3] Aanpassen | [4] Verwijderen | [5] Reserveren | [6] Zoeken | [7] Filteren | [8] Film toewijzen |" + "\n" +
                                          "---------------------------------------------------------------------------------------------------------------------------------");
                 Console.WriteLine("----------------------------------------------------------------");
                 Console.WriteLine("| Toets 1 om terug te keren naar het hoofdmenu.                |" + "\n" +
                                   "| Toets 2 om een nieuwe film toe te voegen.                    |" + "\n" +
                                   "| Toets 3 om de gegevens van een bestaande film aan te passen. |" + "\n" +
                                   "| Toets 4 om een bestaande film te verwijderen.                |" + "\n" +
-                                  "| Toets 5 om een compleet overzicht van een film te krijgen.   |" + "\n" +
+                                  "| Toets 5 om een film te reserveren.                           |" + "\n" +
                                   "| Toets 6 om een film op naam te zoeken.                       |" + "\n" +
                                   "| Toets 7 om films op genre te filteren.                       |" + "\n" +
                                   "| Toets 8 om een film in te roosteren.                         |");
@@ -83,7 +83,7 @@ public class Movies
                         viewFilm(movieList, accountID);
                         break;
                     case "3":
-                        
+                        searchFilm(movieList, rol, accountID);
                         break;
                     case "4":
                         filterFilms(movieList, accountID);
@@ -114,6 +114,7 @@ public class Movies
                         viewFilm(movieList, accountID);
                         break;
                     case "6":
+                        searchFilm(movieList, rol, accountID);
                         break;
                     case "7":
                         filterFilms(movieList, accountID);
@@ -880,7 +881,7 @@ public class Movies
             while (!filmIdArr.Contains(filmId))
             {
                 Console.WriteLine("----------------------------------------------------------------------------");
-                Console.WriteLine("| Voer de ID in van de film die u wilt kijken: (typ '*' om te annuleren)|");
+                Console.WriteLine("| Voer de ID in van de film die u wilt kijken: (typ '*' om te annuleren)   |");
                 Console.WriteLine("----------------------------------------------------------------------------");
 
                 string placeHolder = Console.ReadLine();
@@ -1608,7 +1609,7 @@ public class Movies
 
             if (count == 0)
             {
-                Console.WriteLine("Geen resultaten gevonden!");
+                Console.WriteLine("Geen resultaten gevonden!\n");
             }
 
             Console.WriteLine("| [1] Terug | [2] Kijk film |");
@@ -1656,6 +1657,136 @@ public class Movies
         }
 
         File.WriteAllText("..\\..\\..\\movies.json", JsonConvert.SerializeObject(movielist, Formatting.Indented));
+    }
+
+    public static void searchFilm(List<movie> movielist, string role, int accountID)
+    {
+        string choice = "";
+        while (choice != "*")
+        {
+            Console.Clear();
+            Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            Console.WriteLine("|                                              Zoeken                                               |");
+            Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
+            Console.WriteLine("Toets in '*' om terug te gaan naar vorige scherm of de naam van de film waarin u wilt zoeken....");
+            string search = Console.ReadLine();
+
+            while (search.Trim().Length == 0)
+            {
+                Console.WriteLine("Geef een input a.u.b.");
+                search = Console.ReadLine();
+            }
+            if (search.Trim() == "*")
+            {
+                Console.Clear();
+                return;
+            }
+            string searchLowerCase = "";
+            foreach (var letter in search)
+            {
+                if (int.TryParse(search, out _))
+                {
+                    searchLowerCase += letter;
+                }
+                else
+                {
+                    searchLowerCase += letter.ToString().ToLower();
+                }
+            }
+            searchedFilmOverview(movielist, role, accountID, searchLowerCase);
+        }
+    }
+
+    private static void searchedFilmOverview(List<movie> movielist, string role, int accountID, string search)
+    {
+        string choice = "";
+        while (choice != "1")
+        {
+            Console.Clear();
+            Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+            Console.WriteLine("|                                           Zoekresultaten                                          |");
+            Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
+            string showing = "";
+            int count = 0;
+            foreach (var movie in movielist)
+            {
+                string categories = "";
+                if (movie.name.ToLower().Contains(search) || movie.director.ToLower().Contains(search))
+                {
+                    foreach (string genre in movie.categories)
+                    {
+
+                        if (genre == movie.categories[movie.categories.Length - 1])
+                        {
+                            categories += genre;
+                        }
+                        else
+                        {
+                            categories += genre + "\n                                   ";
+                        }
+                        if (movie.showing)
+                            showing = "NU TE ZIEN";
+                        else
+                            showing = "MOMENTEEL NIET TE ZIEN";
+
+                    }
+                    //print alle films
+                    Console.WriteLine("-----------------------------------------------------------------------------------------------------");
+                    Console.WriteLine("                                         Film-ID : " + movie.id);
+                    Console.WriteLine("                           Naam: " + movie.name);
+                    Console.WriteLine("                           Publicatiejaar: " + movie.year);
+                    Console.WriteLine("                           Genres: " + categories);
+                    Console.WriteLine("                           Status: " + showing);
+                    Console.WriteLine("-----------------------------------------------------------------------------------------------------");
+
+                    count++;
+                }
+            }
+
+            if (count == 0)
+            {
+                Console.WriteLine("Geen resultaten gevonden!\n");
+                Console.WriteLine("| [1] Terug |");
+                choice = Console.ReadLine();
+                while(choice.Trim() != "1")
+                {
+                    Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                    choice = Console.ReadLine();
+                }
+            }
+            else
+            {
+                if(role == "admin" || role == "gebruiker")
+                {
+                    Console.WriteLine("| [1] Terug | [2] Reserveren |");
+                    choice = Console.ReadLine();
+                    while(choice.Trim() != "1" && choice.Trim() != "2")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        choice = Console.ReadLine();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("| [1] Terug |");
+                    choice = Console.ReadLine();
+                    while (choice.Trim() != "1")
+                    {
+                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+                        choice = Console.ReadLine();
+                    }
+                }
+                
+            }
+
+            switch (choice.Trim())
+            {
+                case "2":
+                    viewFilm(movielist, accountID);
+                    break;
+            }
+        }
+        
     }
 
 }
