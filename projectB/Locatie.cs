@@ -30,32 +30,16 @@ public class Locatie
             string locatieJson = File.ReadAllText(url);
             List<Cinema_adress> locatieList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Cinema_adress>>(locatieJson);
 
-            //2D-array bedoeld voor tijdelijke opslag van locatiegegevens 
-            object[][] arr = new object[locatieList.Count][];
+            
 
             Console.Clear();
 
             Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
             Console.WriteLine("|                                            Bioscopen                                              |");
             Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
-            //Forloop om 2d array (inner array) in te vullen met bioscoop locatie gegevens.
-            for (int i = 0; i < locatieList.Count; i++)
-            {
-                arr[i] = new object[] { locatieList[i].name, locatieList[i].address, locatieList[i].zipcode, locatieList[i].city, locatieList[i].telNr, locatieList[i].id };
-             
-            }
-            //Een forloop die de verschillende locaties in de console weergeeft.
-            for (int index = 0, locationNr = 1; index < locatieList.Count; index++, locationNr++)
-            {
-                Console.WriteLine("-----------------------------------------------------------------------------------------------------");
-                Console.WriteLine("                         ID: " + arr[index][5]);
-                Console.WriteLine("                         Naam locatie " + locationNr + " : "+ arr[index][0]);
-                Console.WriteLine("                         Adres: " + arr[index][1]);
-                Console.WriteLine("                         Postcode: " + arr[index][2]);
-                Console.WriteLine("                         Stad: " + arr[index][3]);
-                Console.WriteLine("                         Telnr: " + arr[index][4]);
-                Console.WriteLine("-----------------------------------------------------------------------------------------------------");
-            }
+
+            locationOverview(locatieList);
+
             if (rol == "gebruiker")
             {
                 Console.WriteLine("\n" +
@@ -129,6 +113,30 @@ public class Locatie
        
     }
 
+    private void locationOverview(List<Cinema_adress> locatieList)
+    {
+        //2D-array bedoeld voor tijdelijke opslag van locatiegegevens 
+        object[][] arr = new object[locatieList.Count][];
+
+        //Forloop om 2d array (inner array) in te vullen met bioscoop locatie gegevens.
+        for (int i = 0; i < locatieList.Count; i++)
+        {
+            arr[i] = new object[] { locatieList[i].name, locatieList[i].address, locatieList[i].zipcode, locatieList[i].city, locatieList[i].telNr, locatieList[i].id };
+
+        }
+        //Een forloop die de verschillende locaties in de console weergeeft.
+        for (int index = 0, locationNr = 1; index < locatieList.Count; index++, locationNr++)
+        {
+            Console.WriteLine("-----------------------------------------------------------------------------------------------------");
+            Console.WriteLine("                         ID: " + arr[index][5]);
+            Console.WriteLine("                         Naam locatie " + locationNr + " : " + arr[index][0]);
+            Console.WriteLine("                         Adres: " + arr[index][1]);
+            Console.WriteLine("                         Postcode: " + arr[index][2]);
+            Console.WriteLine("                         Stad: " + arr[index][3]);
+            Console.WriteLine("                         Telnr: " + arr[index][4]);
+            Console.WriteLine("-----------------------------------------------------------------------------------------------------");
+        }
+    }
     public void addLocation(List<Cinema_adress> lijst, string url)
     {
         /*
