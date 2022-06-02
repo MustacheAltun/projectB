@@ -28,7 +28,7 @@ public class Omzet
                     int j = 1;
                     s += "------------------ Week" + i + " ----------------------------------------------------\n";
                     s += "| " + (Weeklies.dailyEarnings[0].date) + " tot " + (Weeklies.dailyEarnings[6].date) + "\n";
-                    s += "| Volledige omzet: " + Weeklies.amountEarned + "\n|\n";
+                    s += "| Volledige omzet: " + Weeklies.amountEarned + " Euro\n|\n";
                     foreach (var dailies in Weeklies.dailyEarnings)
                     {
                         s += "| Dag " + j + ": " + dailies.date + "\n";
@@ -44,7 +44,7 @@ public class Omzet
                     {
                         s += "------------------ Week" + i + " ----------------------------------------------------\n";
                         s += "| " + (Weeklies.dailyEarnings[0].date) + " tot " + (Weeklies.dailyEarnings[6].date);
-                        s += "| Volledige omzet: " + Weeklies.amountEarned + "\n|\n";
+                        s += "| Volledige omzet: " + Weeklies.amountEarned + " Euro\n|\n";
                         foreach (var dailies in Weeklies.dailyEarnings)
                         {
                             s += "| Dag " + j + ": " + dailies.date + "\n";
@@ -59,6 +59,9 @@ public class Omzet
             Console.WriteLine(s);
             Console.WriteLine("----------------------------------------------------------------");
             Console.WriteLine("| [1] Terug | [2] Alle Weken Tonen | [3] Weken met omzet tonen |");
+            Console.WriteLine("----------------------------------------------------------------\n\n ");
+            Console.WriteLine("----------------------------------------------------------------");
+            Console.WriteLine("| [1] Stuurt je terug naar het hoofdscherm van de applicatie.  |\n| [2] Toont de weken met omzet en de weken met geen omzet      |\n| [3] Toont alleen de weken met omzet                          |");
             Console.WriteLine("---------------------------------------------------------------- ");
             Console.WriteLine("Voer de nummer van uw actie in:");
             keuze = Console.ReadLine();
@@ -154,7 +157,7 @@ public class Omzet
             }
         }
     }
-    public static void AddOmzet(double add)
+    public static void AddOrRemoveOmzet(double add)
     {
         string strOmzet = File.ReadAllText("..\\..\\..\\omzet.json");
         List<WeeklyEarning> OmzetList = JsonConvert.DeserializeObject<List<WeeklyEarning>>(strOmzet);

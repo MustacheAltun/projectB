@@ -245,6 +245,7 @@ public class Gegevens
                             {
                                 account.tickets = null;
                             }
+                            Omzet.AddOrRemoveOmzet(-(ticket.prijs));
                             break;
                         }
                     }
@@ -350,6 +351,7 @@ public class Gegevens
                         {
                             account.etenBestelling = null;
                         }
+                        Omzet.AddOrRemoveOmzet(eten.total);
                         break;
                     }
                 }
