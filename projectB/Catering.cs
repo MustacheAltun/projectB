@@ -492,6 +492,7 @@ class Catering
                                 total = Math.Round(total, 2)
                             }
                         };
+                        Omzet.AddOrRemoveOmzet(Math.Round(total, 2));
                     }
                     else
                     {
@@ -510,6 +511,7 @@ class Catering
                         };
 
                         account.etenBestelling = etenBestelling;
+                        Omzet.AddOrRemoveOmzet(Math.Round(total, 2));
                     }
                 }
 
