@@ -46,7 +46,7 @@ public class Omzet
                         foreach (var dailies in Weeklies.dailyEarnings)
                         {
                             s += "Dag " + j + ": " + dailies.date + "\n";
-                            s += "Verdient: " + dailies.earned + " Euro" + "\n";
+                            s += "Verdient: " + dailies.earned + " Euro" + "\n\n";
                             j++;
                         }
   
@@ -60,7 +60,7 @@ public class Omzet
             Console.WriteLine("---------------------------------------------------------------- ");
             Console.WriteLine("Voer de nummer van uw actie in:");
             keuze = Console.ReadLine();
-            while(keuze != "2" || keuze != "3" || keuze != "1")
+            while(keuze != "2" && keuze != "3" && keuze != "1")
             {
                 Console.WriteLine("Onjuiste invoer!");
                 Console.WriteLine("Voer de nummer van uw actie in:");
@@ -73,12 +73,15 @@ public class Omzet
             else if(keuze == "2")
             {
                 toonAlles = true;
+                keuze = "";
             }
             else if(keuze == "3")
             {
                 toonAlles = false;
+                keuze = "";
             }
         }
+        return;
     }
     public static void UpdateOmzet()
     {
