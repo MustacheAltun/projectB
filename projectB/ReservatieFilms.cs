@@ -23,8 +23,8 @@ public class ReservatieFilms
 		int counter = 0;
 		Dictionary<int, string> stoelen = new Dictionary<int, string>();
 		int row = 0;
-		string chairResult = "";
-
+		string chairResult = "Rij 1 |		";
+		int huidigeRij = 1;
 		/*
 		 * maak een forloop om te checken welke stoelen genomen, gebroken en beschikbaar zijn
 		 * voor elke locatie in de lijst van locaties check je of het overeenkomt met de bioscoopNaam
@@ -122,10 +122,53 @@ public class ReservatieFilms
 
 			}
 			counter++;
-			if (counter % row == 0)
-			{
-				chairResult += "\n";
+            if (row == 10)
+            {
+				if (counter % 10 == 0 && huidigeRij < 10)
+				{
+					huidigeRij++;
+                    if (huidigeRij <10)
+                    {
+						chairResult += "\nRij " + huidigeRij + " |		";
+					}
+                    else
+                    {
+						chairResult += "\nRij " + huidigeRij + "|		";
+					}
+					
+				}
+            }
+            else if (row == 15)
+            {
+				if (counter % 10 == 0 && huidigeRij < 15)
+				{
+					huidigeRij++;
+					if (huidigeRij < 10)
+					{
+						chairResult += "\nRij " + huidigeRij + " |		";
+					}
+					else
+					{
+						chairResult += "\nRij " + huidigeRij + "|		";
+					}
+				}
+            }
+            else
+            {
+				if (counter % 10 == 0 && huidigeRij < 20)
+				{
+					huidigeRij++;
+					if (huidigeRij < 10)
+					{
+						chairResult += "\nRij " + huidigeRij + " |		";
+					}
+					else
+					{
+						chairResult += "\nRij " + huidigeRij + "|		";
+					}
+				}
 			}
+			
 		}
 		Console.WriteLine(chairResult);
 		Console.WriteLine("------------------------------------------------ACHTERKANT------------------------------------------------");
@@ -556,10 +599,18 @@ public class ReservatieFilms
 		return vrijeStoelen;
 	}
 
+	private void Logo()
+    {
+
+		Console.WriteLine("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+		Console.WriteLine("|                                              Reservering                                              |");
+		Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
+	}
 	public void reserveren(string filmIdString, int accountID)
 	{
 
 		Console.Clear();
+		Logo();
 		bool loopBack = true;
 		
 
@@ -574,7 +625,7 @@ public class ReservatieFilms
 		Console.WriteLine("Wat is jouw volledige naam?");
 		string fullName = Console.ReadLine();
 
-        while (string.IsNullOrEmpty(fullName) || Locatie.hasSpecialChar(fullName) || fullName.Any(char.IsDigit) || fullName.Length < 7)
+        while (string.IsNullOrEmpty(fullName) || Locatie.hasSpecialChar(fullName) || fullName.Any(char.IsDigit) || fullName.Length < 5)
         {
 			Console.WriteLine("Dit is niet uw volledige naam, voer uw volledige naam in aub.");
 			fullName = Console.ReadLine();
@@ -679,6 +730,7 @@ public class ReservatieFilms
 				while (true)
 				{
 					Console.Clear();
+					Logo();
 					Console.WriteLine("Kies de bioscoop waarin u de film wilt bekijken.\n");
 					Console.WriteLine("U kunt '/' typen om al uw keuzes opnieuw te maken.");
 					Console.WriteLine("U kunt '*' typen om terug te gaan.\n");
@@ -686,7 +738,7 @@ public class ReservatieFilms
 					foreach (var item in bioscoopNamen)
 					{
 
-						Console.WriteLine("[" + bioscoopNamenCounter + "] : " + item + "\n");
+						Console.WriteLine("	[" + bioscoopNamenCounter + "] : " + item + "\n");
 						bioscoopNamenCounter++;
 					}
 					bioscoopKeuze = Console.ReadLine();
@@ -787,13 +839,14 @@ public class ReservatieFilms
 				while (extracheck)
 				{
 					Console.Clear();
+					Logo();
 					Console.WriteLine("Kies de datum waarin u de film wilt bekijken.\n");
 					Console.WriteLine("U kunt '/' typen om al uw keuzes opnieuw te maken.");
 					Console.WriteLine("U kunt '*' typen om terug te gaan.\n");
 					Console.WriteLine("U kunt hier de beschikbare datums zien:");
 					foreach (var datum in datums)
 					{
-						Console.WriteLine("[" + dagenCounter + "] : " + datum);
+						Console.WriteLine("	[" + dagenCounter + "] : " + datum);
 						dagenCounter++;
 					}
 					datumKeuze = Console.ReadLine();
@@ -873,8 +926,21 @@ public class ReservatieFilms
 									{
 										foreach (var tijd in z.tijden)
 										{
+											string tijdelijkePrijs= "";
+                                            if (z.prijs == 12.5)
+                                            {
+												tijdelijkePrijs = "12,50 Euro";
 
-											zalenTechnoligien[zalenMetFilm] = z.naam + " " + z.type + " : " + z.prijs;
+											}
+                                            else if (z.prijs == 15.0)
+                                            {
+												tijdelijkePrijs = "15,00 Euro";
+											}
+                                            else if (z.prijs == 17.5)
+                                            {
+												tijdelijkePrijs = "17,50 Euro";
+											}
+                                            zalenTechnoligien[zalenMetFilm] = z.naam + " " + z.type + " : " + tijdelijkePrijs;
 											zalenMetFilm++;
 											break;
 
@@ -899,13 +965,14 @@ public class ReservatieFilms
 				while (true)
 				{
 					Console.Clear();
+					Logo();
 					Console.WriteLine("Kies de zaal waarin u de film wilt bekijken.\n");
 					Console.WriteLine("U kunt '/' typen om al uw keuzes opnieuw te maken.");
 					Console.WriteLine("U kunt '*' typen om terug te gaan.\n");
 					Console.WriteLine("U kunt hier de beschikbare zalen zien:");
 					foreach (var item in zalenTechnoligien)
 					{
-						Console.WriteLine("[" + zalenMetFilm + "] : " + item + "\n");
+						Console.WriteLine("	[" + zalenMetFilm + "] : " + item + "\n");
 						zalenMetFilm++;
 					}
 					zaalKeuze = Console.ReadLine();
@@ -942,19 +1009,13 @@ public class ReservatieFilms
 				//als de zaal keuze een van deze keuzes zijn dan wordt searchZaal aangepast
 				switch (zaalKeuze)
 			{
-				case "zaal 1 2D : 12.5":
+				case "zaal 1 2D : 12,50 Euro":
 					searchZaal = "zaal 1";
 					break;
-				case "zaal 2 3D : 15":
+				case "zaal 2 3D : 15,00 Euro":
 					searchZaal = "zaal 2";
 					break;
-				case "zaal 3 IMAX : 17.5":
-					searchZaal = "zaal 3";
-					break;
-				case "zaal 1 2D : 12,5":
-					searchZaal = "zaal 1";
-					break;
-				case "zaal 3 IMAX : 17,5":
+				case "zaal 3 IMAX : 17,50 Euro":
 					searchZaal = "zaal 3";
 					break;
 				}
@@ -1075,6 +1136,7 @@ public class ReservatieFilms
 				while (true)
 				{
 					Console.Clear();
+					Logo();
 					Console.WriteLine("Kies de tijd waarin u de film wilt bekijken.\n");
 					Console.WriteLine("U kunt '/' typen om al uw keuzes opnieuw te maken.");
 					Console.WriteLine("U kunt '*' typen om terug te gaan.\n");
@@ -1097,10 +1159,10 @@ public class ReservatieFilms
 								TijdelijkeTijd = "18:00-21:00";
 								break;
 							case "21-24":
-								TijdelijkeTijd = "21:00-24:00";
+								TijdelijkeTijd = "21:00-00:00";
 								break;
 						}
-						Console.WriteLine("[" + filmtijdenCounter + "] : " + TijdelijkeTijd + "\n");
+						Console.WriteLine("	[" + filmtijdenCounter + "] : " + TijdelijkeTijd + "\n");
 						filmtijdenCounter++;
 					}
 					tijdKeuze = Console.ReadLine();
@@ -1170,17 +1232,18 @@ public class ReservatieFilms
 				int aantalStoelenOver = aantalVrijeStoelen(Int32.Parse(bioscoopKeuze), searchZaal, tijdKeuze, datumKeuze);
 				int aantalStoelenKeuzeInt = 0;
 				Console.Clear();
+				Logo();
 				//hier wordt moet er een keuze gemaakt worden over hoeveel stoelen er gereserveerd moet worden.
 				//als er geen goed aantal is gegeven dan wordt het opnieuw gelooped
 				while (aantalGeselecteerd == false)
                 {
 					Console.WriteLine("Selecteer de aantal stoelen die u wilt reserveren:");
 					Console.WriteLine("Het aantal moet hoger dan 0 zijn en lager of gelijk aan "+ aantalStoelenOver);
-					Console.WriteLine("u kunt '/' typen om al uw keuzes opnieuw te maken");
-					Console.WriteLine("u kunt '*' typen om terug te gaan");
+					Console.WriteLine("\nU kunt '/' typen om al uw keuzes opnieuw te maken.");
+					Console.WriteLine("U kunt '*' typen om terug te gaan.");
 					if (aantalStoelenOver == 0)
                     {
-						Console.WriteLine("Zaal is vol.");
+						Console.WriteLine("\nZAAL IS VOL!");
 						Console.WriteLine("Typ iets om al uw keuzes opnieuw te maken.");
 						Console.ReadLine();
 						loopBackChecker = true;
@@ -1207,11 +1270,7 @@ public class ReservatieFilms
                         {
 							Console.WriteLine("Er zijn momenteel niet zoveel stoelen vrij.");
 							aantalGeselecteerd = true;
-
 						}
-						
-
-
 					}
 					Console.WriteLine();
 
@@ -1222,8 +1281,8 @@ public class ReservatieFilms
 				if (aantalGeselecteerd)
                 {
 					Console.Clear();
-					
-					
+
+					Logo();
 					//de stoelen worden door deze functie geprint.
 					showBeschikbaar(Int32.Parse(bioscoopKeuze), searchZaal, tijdKeuze, datumKeuze);
 					//Nu worden de stoelen gevraagd voor de aantal stoelen die de klant wilt.
@@ -1268,35 +1327,23 @@ public class ReservatieFilms
 						stoelen[stoelCounter] = stoelKeuze;
 						stoelCounter++;
 					}
-					
-					
 				}
 				if (loopBackChecker == false)
 				{
 					//hier wordt de informatie opgesplitst in meerdere variabelen zodat er meerdere checks uitgvoerd kunnen worden.
 					switch (zaalKeuze)
 					{
-						case "zaal 1 2D : 12.5":
-							zaalKeuze = "zaal 1";
-							technologie = "2D";
-							filmPrijs = 12.5;
-							break;
-						case "zaal 2 3D : 15":
+						case "zaal 2 3D : 15,00 Euro":
 							zaalKeuze = "zaal 2";
 							technologie = "3D";
 							filmPrijs = 15.0;
 							break;
-						case "zaal 3 IMAX : 17.5":
-							zaalKeuze = "zaal 3";
-							technologie = "IMAX";
-							filmPrijs = 17.5;
-							break;
-						case "zaal 1 2D : 12,5":
+						case "zaal 1 2D : 12,50 Euro":
 							zaalKeuze = "zaal 1";
 							technologie = "2D";
 							filmPrijs = 12.5;
 							break;
-						case "zaal 3 IMAX : 17,5":
+						case "zaal 3 IMAX : 17,50 Euro":
 							zaalKeuze = "zaal 3";
 							technologie = "IMAX";
 							filmPrijs = 17.5;
@@ -1383,6 +1430,8 @@ public class ReservatieFilms
 						string convertedJson = JsonConvert.SerializeObject(accounts, Formatting.Indented);
 						//verander de hele file met de nieuwe json informatie
 						File.WriteAllText("..\\..\\..\\account.json", convertedJson);
+						Console.WriteLine("Bedankt voor uw reservering!");
+						Thread.Sleep(2000);
 						//en nu is de loop false dus hij is klaar met de functie
 						loopBack = false;
 					}
@@ -1464,23 +1513,24 @@ public class ReservatieFilms
 				tijdKeuze = "18:00-21:00";
 				break;
 			case "21-24":
-				tijdKeuze = "21:00-24:00";
+				tijdKeuze = "21:00-00:00";
 				break;
 		}
 		while (true)
 		{
 			//hier worden alle gegevens weergeven van de keuzes die zijn gemaakt
 			Console.Clear();
-			Console.WriteLine("Film ID : " + filmId);
-			Console.WriteLine("Film naam : " + filmNaam);
-			Console.WriteLine("Volledige naam : " + fullName);
-			Console.WriteLine("Prijs : " + filmPrijs* stoelKeuze.Length + " euro");
-			Console.WriteLine("Bioscoop naam : " + bioscoopNaam);
-			Console.WriteLine("Zaal : " + zaalKeuze);
-			Console.WriteLine("Zaal technologie : " + technologie);
-			Console.WriteLine("Datum : " + dagKeuze);
-			Console.WriteLine("Tijd : " + tijdKeuze);
-			Console.WriteLine("Stoel : " + string.Join(",", stoelKeuze) + "\n\n") ;
+			Logo();
+			Console.WriteLine("	Film ID : " + filmId);
+			Console.WriteLine("	Film naam : " + filmNaam);
+			Console.WriteLine("	Volledige naam : " + fullName);
+			Console.WriteLine("	Prijs : " + String.Format("{0:0.00}", filmPrijs * stoelKeuze.Length) + " Euro");
+			Console.WriteLine("	Bioscoop naam : " + bioscoopNaam);
+			Console.WriteLine("	Zaal : " + zaalKeuze);
+			Console.WriteLine("	Zaal technologie : " + technologie);
+			Console.WriteLine("	Datum : " + dagKeuze);
+			Console.WriteLine("	Tijd : " + tijdKeuze);
+			Console.WriteLine("	Stoel : " + string.Join(",", stoelKeuze) + "\n\n") ;
 
 			Console.WriteLine("Wilt u een bestelling plaatsen met deze informatie?");
 			Console.WriteLine("Beantwoordt de vraag met 'ja' of 'nee'.\n");
