@@ -110,6 +110,10 @@ namespace projectB
                 {
                     AccGegevens.showGegevens(url, id);
                 }
+                else if (page == "Zoeken")
+                {
+                    Movies.searchFilm(movieList, rol, id);
+                }
                 else if (page == "Omzet")
                 {
                     Omzet.ShowOmzet();

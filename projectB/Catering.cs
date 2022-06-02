@@ -112,7 +112,7 @@ class Catering
                 Console.WriteLine("                                 Product ID: " + item.productID);
                 Console.WriteLine("                                 Product Naam: " + item.productName);
                 Console.WriteLine("                                 Aantal: " + item.amount + "X");
-                Console.WriteLine("                                 Prijs: $" + item.price);
+                Console.WriteLine("                                 Prijs: " + item.price + " Euro"); 
                 Console.WriteLine("-----------------------------------------------------------------------------------------------------");
                 break;
             }
@@ -133,7 +133,7 @@ class Catering
                 Console.WriteLine("                                 Product ID: " + item.productID);
                 Console.WriteLine("                                 Product Naam: " + item.productName);
                 Console.WriteLine("                                 Aantal: " + item.amount + "X");
-                Console.WriteLine("                                 Prijs: $" + item.price);
+                Console.WriteLine("                                 Prijs: " + item.price + " Euro");
                 Console.WriteLine("-----------------------------------------------------------------------------------------------------");
                 snacksCount++;
             }
@@ -155,7 +155,7 @@ class Catering
                 Console.WriteLine("                                 Product ID: " + item.productID);
                 Console.WriteLine("                                 Product Naam: " + item.productName);
                 Console.WriteLine("                                 Aantal: " + item.amount + "X");
-                Console.WriteLine("                                 Prijs: $" + item.price);
+                Console.WriteLine("                                 Prijs: " + item.price + " Euro");
                 Console.WriteLine("-----------------------------------------------------------------------------------------------------");
                 drinksCount++;
             }
@@ -193,7 +193,7 @@ class Catering
                             Console.WriteLine("         Product ID: " + item.Key);
                             Console.WriteLine("         Product Naam: " + item2.productName);
                             Console.WriteLine("         Aantal: " + item.Value + "X");
-                            Console.WriteLine("         Prijs: $" + item2.price + "\n");
+                            Console.WriteLine("         Prijs per stuk: " + item2.price + " Euro\n");
                             total = total + (item.Value * item2.price);
                         }
                     }
@@ -418,14 +418,14 @@ class Catering
                     Console.WriteLine("         Product ID: " + item.Key);
                     Console.WriteLine("         Product Naam: " + item2.productName);
                     Console.WriteLine("         Aantal: " + item.Value + "X");
-                    Console.WriteLine("         Prijs: $" + item2.price + "\n");
+                    Console.WriteLine("         Prijs per stuk: " + item2.price + " Euro\n");
                     total = total + (item.Value * item2.price);
                 }
             }
 
         }
         Console.WriteLine("         Datum: " + DateTime.Now.ToString("dd-MM-yyyy"));
-        Console.WriteLine("         Totaal: $" + Math.Round(total, 2));
+        Console.WriteLine("         Totaal: " + Math.Round(total, 2) + " Euro");
 
         Console.WriteLine("\n" + "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + "\n" +
                                  "| [1] Betalen | [2] Annuleren |" + "\n" +
