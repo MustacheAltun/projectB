@@ -23,15 +23,16 @@ public class Omzet
 
             foreach(var Weeklies in OmzetList)
             {
-                if(toonAlles)
+                if (toonAlles)
                 {
                     int j = 1;
                     s += "------------------ Week" + i + " ----------------------------------------------------\n";
-                    s += "| " + (Weeklies.dailyEarnings[0].date)+ " tot " +(Weeklies.dailyEarnings[6].date) + "\n";
+                    s += "| " + (Weeklies.dailyEarnings[0].date) + " tot " + (Weeklies.dailyEarnings[6].date) + "\n";
+                    s += "| Volledige omzet: " + Weeklies.amountEarned + "\n|\n";
                     foreach (var dailies in Weeklies.dailyEarnings)
                     {
-                        s += "Dag " + j + ": " + dailies.date + "\n";
-                        s += "Verdient: " + dailies.earned + " Euro" + "\n\n";
+                        s += "| Dag " + j + ": " + dailies.date + "\n";
+                        s += "| Verdient: " + dailies.earned + " Euro" + "\n|\n";
                         j++;
                     }
                   
@@ -43,10 +44,11 @@ public class Omzet
                     {
                         s += "------------------ Week" + i + " ----------------------------------------------------\n";
                         s += "| " + (Weeklies.dailyEarnings[0].date) + " tot " + (Weeklies.dailyEarnings[6].date);
+                        s += "| Volledige omzet: " + Weeklies.amountEarned + "\n|\n";
                         foreach (var dailies in Weeklies.dailyEarnings)
                         {
-                            s += "Dag " + j + ": " + dailies.date + "\n";
-                            s += "Verdient: " + dailies.earned + " Euro" + "\n\n";
+                            s += "| Dag " + j + ": " + dailies.date + "\n";
+                            s += "| Verdient: " + dailies.earned + " Euro" + "\n|\n";
                             j++;
                         }
   
