@@ -2,14 +2,14 @@
   {
     "productID": 100,
     "productName": "Snickers",
-    "amount": 50,
+    "amount": 40,
     "price": 2.99,
     "productType": "Eten"
   },
   {
     "productID": 101,
     "productName": "Sprite",
-    "amount": 50,
+    "amount": 38,
     "price": 3.99,
     "productType": "Drank"
   }

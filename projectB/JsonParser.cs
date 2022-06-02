@@ -91,10 +91,15 @@ public class Eten
     public string productType { get; set; }
 
 }
-
+public class dailyEarnings
+{
+    public string date { get; set; }
+    public double earned { get; set; }
+}
 public class WeeklyEarning
 {
     public string weekendDate { get; set; }
     public double amountEarned { get; set; }
-    public List<Dictionary<string, double>> dailyEarnings { get; set; }
+       
+    public dailyEarnings[] dailyEarnings { get; set;}
 }

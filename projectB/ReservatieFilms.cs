@@ -1302,6 +1302,7 @@ public class ReservatieFilms
 										{
 										new Ticket() { id = 0, filmID = filmId.ToString(),name = fullName, prijs = filmPrijs, bioscoopID = Int32.Parse(bioscoopKeuze), zaalID = Int32.Parse(zaalKeuze),filmTechnologie = technologie, dag = datumKeuze, stoel = Int32.Parse(eenStoel),tijd = tijdKeuze}
 										};
+										Omzet.AddOrRemoveOmzet(filmPrijs);
 
 									}
 									else
@@ -1315,11 +1316,11 @@ public class ReservatieFilms
 										}
 										tickets[tickets.Length - 1] = new Ticket() { id = item.tickets.Length, filmID = filmId.ToString(), name = fullName, prijs = filmPrijs, bioscoopID = Int32.Parse(bioscoopKeuze), zaalID = Int32.Parse(zaalKeuze), filmTechnologie = technologie, dag = datumKeuze, tijd = tijdKeuze, stoel = Int32.Parse(eenStoel) };
 										item.tickets = tickets;
+										Omzet.AddOrRemoveOmzet(filmPrijs);
 									}
 								}
 							}
 						}
-						
 						string convertedJson = JsonConvert.SerializeObject(accounts, Formatting.Indented);
 						//verander de hele file met de nieuwe json informatie
 						File.WriteAllText("..\\..\\..\\account.json", convertedJson);
