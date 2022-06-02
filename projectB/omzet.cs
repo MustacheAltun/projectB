@@ -171,6 +171,8 @@ public class Omzet
                 {
                     dailies.earned += add;
                     Weeklies.amountEarned += add;
+                    Math.Round(dailies.earned, 2);
+                    Math.Round(Weeklies.amountEarned, 2);
                     string OmzetJson = JsonConvert.SerializeObject(OmzetList, Formatting.Indented);
                     //verander de hele file met de nieuwe json informatie
                     File.WriteAllText("..\\..\\..\\omzet.json", OmzetJson);
