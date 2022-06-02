@@ -351,7 +351,7 @@ public class Gegevens
                         {
                             account.etenBestelling = null;
                         }
-                        Omzet.AddOrRemoveOmzet(eten.total);
+                        Omzet.AddOrRemoveOmzet(-(eten.total));
                         break;
                     }
                 }
