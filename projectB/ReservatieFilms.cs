@@ -571,7 +571,7 @@ public class ReservatieFilms
 		List<Account> accounts = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
 		List<Cinema_adress> locaties = JsonConvert.DeserializeObject<List<Cinema_adress>>(strResultJson2);
 
-		Console.WriteLine("wat is jouw volledige naam?");
+		Console.WriteLine("Wat is jouw volledige naam?");
 		string fullName = Console.ReadLine();
 
         while (string.IsNullOrEmpty(fullName) || Locatie.hasSpecialChar(fullName) || fullName.Any(char.IsDigit) || fullName.Length < 7)
@@ -674,6 +674,7 @@ public class ReservatieFilms
 					Console.WriteLine("Kies de bioscoop waarin u de film wilt bekijken.\n");
 					Console.WriteLine("U kunt '/' typen om al uw keuzes opnieuw te maken.");
 					Console.WriteLine("U kunt '*' typen om terug te gaan.\n");
+					Console.WriteLine("U kunt hier de beschikbare bioscopen zien:");
 					foreach (var item in bioscoopNamen)
 					{
 
@@ -778,6 +779,7 @@ public class ReservatieFilms
 					Console.WriteLine("Kies de datum waarin u de film wilt bekijken.\n");
 					Console.WriteLine("U kunt '/' typen om al uw keuzes opnieuw te maken.");
 					Console.WriteLine("U kunt '*' typen om terug te gaan.\n");
+					Console.WriteLine("U kunt hier de beschikbare datums zien:");
 					foreach (var datum in datums)
 					{
 						Console.WriteLine("[" + dagenCounter + "] : " + datum);
@@ -885,6 +887,7 @@ public class ReservatieFilms
 					Console.WriteLine("Kies de zaal waarin u de film wilt bekijken.\n");
 					Console.WriteLine("U kunt '/' typen om al uw keuzes opnieuw te maken.");
 					Console.WriteLine("U kunt '*' typen om terug te gaan.\n");
+					Console.WriteLine("U kunt hier de beschikbare zalen zien:");
 					foreach (var item in zalenTechnoligien)
 					{
 						Console.WriteLine("[" + zalenMetFilm + "] : " + item + "\n");
@@ -1063,9 +1066,29 @@ public class ReservatieFilms
 					Console.WriteLine("Kies de tijd waarin u de film wilt bekijken.\n");
 					Console.WriteLine("U kunt '/' typen om al uw keuzes opnieuw te maken.");
 					Console.WriteLine("U kunt '*' typen om terug te gaan.\n");
+					Console.WriteLine("U kunt hier de beschikbare tijden zien:");
 					foreach (var item in filmtijden)
 					{
-						Console.WriteLine("[" + filmtijdenCounter + "] : " + item + "\n");
+						string TijdelijkeTijd = "";
+						switch (item)
+						{
+							case "9-12":
+								TijdelijkeTijd = "9:00-12:00";
+								break;
+							case "12-15":
+								TijdelijkeTijd = "12:00-15:00";
+								break;
+							case "15-18":
+								TijdelijkeTijd = "15:00-18:00";
+								break;
+							case "18-21":
+								TijdelijkeTijd = "18:00-21:00";
+								break;
+							case "21-24":
+								TijdelijkeTijd = "21:00-24:00";
+								break;
+						}
+						Console.WriteLine("[" + filmtijdenCounter + "] : " + TijdelijkeTijd + "\n");
 						filmtijdenCounter++;
 					}
 					tijdKeuze = Console.ReadLine();
@@ -1144,6 +1167,7 @@ public class ReservatieFilms
                     {
 						Console.WriteLine("Zaal is vol.");
 						Console.WriteLine("Typ iets om al uw keuzes opnieuw te maken.");
+						Console.ReadLine();
 						loopBackChecker = true;
 						break;
                     }
