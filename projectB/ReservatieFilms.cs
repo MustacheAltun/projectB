@@ -18,7 +18,7 @@ public class ReservatieFilms
 		List<Cinema_adress> locatieList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Cinema_adress>>(locatieJson);
 
 		// vraag de input
-		Console.WriteLine("B: Beschikbaar		O: Onbeschikbaar		");
+		Console.WriteLine("				B: Beschikbaar		O: Onbeschikbaar		");
 		Console.WriteLine("------------------------------------------------SCHERM------------------------------------------------");
 		int counter = 0;
 		Dictionary<int, string> stoelen = new Dictionary<int, string>();

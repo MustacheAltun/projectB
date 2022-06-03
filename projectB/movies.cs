@@ -17,12 +17,13 @@ public class Movies
         string locatieUrl = "..\\..\\..\\locatie.json";
         List<Cinema_adress> locatieList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Cinema_adress>>(File.ReadAllText(locatieUrl));
         
-        Console.Clear();
+        
         string Keuze = "";
 
         //Pagina blijft runnen zolang keuze is niet gelijk aan 1
         while (Keuze != "1")
         {
+            Console.Clear();
             Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
             Console.WriteLine("|                                                Films                                              |");
             Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
@@ -1508,7 +1509,7 @@ public class Movies
 
             filmsOverview(movielist);
 
-            Console.WriteLine("| [1] Terug | [2] Actie | [3] Misdaad | [4] Avontuur | [5] Sci-Fi | [6] KinderFilm | [7] Documentaire | [8] Romance | [9] Komedie | [10] Fantasie |\n");
+            Console.WriteLine("| [1] Terug | [2] Actie | [3] Misdaad | [4] Avontuur | [5] Sci-Fi |\n\n|[6] KinderFilm | [7] Documentaire | [8] Romance | [9] Komedie | [10] Fantasie |\n");
 
             Console.WriteLine("--------------------------------------------------");
             Console.WriteLine("| Kies een van de genres waarop u wilt filteren: |");
