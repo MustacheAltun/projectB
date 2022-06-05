@@ -287,7 +287,7 @@ public class Movies
                     genreKeuze = "Avontuur";
                     break;
                 case "4":
-                    genreKeuze = "Sci-fi";
+                    genreKeuze = "Sci-FSi";
                     break;
                 case "5":
                     genreKeuze = "KinderFilm";
@@ -647,7 +647,7 @@ public class Movies
                         genreKeuze = "Avontuur";
                         break;
                     case "4":
-                        genreKeuze = "Sci-fi";
+                        genreKeuze = "Sci-Fi";
                         break;
                     case "5":
                         genreKeuze = "KinderFilm";
