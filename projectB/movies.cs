@@ -38,7 +38,7 @@ public class Movies
                                         "----------------------------------------------------------");
                 Console.WriteLine("----------------------------------------------------------------");
                 Console.WriteLine("| Toets 1 om terug te keren naar het hoofdmenu.                |" + "\n" +
-                                  "| Toets 2 om een compleet overzicht van een film te krijgen.   |" + "\n" +
+                                  "| Toets 2 om een film te reserveren.                           |" + "\n" +
                                   "| Toets 3 om een film op naam te zoeken.                       |" + "\n" +
                                   "| Toets 4 om films op genre te filteren.                       |");
                 Console.WriteLine("----------------------------------------------------------------");
@@ -62,8 +62,15 @@ public class Movies
             }
             else
             {
-                Console.WriteLine("\n" + "*-*-*-*-*-*-*" + "\n" + "| [1] Terug |" + "\n" + "-------------");
-                Console.WriteLine("\n" + "Toets 1 om terug te keren naar het hoofdscherm of toets een film-ID in om een film te bekijken:    ");
+                Console.WriteLine("\n" + "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" + "\n" +
+                                        "| [1] Terug | [2] Reserveren | [3] Zoeken | [4] Filteren |" + "\n" +
+                                        "----------------------------------------------------------");
+                Console.WriteLine("----------------------------------------------------------------");
+                Console.WriteLine("| Toets 1 om terug te keren naar het hoofdmenu.                |" + "\n" +
+                                  "| Toets 2 om een film te reserveren (U moet eerst inloggen).   |" + "\n" +
+                                  "| Toets 3 om een film op naam te zoeken.                       |" + "\n" +
+                                  "| Toets 4 om films op genre te filteren.                       |");
+                Console.WriteLine("----------------------------------------------------------------");
             }
                 
 
@@ -87,7 +94,7 @@ public class Movies
                         searchFilm(movieList, rol, accountID);
                         break;
                     case "4":
-                        filterFilms(movieList, accountID);
+                        filterFilms(movieList, accountID, rol);
                         break;
                 }
             }
@@ -118,7 +125,7 @@ public class Movies
                         searchFilm(movieList, rol, accountID);
                         break;
                     case "7":
-                        filterFilms(movieList, accountID);
+                        filterFilms(movieList, accountID, rol);
                         break;
                     case "8":
                         assignFilm(movieList, url, locatieList, locatieUrl);
@@ -128,10 +135,23 @@ public class Movies
             }
             else
             {
-                while (Keuze.Trim() != "1")
+                while (Keuze.Trim() != "1" && Keuze.Trim() != "2" && Keuze.Trim() != "3" && Keuze.Trim() != "4")
                 {
                     Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
                     Keuze = Console.ReadLine();
+                }
+                switch (Keuze.ToLower().Trim())
+                {
+
+                    case "2":
+                        guestUserReservationMenuOverview();
+                        break;
+                    case "3":
+                        searchFilm(movieList, rol, accountID);
+                        break;
+                    case "4":
+                        filterFilms(movieList, accountID, rol);
+                        break;
                 }
             }
         }
@@ -1498,7 +1518,7 @@ public class Movies
         throw new NotImplementedException();
     }
 
-    private static void filterFilms(List<movie> movielist, int id)
+    private static void filterFilms(List<movie> movielist, int id, string role)
     {
         string choice = "";
         while(choice.Trim() != "1")
@@ -1554,11 +1574,11 @@ public class Movies
 
             }
             if(choice.Trim() != "1")
-                filteredFilmsOverview(movielist, genre, id);
+                filteredFilmsOverview(movielist, genre, id, role);
         }
         
     }
-    private static void filteredFilmsOverview(List<movie> movielist, string genre, int id)
+    private static void filteredFilmsOverview(List<movie> movielist, string genre, int id, string role)
     {
         string choice = "";
         while(choice != "1")
@@ -1602,6 +1622,7 @@ public class Movies
                     Console.WriteLine("                           Naam: " + item.name);
                     Console.WriteLine("                           Publicatiejaar: " + item.year);
                     Console.WriteLine("                           Genres: " + categories);
+                    Console.WriteLine("                           Regisseur: " + item.director);
                     Console.WriteLine("                           Status: " + showing);
                     Console.WriteLine("-----------------------------------------------------------------------------------------------------");
 
@@ -1614,19 +1635,32 @@ public class Movies
                 Console.WriteLine("Geen resultaten gevonden!\n");
             }
 
-            Console.WriteLine("| [1] Terug | [2] Kijk film |");
+            Console.WriteLine("| [1] Terug | [2] Reserveren |");
             choice = Console.ReadLine();
             while(choice.Trim() != "1" && choice.Trim() != "2")
             {
                 Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
                 choice = Console.ReadLine();
             }
-            switch (choice.Trim())
+            if (role != "gast")
             {
-                case "2":
-                    viewFilm(movielist, id);
-                    break;
+                switch (choice.Trim())
+                {
+                    case "2":
+                        viewFilm(movielist, id);
+                        break;
+                }
             }
+            else
+            {
+                switch (choice.Trim())
+                {
+                    case "2":
+                        guestUserReservationMenuOverview();
+                        break;
+                }
+            }
+            
         }
         
     }
@@ -1738,6 +1772,7 @@ public class Movies
                     Console.WriteLine("                           Naam: " + movie.name);
                     Console.WriteLine("                           Publicatiejaar: " + movie.year);
                     Console.WriteLine("                           Genres: " + categories);
+                    Console.WriteLine("                           Regisseur: " + movie.director);
                     Console.WriteLine("                           Status: " + showing);
                     Console.WriteLine("-----------------------------------------------------------------------------------------------------");
 
@@ -1758,37 +1793,58 @@ public class Movies
             }
             else
             {
-                if(role == "admin" || role == "gebruiker")
+                Console.WriteLine("| [1] Terug | [2] Reserveren |");
+                choice = Console.ReadLine();
+                while (choice.Trim() != "1" && choice.Trim() != "2")
                 {
-                    Console.WriteLine("| [1] Terug | [2] Reserveren |");
+                    Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
                     choice = Console.ReadLine();
-                    while(choice.Trim() != "1" && choice.Trim() != "2")
+                }
+
+                if (role != "gast")
+                {
+                    switch (choice.Trim())
                     {
-                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
-                        choice = Console.ReadLine();
+                        case "2":
+                            viewFilm(movielist, accountID);
+                            break;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("| [1] Terug |");
-                    choice = Console.ReadLine();
-                    while (choice.Trim() != "1")
+                    switch (choice.Trim())
                     {
-                        Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
-                        choice = Console.ReadLine();
+                        case "2":
+                            guestUserReservationMenuOverview();
+                            break;
                     }
                 }
                 
             }
 
-            switch (choice.Trim())
-            {
-                case "2":
-                    viewFilm(movielist, accountID);
-                    break;
-            }
         }
         
+    }
+
+    private static void guestUserReservationMenuOverview()
+    {
+        Console.Clear();
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+        Console.WriteLine("|                                              Reserveren                                           |");
+        Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
+        
+        Console.WriteLine("             Als u een film wilt reserveren moet u eerst inloggen!\n");
+        Console.WriteLine("-----------------------------------------------------------------------------------------------------");
+        Console.WriteLine("| [1] Terug |\n");
+
+        string choice = Console.ReadLine();
+
+        while (choice.Trim() != "1")
+        {
+            Console.WriteLine("Kies a.u.b. een van de bovenstaande opties.\n");
+            choice = Console.ReadLine();
+        }
+
     }
 
 }
