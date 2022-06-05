@@ -523,8 +523,8 @@ public class Movies
         Console.WriteLine("-----------------------------------------------------------------------------------------------");
 
         bool check = true;
-        int yearPlaceholder = 0;
-        string year;
+        int yearPlaceholder;
+        string year = "";
         while (check)
         {
             year = Console.ReadLine();
@@ -558,6 +558,7 @@ public class Movies
                             year = movieList[i].year;
                         }
                     }
+                    check = false;
                 }
                 else
                 {
@@ -566,7 +567,7 @@ public class Movies
                 }
             }
         }
-        year = yearPlaceholder.ToString();
+        
         
 
         Console.WriteLine("-----------------------------------------------------------------------------------------------");
