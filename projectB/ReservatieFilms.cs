@@ -289,6 +289,11 @@ public class ReservatieFilms
 				Console.WriteLine("\nU moet de nummer aangeven van de stoel zonder letters, probeer nogmaals:");
 				input = Console.ReadLine();
 			}
+			else if (String.IsNullOrEmpty(input))
+			{
+				Console.WriteLine("\nUw nummer staat niet in de lijst, probeer nogmaals:");
+				input = Console.ReadLine();
+			}
 			else if (!stoelen.ContainsKey(Int32.Parse(input)))
 			{
 				Console.WriteLine("\nUw nummer staat niet in de lijst, probeer nogmaals:");
