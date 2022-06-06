@@ -53,7 +53,7 @@ public class Registratie
     public void RegistrerenFrontend(string url, List<Account> accountList)
     {
         //onthoudt alle verboden characters
-        string[] verbodenKarakters = new string[26] { " ", ",", ".", "/", "'", ";", ":", "`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "+", "=", "<", ">", "?" };
+        string[] verbodenKarakters = new string[30] { " ", ",", ".", "/", "'", ";", ":", "`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "+", "=", "<", ">", "?", "{" , "}" , "[", "]"};
         //om de account een ID te geven is er een forloop om te checken wat de laatste id is
         int id = 0;
 
@@ -69,106 +69,141 @@ public class Registratie
         Console.WriteLine("*-*-*-*-*-*-*-*-*-*" + "\n" +
                           "|   Registeren    |" + "\n" +
                           "*-*-*-*-*-*-*-*-*-*" + "\n");
-        Console.WriteLine("Voer uw gewenste gebruikersnaam in of voer * in om te annuleren:");
-        string username = Console.ReadLine();
-        if(username == "*")
+        string username = "";
+        bool usernameCheck = false;
+        string verboden = "";
+        string s = "";
+        foreach(var character in verbodenKarakters)
         {
-            return;
-        }
-        bool usernameCheck = CheckVerbodenLetters(verbodenKarakters, username);
-        bool checkBestatt = CheckBestaandeNaam(accountList,username);
-        while (usernameCheck == false || checkBestatt == true)
-        {
-            if (usernameCheck == false)
+            verboden += character + " + ";
+            if(character == verbodenKarakters[verbodenKarakters.Length - 1])
             {
-                Console.WriteLine("Gebruikersnaam bevat verboden karakters.");
+                s = "Verboden Karakters:" + " " + verboden + "\n\n";
+                Console.WriteLine(s);
+            }
+        }
+        Console.WriteLine("---------------------------------------Account Specificaties-----------------------------------------");
+        Console.WriteLine("| Gebruikersnaam mag niet een bestaande naam hebben en ook geen verboden karakters!                 |");
+        Console.WriteLine("| Wachtwoord mag niet korter dan 9 karakters zijn en mag ook geen verboden karakters bevatten!      |");
+        Console.WriteLine("| Beveiligingscode mag niet korter dan 9 karakters zijn en mag ook geen verboden karakters bevatten!|\n-----------------------------------------------------------------------------------------------------\n\n");
+        Console.WriteLine("---------------------------------------------------------------------------------");
+        Console.WriteLine("Voer uw gewenste gebruikersnaam in of voer * in om te annuleren:");
+        Console.WriteLine("---------------------------------------------------------------------------------");
+        while (usernameCheck == false && username != "*")
+        {
+            username = Console.ReadLine();
+            if(username == "*")
+            {
+                return;
+                break;
+            }
+            if (CheckBestaandeNaam(accountList, username) && CheckVerbodenLetters(verbodenKarakters, username) == false)
+            {
+                Console.WriteLine("Gebruikersnaam bestaat al en bevat verboden karakters!");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+                Console.WriteLine("Voer uw gewenste gebruikersnaam in of voer * in om te annuleren:");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+            }
+            else if (CheckBestaandeNaam(accountList, username))
+            {
+                Console.WriteLine("Gebruikersnaam bestaat al!");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+                Console.WriteLine("Voer uw gewenste gebruikersnaam in of voer * in om te annuleren:");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+            }
+            else if (CheckVerbodenLetters(verbodenKarakters, username) == false)
+            {
+                Console.WriteLine("Gebruikersnaam bevat verboden karakters!");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+                Console.WriteLine("Voer uw gewenste gebruikersnaam in of voer * in om te annuleren:");
+                Console.WriteLine("---------------------------------------------------------------------------------");
             }
             else
             {
-                Console.WriteLine("Gebruikersnaam bestaat al");
+                usernameCheck = true;
             }
-            Console.WriteLine("Voer uw gewenste gebruikersnaam in of voer * in om te annuleren:");
-            username = Console.ReadLine();
-            if (username == "*")
-            {
-                return;
-            }
-            usernameCheck = CheckVerbodenLetters(verbodenKarakters, username);
-            checkBestatt = CheckBestaandeNaam(accountList, username);
-
         }
+        string password = "";
+        bool passwordcheck = false;
+        Console.WriteLine("---------------------------------------------------------------------------------");
         Console.WriteLine("Voer uw gewenste wachtwoord in of voer * in om te annuleren:");
-        string password = Console.ReadLine();
-        if (password == "*")
+        Console.WriteLine("---------------------------------------------------------------------------------");
+        while (passwordcheck == false && password != "*")
         {
-            return;
-        }
-        bool passwordCheck = CheckVerbodenLetters(verbodenKarakters, password);
-        while (passwordCheck == false)
-        {
-            Console.WriteLine("Wachtwoord bevat verboden karakters.");
             password = Console.ReadLine();
             if (password == "*")
             {
                 return;
+                break;
             }
-            passwordCheck = CheckVerbodenLetters(verbodenKarakters, password);
+            if (password.Length < 9 && CheckVerbodenLetters(verbodenKarakters, password) == false)
+            {
+                Console.WriteLine("Wachtwoord is kleiner dan 9 karakter en bevat verboden karakters!");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+                Console.WriteLine("Voer uw gewenste wachtwoord in of voer * in om te annuleren:");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+            }
+            else if (password.Length < 9)
+            {
+                Console.WriteLine("Wachtwoord is kleiner dan 9 karakters!");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+                Console.WriteLine("Voer uw gewenste wachtwoord in of voer * in om te annuleren:");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+            }
+            else if (CheckVerbodenLetters(verbodenKarakters, password) == false)
+            {
+                Console.WriteLine("Wachtwoord bevat verboden karakters!");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+                Console.WriteLine("Voer uw gewenste wachtwoord in of voer * in om te annuleren:");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+            }
+            else
+            {
+                passwordcheck = true;
+            }
         }
-        Console.WriteLine("Als u uw wachtwoord vergeet moet u als controle een beveiligingswoord invoeren." + "\n" + "Voer uw gewenste beveiligingswoord in of voer * in om te annuleren:");
-        string secretWord = Console.ReadLine();
-        if (secretWord == "*")
+        string security = "";
+        bool securitCheck = false;
+        Console.WriteLine("---------------------------------------------------------------------------------");
+        Console.WriteLine("Voer uw gewenste Beveilingscode in of voer * in om te annuleren:");
+        Console.WriteLine("---------------------------------------------------------------------------------");
+        while (securitCheck == false && security != "*")
         {
-            return;
-        }
-        bool secretCheck = CheckVerbodenLetters(verbodenKarakters, secretWord);
-        while (secretCheck == false)
-        {
-            Console.WriteLine("Beveiligingswoord bevat verboden karakters.");
-            secretWord = Console.ReadLine();
-            if (secretWord == "*")
+            security = Console.ReadLine();
+            if (security == "*")
             {
                 return;
+                break;
             }
-            secretCheck = CheckVerbodenLetters(verbodenKarakters, secretWord);
-
+            if (security.Length < 9 && CheckVerbodenLetters(verbodenKarakters, security) == false)
+            {
+                Console.WriteLine("Beveilingscode is kleiner dan 9 karakter en bevat verboden karakters!");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+                Console.WriteLine("Voer uw gewenste Beveilingscode in of voer * in om te annuleren:");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+            }
+            else if (security.Length < 9)
+            {
+                Console.WriteLine("Beveilingscode is kleiner dan 9 karakters!");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+                Console.WriteLine("Voer uw gewenste Beveilingscode in of voer * in om te annuleren:");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+            }
+            else if (CheckVerbodenLetters(verbodenKarakters, security) == false)
+            {
+                Console.WriteLine("Beveilingscode bevat verboden karakters!");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+                Console.WriteLine("Voer uw gewenste Beveilingscode in of voer * in om te annuleren:");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+            }
+            else
+            {
+                securitCheck = true;
+            }
         }
-
-
-
-        //als een van de volgende statements false zijn dan is de account fout
-        if (secretCheck == false || passwordCheck == false || usernameCheck == false)
-        {
-            Console.WriteLine("Gebruikersnaam, wachtwoord en/of beveiligingswoord is incorrect!");
-            Thread.Sleep(2000);
-            //herhaal de functie, want account heeft niet de juiste data
-        }
-        else if (String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(secretWord))
-        {
-            Console.WriteLine("Een of meerdere velden zijn niet ingevuld");
-            Thread.Sleep(2500);
-            //herhaal de functie, want account heeft niet de juiste data
-        }
-        else if (CheckBestaandeNaam(accountList, username))
-        {
-            Console.WriteLine("Uw gekozen gebruikersnaam bestaat al. Kies a.u.b. een andere gebruikersnaam");
-            Thread.Sleep(2500);
-            //herhaal de functie, want account heeft niet de juiste data
-        }
-        else if (password.Length < 8) 
-        {
-            Console.WriteLine("Uw wachtwoord is kleiner dan 9 karakters" + "\n" + "Voer een wachtwoord in dat groter  is dan 8 karakters.");
-            Thread.Sleep(3000);
-        } 
-        else
-        {
-            //hier maakt hij de account en mag hij terug naar de hoofdmenu
-            RegistrerenMethode(url, accountList, username, password, secretWord, id, null);
-            Console.WriteLine("Uw account is aangemaakt.");
-            Thread.Sleep(1500);
-            return;
-
-        }
+        RegistrerenMethode(url,accountList,username,password,security,id);
+        Console.WriteLine("Account Sucessvol gecreerd!");
+        return;
         Thread.Sleep(1000);
-        Console.Clear();
     }
 }
