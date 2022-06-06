@@ -18,7 +18,15 @@ public class ReservatieFilms
 		List<Cinema_adress> locatieList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Cinema_adress>>(locatieJson);
 
 		// vraag de input
-		Console.WriteLine("				B: Beschikbaar		O: Onbeschikbaar		");
+		Console.Write("				Beschikbaar: ");
+		Console.BackgroundColor = ConsoleColor.Green;
+		Console.Write("   ");
+		Console.BackgroundColor = ConsoleColor.Black;
+		Console.Write("       Onbeschikbaar: ");
+		Console.BackgroundColor = ConsoleColor.Red;
+		Console.Write("   ");
+		Console.BackgroundColor = ConsoleColor.Black;
+		Console.Write("				\n");
 		Console.WriteLine("------------------------------------------------SCHERM------------------------------------------------");
 		int counter = 0;
 		Dictionary<int, string> stoelen = new Dictionary<int, string>();
@@ -110,15 +118,15 @@ public class ReservatieFilms
 		{
 			if (stoel.Value == "G")
 			{
-				chairResult += stoel.Key + " : G	";
+				chairResult += stoel.Key + "	";
 			}
 			else if (stoel.Value == "O")
 			{
-				chairResult += stoel.Key + " : O	";
+				chairResult += stoel.Key + "	";
 			}
 			else
 			{
-				chairResult += stoel.Key + " : B	";
+				chairResult += stoel.Key + "	";
 
 			}
 			counter++;
@@ -170,8 +178,77 @@ public class ReservatieFilms
 			}
 			
 		}
-		Console.WriteLine(chairResult);
-		Console.WriteLine("------------------------------------------------ACHTERKANT------------------------------------------------");
+		int colorChair = 0;
+		int steps = 0;
+		bool colorCheck = false;
+        foreach (var letter in chairResult)
+        {
+            if (letter == '\n')
+            {
+				colorCheck = false;
+			}
+            if (colorCheck && Char.IsDigit(letter))
+            {
+                if (steps <= 0)
+                {
+					colorChair++;
+					if (colorChair < 10)
+					{
+						steps = 1;
+						
+					}
+					else if (colorChair < 100)
+					{
+						steps = 2;
+						
+					}
+					else
+					{
+						steps = 3;
+						
+					}
+				}
+                if (steps>0)
+                {
+                    if (stoelen[colorChair] == "B")
+                    {
+						Console.BackgroundColor = ConsoleColor.Green;
+						Console.ForegroundColor = ConsoleColor.Black;
+						Console.Write(letter);
+						steps--;
+						Console.BackgroundColor = ConsoleColor.Black;
+						Console.ForegroundColor = ConsoleColor.Blue;
+					}
+                    if (stoelen[colorChair] == "O")
+                    {
+						Console.BackgroundColor = ConsoleColor.Red;
+						Console.ForegroundColor = ConsoleColor.Black;
+						Console.Write(letter);
+						steps--;
+						Console.BackgroundColor = ConsoleColor.Black;
+						Console.ForegroundColor = ConsoleColor.Blue;
+					}
+					
+					
+                }
+                
+				
+
+
+			}
+			else
+			{
+				
+				Console.Write(letter);
+			}
+			if (letter == '|')
+			{
+				colorCheck = true;
+
+			}
+		}
+		//Console.WriteLine(chairResult);
+		Console.WriteLine("\n------------------------------------------------ACHTERKANT------------------------------------------------");
 	}
 
 	private string stoelKiezen(int bioscoopNaam, string zaalNaam, string tijdNaam, string datum)
