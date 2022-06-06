@@ -37,7 +37,26 @@ public class Gegevens
                             List<Cinema_adress> locatieList = JsonConvert.DeserializeObject<List<Cinema_adress>>(File.ReadAllText(locaties));
                             string films = getMovieName(movieList, film.filmID);
                             string locatie = getBioscoopName(locatieList, film.bioscoopID);
-                            Console.WriteLine("----------------------------Ticket---------------------------------" + "\n" + $"id: {film.id}\n" + $"FilmID: {films} {film.filmTechnologie}\n" + $"Kijker: {film.name}\n" + $"prijs: {film.prijs}\n" + $"Locatie: Biscoop:{locatie} Zaal:{film.zaalID} stoel:{film.stoel}\n" + $"Datum: {film.dag} {film.tijd}\n");
+                            string tijdKeuze = "";
+                            switch (film.tijd)
+                            {
+                                case "9-12":
+                                    tijdKeuze = "9:00-12:00";
+                                    break;
+                                case "12-15":
+                                    tijdKeuze = "12:00-15:00";
+                                    break;
+                                case "15-18":
+                                    tijdKeuze = "15:00-18:00";
+                                    break;
+                                case "18-21":
+                                    tijdKeuze = "18:00-21:00";
+                                    break;
+                                case "21-24":
+                                    tijdKeuze = "21:00-00:00";
+                                    break;
+                            }
+                            Console.WriteLine("----------------------------Ticket---------------------------------" + "\n" + $"Id: {film.id}\n" + $"FilmID: {films} {film.filmTechnologie}\n" + $"Kijker: {film.name}\n" + $"Prijs: {String.Format("{0:0.00} Euro", film.prijs)}\n" + $"Locatie: Biscoop:{locatie} Zaal:{film.zaalID} Stoel:{film.stoel}\nRij:{film.stoel/10+1}\n" + $"Datum: {film.dag} {tijdKeuze}\n");
                         }
                         Console.WriteLine("-------------------------------------------------------------------");
                         break;
