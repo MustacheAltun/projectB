@@ -1704,7 +1704,7 @@ public class Movies
             Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
             Console.WriteLine("|                                              Zoeken                                               |");
             Console.WriteLine("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" + " \n");
-            Console.WriteLine("Toets in '*' om terug te gaan naar vorige scherm of de naam van de film waarin u wilt zoeken....");
+            Console.WriteLine("Voer de naam van een film in of toets '*' om terug te gaan naar vorige scherm...");
             string search = Console.ReadLine();
 
             while (search.Trim().Length == 0)

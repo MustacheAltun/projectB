@@ -83,9 +83,10 @@ public class Registratie
             }
         }
         Console.WriteLine("---------------------------------------Account Specificaties-----------------------------------------");
-        Console.WriteLine("| Gebruikersnaam mag niet een bestaande naam hebben en ook geen verboden karakters!                 |");
-        Console.WriteLine("| Wachtwoord mag niet korter dan 9 karakters zijn en mag ook geen verboden karakters bevatten!      |");
-        Console.WriteLine("| Beveiligingscode mag niet korter dan 9 karakters zijn en mag ook geen verboden karakters bevatten!|\n-----------------------------------------------------------------------------------------------------\n\n");
+        Console.WriteLine("| Uw invoer mag geen verboden characters bevatten!                                                  |");
+        Console.WriteLine("| Uw gebruikersnaam mag niet hetzelfde zijn als een bestaande gebruikersnaam!                       |");
+        Console.WriteLine("| Wachtwoord mag niet korter dan 9 karakters zijn!                                                  |");
+        Console.WriteLine("| Beveiligingscode mag niet korter dan 9 karakters zijn!                                            |\n-----------------------------------------------------------------------------------------------------\n\n");
         Console.WriteLine("---------------------------------------------------------------------------------");
         Console.WriteLine("Voer uw gewenste gebruikersnaam in of voer * in om te annuleren:");
         Console.WriteLine("---------------------------------------------------------------------------------");
