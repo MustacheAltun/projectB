@@ -75,7 +75,7 @@ public class Registratie
         string s = "";
         foreach(var character in verbodenKarakters)
         {
-            verboden += character + " + ";
+            verboden += character + "";
             if(character == verbodenKarakters[verbodenKarakters.Length - 1])
             {
                 s = "Verboden Karakters:" + " " + verboden + "\n\n";
@@ -83,10 +83,9 @@ public class Registratie
             }
         }
         Console.WriteLine("---------------------------------------Account Specificaties-----------------------------------------");
-        Console.WriteLine("| Uw invoer mag geen verboden characters bevatten!                                                  |");
-        Console.WriteLine("| Uw gebruikersnaam mag niet hetzelfde zijn als een bestaande gebruikersnaam!                       |");
-        Console.WriteLine("| Wachtwoord mag niet korter dan 9 karakters zijn!                                                  |");
-        Console.WriteLine("| Beveiligingscode mag niet korter dan 9 karakters zijn!                                            |\n-----------------------------------------------------------------------------------------------------\n\n");
+        Console.WriteLine("| Gebruikersnaam mag niet een bestaande naam hebben en ook geen verboden karakters!                 |");
+        Console.WriteLine("| Wachtwoord mag niet korter dan 9 karakters zijn en mag ook geen verboden karakters bevatten!      |");
+        Console.WriteLine("| Beveiligingscode mag niet korter dan 9 karakters zijn en mag ook geen verboden karakters bevatten!|\n-----------------------------------------------------------------------------------------------------\n\n");
         Console.WriteLine("---------------------------------------------------------------------------------");
         Console.WriteLine("Voer uw gewenste gebruikersnaam in of voer * in om te annuleren:");
         Console.WriteLine("---------------------------------------------------------------------------------");
@@ -108,6 +107,13 @@ public class Registratie
             else if (CheckBestaandeNaam(accountList, username))
             {
                 Console.WriteLine("Gebruikersnaam bestaat al!");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+                Console.WriteLine("Voer uw gewenste gebruikersnaam in of voer * in om te annuleren:");
+                Console.WriteLine("---------------------------------------------------------------------------------");
+            }
+            else if(username.Length < 6 || username.Length > 30)
+            {
+                Console.WriteLine("Gebruikersnaam moet 6-30 karakters bevatten!");
                 Console.WriteLine("---------------------------------------------------------------------------------");
                 Console.WriteLine("Voer uw gewenste gebruikersnaam in of voer * in om te annuleren:");
                 Console.WriteLine("---------------------------------------------------------------------------------");

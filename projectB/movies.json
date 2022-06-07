@@ -1,18 +1,5 @@
 [
   {
-    "id": 0,
-    "name": "Jurassic Park",
-    "year": "1993",
-    "categories": [
-      "Actie",
-      "Sci-Fi"
-    ],
-    "releasedate": null,
-    "director": "Steven Spielberg",
-    "storyline": "Op een afgelegen eiland voor de kust van Costa Rica heeft miljonair John Hammond een uitzonderlijk themapark met gekloonde dinosaurussen gebouwd. Een select groepje mag een kijkje nemen, maar dan valt het beveiliggingssysteem uit.",
-    "showing": false
-  },
-  {
     "id": 1,
     "name": "Harry Potter en de Vuurbeker",
     "year": "2005",

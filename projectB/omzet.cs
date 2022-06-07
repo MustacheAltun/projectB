@@ -16,6 +16,7 @@ public class Omzet
         {
             Console.Clear();
             int i = 1;
+            int earnedWeeks = 0;
             string s = "";
             string strOmzet = File.ReadAllText("..\\..\\..\\omzet.json");
             List<WeeklyEarning> OmzetList = JsonConvert.DeserializeObject<List<WeeklyEarning>>(strOmzet);
@@ -50,11 +51,19 @@ public class Omzet
                             s += "| Dag " + j + ": " + dailies.date + "\n";
                             s += "| Verdient: " + dailies.earned + " Euro" + "\n|\n";
                             j++;
+                            earnedWeeks++;
                         }
   
                     }
                 }
                 i++;
+               
+            }
+            if (earnedWeeks == 0 && toonAlles == false)
+            {
+                Console.WriteLine("________________________________________________");
+                Console.WriteLine("| Er zijn geen weken die omzet hebben gemaakt. |");
+                Console.WriteLine("------------------------------------------------");
             }
             Console.WriteLine(s);
             Console.WriteLine("----------------------------------------------------------------");

@@ -27,7 +27,7 @@ public class Login
         bool accountFound = false;
         foreach (var accounts in accountList)
         {
-            if (accounts.username.ToLower() == oldName.ToLower())
+            if (accounts.username == oldName)
             {
                 accountFound = true;
             }
