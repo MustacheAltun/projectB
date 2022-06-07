@@ -141,7 +141,7 @@ class Catering
 
         if (snacksCount == 0)
         {
-            Console.WriteLine("Er zijn geen snacks beschikbaar!\n");
+            Console.WriteLine("                 Er zijn geen snacks beschikbaar!\n");
         }
 
         Console.WriteLine("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
@@ -163,7 +163,7 @@ class Catering
 
         if (drinksCount == 0)
         {
-            Console.WriteLine("Er zijn geen dranken beschikbaar!\n");
+            Console.WriteLine("                 Er zijn geen dranken beschikbaar!\n");
         }
     }
     private void orderFood(string rol, int accountID, List<Eten> etenMenu)
@@ -254,7 +254,7 @@ class Catering
                     Console.WriteLine("| Voer de aantal van de item die u wilt bestellen: (typ '*' om te annuleren)   |");
                     Console.WriteLine("--------------------------------------------------------------------------------");
                     string placeHolder = Console.ReadLine();
-
+                
                     if (int.TryParse(placeHolder, out productAmount))
                     {
                         foreach (dynamic item in etenMenu)
@@ -563,13 +563,14 @@ class Catering
         
         menuOverview(etenMenu);
 
-        Console.WriteLine("--------------------------------------------------------------------------------");
-        Console.WriteLine("| Voer de naam in van het item die u wilt toevoegen: (typ '*' om te annuleren) |");
-        Console.WriteLine("--------------------------------------------------------------------------------");
+        
         string itemName = "";
         bool check = true;
         while (check)
         {
+            Console.WriteLine("--------------------------------------------------------------------------------");
+            Console.WriteLine("| Voer de naam in van het item die u wilt toevoegen: (typ '*' om te annuleren) |");
+            Console.WriteLine("--------------------------------------------------------------------------------");
             itemName = Console.ReadLine();
             //Check of jaar een nummer is dat gelijk of groter is dan 1888 en niet groter that huidige jaar.
             if (int.TryParse(itemName, out _))
@@ -588,8 +589,7 @@ class Catering
                 }
                 else if(itemName.Trim().Length == 0)
                 {
-                    Console.WriteLine("Ongeldig invoer!\n");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Ongeldig invoer!");
                 }
                 else
                 {
@@ -598,13 +598,14 @@ class Catering
             }
         }
 
-        Console.WriteLine("-----------------------------------------------------------------------------------------");
-        Console.WriteLine("| Voer de aantal voorraad van het item die u wilt toevoegen: (typ '*' om te annuleren)  |");
-        Console.WriteLine("-----------------------------------------------------------------------------------------");
+        
         int itemInventory = 0; 
         check = true;
         while (check)
         {
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
+            Console.WriteLine("| Voer de aantal voorraad van het item die u wilt toevoegen: (typ '*' om te annuleren)  |");
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
             string placeHolder = Console.ReadLine();
             if(int.TryParse(placeHolder, out itemInventory))
             {
@@ -635,19 +636,20 @@ class Catering
                 else
                 {
                     Console.WriteLine("Ongeldige invoer!");
-                    Thread.Sleep(1000);
+                    Console.WriteLine("Probeer opniew!");
                 }
                 
             }
         }
 
-        Console.WriteLine("---------------------------------------------------------------------------------");
-        Console.WriteLine("| Voer de prijs in van het item die u wilt toevoegen: (typ '*' om te annuleren) |");
-        Console.WriteLine("---------------------------------------------------------------------------------");
+        
         double itemPrice = 0.0;
         check = true;
         while (check)
         {
+            Console.WriteLine("---------------------------------------------------------------------------------");
+            Console.WriteLine("| Voer de prijs in van het item die u wilt toevoegen: (typ '*' om te annuleren) |");
+            Console.WriteLine("---------------------------------------------------------------------------------");
             string placeHolder = Console.ReadLine();
             if (double.TryParse(placeHolder, out itemPrice))
             {
@@ -673,6 +675,7 @@ class Catering
                 else
                 {
                     Console.WriteLine("Ongeldig invoer!");
+                    Console.WriteLine("Probeer opniew!");
                 }
             }
         }
@@ -729,13 +732,14 @@ class Catering
         Console.Clear();
         menuOverview(etenMenu);
 
-        Console.WriteLine("--------------------------------------------------------------------------------");
-        Console.WriteLine("| Voer de ID in van het item die u wilt verwijderen: (typ '*' om te annuleren) |");
-        Console.WriteLine("--------------------------------------------------------------------------------");
+        
         bool check = true;
         int itemID = 0;
         while (check)
         {
+            Console.WriteLine("--------------------------------------------------------------------------------");
+            Console.WriteLine("| Voer de ID in van het item die u wilt verwijderen: (typ '*' om te annuleren) |");
+            Console.WriteLine("--------------------------------------------------------------------------------");
             string placeHolder = Console.ReadLine();
             if(int.TryParse(placeHolder, out itemID))
             {
@@ -790,13 +794,14 @@ class Catering
 
         Console.Clear();
         menuOverview(etenMenu);
-        Console.WriteLine("-----------------------------------------------------------------------------");
-        Console.WriteLine("| Voer de ID in van het item die u wilt wijzigen: (typ '*' om te annuleren) |");
-        Console.WriteLine("-----------------------------------------------------------------------------");
+        
         bool check = true;
         int itemID = 0;
         while (check)
         {
+            Console.WriteLine("-----------------------------------------------------------------------------");
+            Console.WriteLine("| Voer de ID in van het item die u wilt wijzigen: (typ '*' om te annuleren) |");
+            Console.WriteLine("-----------------------------------------------------------------------------");
             string placeHolder = Console.ReadLine();
             if (int.TryParse(placeHolder, out itemID))
             {
@@ -821,6 +826,7 @@ class Catering
                 else
                 {
                     Console.WriteLine("Ongeldig invoer!");
+                    Console.WriteLine("Probeer opniew!");
                 }
             }
         }
@@ -828,13 +834,13 @@ class Catering
         Console.Clear();
         selectedOverview(itemID, etenMenu);
 
-        Console.WriteLine("----------------------------------------------------------------------------------");
-        Console.WriteLine("| Voer de nieuwe naam in: (typ '/' om veld over te slaan of '*' om te annuleren) |");
-        Console.WriteLine("----------------------------------------------------------------------------------");
         check = true;
         string itemName = "";
         while (check)
         {
+            Console.WriteLine("----------------------------------------------------------------------------------");
+            Console.WriteLine("| Voer de nieuwe naam in: (typ '/' om veld over te slaan of '*' om te annuleren) |");
+            Console.WriteLine("----------------------------------------------------------------------------------");
             itemName = Console.ReadLine();
             if(int.TryParse(itemName, out _))
             {
@@ -862,6 +868,11 @@ class Catering
                     }
                     check = false;
                 }
+                else if(itemName.Trim().Length == 0)
+                {
+                    Console.WriteLine("Ongeldig invoer!");
+                    Console.WriteLine("Probeer opnieuw!");
+                }
                 else
                 {
                     check = false;
@@ -869,13 +880,14 @@ class Catering
             }
         }
 
-        Console.WriteLine("-----------------------------------------------------------------------------------");
-        Console.WriteLine("| Voer de nieuwe prijs in: (typ '/' om veld over te slaan of '*' om te annuleren) |");
-        Console.WriteLine("-----------------------------------------------------------------------------------");
+        
         check = true;
         double itemPrice = 0.0;
         while (check)
         {
+            Console.WriteLine("-----------------------------------------------------------------------------------");
+            Console.WriteLine("| Voer de nieuwe prijs in: (typ '/' om veld over te slaan of '*' om te annuleren) |");
+            Console.WriteLine("-----------------------------------------------------------------------------------");
             string placeHolder = Console.ReadLine();
             if(double.TryParse(placeHolder, out itemPrice))
             {
@@ -978,13 +990,14 @@ class Catering
         }
         Console.Clear();
         menuOverview(etenMenu);
-        Console.WriteLine("--------------------------------------------------------------------------------------------");
-        Console.WriteLine("| Voer de ID in het item waarvan u de inventaris wilt bijwerken: (typ '*' om te annuleren) |");
-        Console.WriteLine("--------------------------------------------------------------------------------------------");
+        
         bool check = true;
         int itemID = 0;
         while (check)
         {
+            Console.WriteLine("--------------------------------------------------------------------------------------------");
+            Console.WriteLine("| Voer de ID in het item waarvan u de inventaris wilt bijwerken: (typ '*' om te annuleren) |");
+            Console.WriteLine("--------------------------------------------------------------------------------------------");
             string placeHolder = Console.ReadLine();
             if (int.TryParse(placeHolder, out itemID))
             {
@@ -1009,6 +1022,7 @@ class Catering
                 else
                 {
                     Console.WriteLine("Ongeldig invoer!");
+                    Console.WriteLine("Probeer opniew!");
                 }
             }
         }
@@ -1053,13 +1067,14 @@ class Catering
                 currentAmount = item.amount;
             }
         }
-        Console.WriteLine("-----------------------------------------------------------------------------------------");
-        Console.WriteLine("| Voer de aantal die u wilt toevoegen aan voorraad het item : (typ '*' om te annuleren) |");
-        Console.WriteLine("-----------------------------------------------------------------------------------------");
+        
         bool check = true;
         int itemAmount = 0;
         while (check)
         {
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
+            Console.WriteLine("| Voer de aantal die u wilt toevoegen aan voorraad het item : (typ '*' om te annuleren) |");
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
             string placeHolder = Console.ReadLine();
             if(int.TryParse(placeHolder, out itemAmount))
             {
@@ -1089,6 +1104,7 @@ class Catering
                 else
                 {
                     Console.WriteLine("Ongeldig invoer!");
+                    Console.WriteLine("Probeer opniew!");
                 }
             }
         }
@@ -1117,13 +1133,14 @@ class Catering
                 currentAmount = item.amount;
             }
         }
-        Console.WriteLine("-----------------------------------------------------------------------------------------");
-        Console.WriteLine("| Voer de aantal die u wilt aftrekken van voorraad het item : (typ '*' om te annuleren) |");
-        Console.WriteLine("-----------------------------------------------------------------------------------------");
+        
         bool check = true;
         int itemAmount = 0;
         while (check)
         {
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
+            Console.WriteLine("| Voer de aantal die u wilt aftrekken van voorraad het item : (typ '*' om te annuleren) |");
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
             string placeHolder = Console.ReadLine();
             if (int.TryParse(placeHolder, out itemAmount))
             {
@@ -1153,6 +1170,7 @@ class Catering
                 else
                 {
                     Console.WriteLine("Ongeldig invoer!");
+                    Console.WriteLine("Probeer opniew!");
                 }
             }
         }
