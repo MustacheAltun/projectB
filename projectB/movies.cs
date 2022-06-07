@@ -183,14 +183,17 @@ public class Movies
 
         Console.WriteLine("--------------------------------------------------------");
         Console.WriteLine("|    Voer de filmtitel in: (typ '*' om te annuleren)   |");
-        Console.WriteLine("--------------------------------------------------------" + "\n");
+        Console.WriteLine("--------------------------------------------------------");
+        Console.WriteLine("--------------------------------------------------------");
+        Console.WriteLine("             Filmtitel maximaal 30 karakters!");
+        Console.WriteLine("--------------------------------------------------------\n");
         string name = Console.ReadLine();
 
         //Check of gebruiker spatie heeft ingevoerd.
-        while (string.IsNullOrEmpty(name) || name.Trim().Length == 0)
+        while (string.IsNullOrEmpty(name) || name.Trim().Length == 0 || name.Trim().Length>30)
         {
             Console.WriteLine("Vul in een geldige naam a.u.b!");
-            Thread.Sleep(3000);
+            Console.WriteLine("Naam moet minimaal 1 karakter lang zijn en maximaal 30!\n");
             name = Console.ReadLine();
         }
         //Als input is gelijk aan * wordt de functie geannuleerd.
@@ -203,61 +206,26 @@ public class Movies
         }
         
 
-        Console.WriteLine("----------------------------------------------------------------------");
-        Console.WriteLine("|       Voer de publicatiejaar in: (typ '*' om te annuleren)        |");
-        Console.WriteLine("----------------------------------------------------------------------" + "\n");
-        
-        bool check = true;
-        int yearPlaceholder = 0;
-        string year;
-        while (check)
-        {
-            year = Console.ReadLine();
-            //Check of jaar een nummer is dat gelijk of groter is dan 1888 en niet groter that huidige jaar.
-            if (int.TryParse(year, out yearPlaceholder))
-            {
-                if (yearPlaceholder < 1888 || yearPlaceholder > @DateTime.Now.Year)
-                {
-                    Console.WriteLine("Voer een geldige jaar in a.u.b!\n");
-                    Thread.Sleep(3000);
-                }
-                else
-                    check = false;
-            }
-            else
-            {
-                if (year.Trim() == "*")
-                {
-                    Console.WriteLine("Bewerking is geannuleerd!");
-                    Thread.Sleep(3000);
-                    Console.Clear();
-                    return;
-                }
-                else
-                {
-                    Console.WriteLine("Voer een geldige jaar in a.u.b!\n");
-                    Thread.Sleep(3000);
-                }
-            }
-        }
-        year = yearPlaceholder.ToString();
-
-
-
         int lengthArr = 0;
-        check = true;
+        bool check = true;
 
         while (check)
         {
             Console.WriteLine("-----------------------------------------------------------------------");
             Console.WriteLine("|   Voer het aantal genres van de film in: (typ '*' om te annuleren)  |");
             Console.WriteLine("-----------------------------------------------------------------------");
-            
+            Console.WriteLine("                           MAXIMAAL: 3 KEUZES!");
+            Console.WriteLine("-----------------------------------------------------------------------\n");
             string placeHolder = Console.ReadLine();
             if (int.TryParse(placeHolder, out lengthArr))
             {
-                
-                check = false;
+                if (lengthArr > 0 && lengthArr <= 3)
+                    check = false;
+                else
+                {
+                    Console.WriteLine("U mag 1-3 genres kiezen!");
+                    Console.WriteLine("Probeer opnieuw!\n");
+                }
             }
             else
             {
@@ -292,9 +260,10 @@ public class Movies
             while (genreKeuze != "1" && genreKeuze != "2" && genreKeuze != "3" && genreKeuze != "4" && genreKeuze != "5" && genreKeuze != "6" && genreKeuze != "7" && genreKeuze != "8" && genreKeuze != "9")
             {
                 Console.WriteLine("Ongeldig keuze!");
-                Console.WriteLine("Probeer opnieuw a.u.b!");
+                Console.WriteLine("Probeer opnieuw a.u.b!\n");
                 genreKeuze = Console.ReadLine();
             }
+            
             switch (genreKeuze)
             {
                 case "1":
@@ -307,7 +276,7 @@ public class Movies
                     genreKeuze = "Avontuur";
                     break;
                 case "4":
-                    genreKeuze = "Sci-FSi";
+                    genreKeuze = "Sci-Fi";
                     break;
                 case "5":
                     genreKeuze = "KinderFilm";
@@ -325,11 +294,20 @@ public class Movies
                     genreKeuze = "Fantasie";
                     break;
             }
-
-            genreArr[i] = genreKeuze;
+            if (genreArr.Contains(genreKeuze))
+            {
+                Console.WriteLine("U heeft deze genre al gekozen!");
+                Console.WriteLine("Probeer opnieuw a.u.b!\n");
+                i--;
+            }
+            else
+            {
+                genreArr[i] = genreKeuze;
+                Console.WriteLine("Genre toegevoegd!\n");
+            }
         }
 
-        Console.WriteLine("------------------------------------------------------------------");
+        Console.WriteLine("\n------------------------------------------------------------------");
         Console.WriteLine("|     Type de verhaal van de film:  (typ '*' om te annuleren)    |");
         Console.WriteLine("------------------------------------------------------------------" + "\n");
         string storyline = Console.ReadLine();
@@ -348,41 +326,93 @@ public class Movies
         }
         
 
-        Console.WriteLine("----------------------------------------------------------------------");
-        Console.WriteLine("|     Voer de naam van de regisseur in: (typ '*' om te annuleren)    |");
-        Console.WriteLine("----------------------------------------------------------------------" + "\n");
-        string director = Console.ReadLine();
-        while (string.IsNullOrEmpty(director) || director.Trim().Length == 0)
-        {
-            Console.WriteLine("Vul in een geldige naam a.u.b!");
-            Thread.Sleep(3000);
-            director = Console.ReadLine();
-        }
-        if (director.Trim() == "*")
-        {
-            Console.WriteLine("Bewerking is geannuleerd!");
-            Thread.Sleep(3000);
-            Console.Clear();
-            return;
-        }
         
-
-        Console.WriteLine("----------------------------------------------------------------------");
-        Console.WriteLine("|  Voer de publicatiedatum in:(DD-MM-YYYY) (typ '*' om te annuleren) |");
-        Console.WriteLine("----------------------------------------------------------------------");
-        string releasedate = Console.ReadLine();
-        while (string.IsNullOrEmpty(releasedate) || releasedate.Trim().Length == 0)
+        check = true;
+        string director = "";
+        while (check)
         {
-            Console.WriteLine("Vul in een geldige naam a.u.b!");
-            Thread.Sleep(3000);
-            releasedate = Console.ReadLine();
+            Console.WriteLine("\n----------------------------------------------------------------------");
+            Console.WriteLine("|     Voer de naam van de regisseur in: (typ '*' om te annuleren)    |");
+            Console.WriteLine("----------------------------------------------------------------------");
+            Console.WriteLine("                     Naam maximaal 30 karakters!");
+            Console.WriteLine("----------------------------------------------------------------------\n");
+            director = Console.ReadLine();
+            if(int.TryParse(director, out _))
+            {
+                Console.WriteLine("Ongeldig invoer!");
+                Console.WriteLine("De naam mag geen nummers of speciale karakters bevatten!\n");
+            }
+            else
+            {
+                if (director.Trim() == "*")
+                {
+                    Console.WriteLine("Bewerking is geannuleerd!");
+                    Thread.Sleep(3000);
+                    Console.Clear();
+                    return;
+                }
+                else if (Locatie.hasSpecialChar(director))
+                {
+                    Console.WriteLine("Vul in een geldige naam a.u.b!");
+                    Console.WriteLine("De naam mag geen speciale karakters bevatten!\n");
+                }
+                else if (director.Trim().Length == 0 || director.Trim().Length < 3)
+                {
+                    Console.WriteLine("Vul in een geldige naam a.u.b!");
+                    Console.WriteLine("De naam moet minimaal 3 karakters zijn!\n");
+                }
+                else if (director.Trim().Length > 30)
+                {
+                    Console.WriteLine("Excuses, maar deze naam is te lang!");
+                    Console.WriteLine("Probeer opnieuw a.u.b!\n");
+                }
+                else
+                {
+                    check = false;
+                }
+            }
         }
-        if (releasedate.Trim() == "*")
+
+        string[] formats =
+                {
+                    "dd/MM/yyyy", "dd/M/yyyy", "d/M/yyyy", "d/MM/yyyy",
+                    "dd/MM/yy", "dd/M/yy", "d/M/yy", "d/MM/yy","dd-MM-yyyy", "dd-M-yyyy", "d-M-yyyy", "d-MM-yyyy",
+                    "dd-MM-yy", "dd-M-yy", "d-M-yy", "d-MM-yy"
+                };
+
+        string releasedate = "";
+        DateTime actualDate;
+        check = true;
+        string year = "";
+        while (check)
         {
-            Console.WriteLine("Bewerking is geannuleerd!");
-            Thread.Sleep(3000);
-            Console.Clear();
-            return;
+            Console.WriteLine("\n----------------------------------------------------------------------");
+            Console.WriteLine("|  Voer de publicatiedatum in:(DD-MM-YYYY) (typ '*' om te annuleren) |");
+            Console.WriteLine("----------------------------------------------------------------------");
+            Console.WriteLine("                         Voorbeeld: 25-12-2022\n");
+            releasedate = Console.ReadLine();
+            if (DateTime.TryParseExact(releasedate, formats, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out actualDate))
+            {
+                releasedate = actualDate.ToString();
+                releasedate = releasedate.Remove(releasedate.Length - 9); ;
+                year = releasedate[^4..];
+                check = false;
+            }
+            else
+            {
+                if (releasedate.Trim() == "*")
+                {
+                    Console.WriteLine("Bewerking is geannuleerd!");
+                    Thread.Sleep(3000);
+                    Console.Clear();
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Ongeldig datum!");
+                    Console.WriteLine("Voer de datum in deze format a.u.b! (DD-MM-YYYY)\n");
+                }
+            }
         }
 
 
@@ -477,7 +507,7 @@ public class Movies
         {
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine("| Voer de ID in van de film die u wilt aanpassen: (typ '*' om te annuleren)|");
-            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine("----------------------------------------------------------------------------\n");
 
             placeHolder = Console.ReadLine();
             if (int.TryParse(placeHolder, out filmId))
@@ -486,7 +516,7 @@ public class Movies
                 {
                     Console.WriteLine("Er is geen film voor de ingevoerde ID!\n");
                     filmId = int.MinValue;
-                    Thread.Sleep(3000);
+                    
                 }
             }
             else
@@ -500,21 +530,22 @@ public class Movies
                 }
                 else
                 {
-                    Console.WriteLine("Voer een geldige ID in a.u.b!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Voer een geldige ID in a.u.b!\n");
                     filmId = int.MinValue;
                 }
 
             }
         }
-        Console.WriteLine("------------------------------------------------------------------------------------------------");
-        Console.WriteLine("|  Voer de aangepaste naam van de film in: (typ '/' om over te slaan of '*' om te annuleren)   |");
-        Console.WriteLine("------------------------------------------------------------------------------------------------");
+        Console.WriteLine("-------------------------------------------------------------------------------------------------");
+        Console.WriteLine("|  Voer de aangepaste titel van de film in: (typ '/' om over te slaan of '*' om te annuleren)   |");
+        Console.WriteLine("-------------------------------------------------------------------------------------------------");
+        Console.WriteLine("                                 Filmtitel maximaal 30 karakters!");
+        Console.WriteLine("-------------------------------------------------------------------------------------------------\n");
         string name = Console.ReadLine();
-        while (string.IsNullOrEmpty(name) || name.Trim().Length == 0)
+        while (string.IsNullOrEmpty(name) || name.Trim().Length == 0 || name.Trim().Length > 30)
         {
             Console.WriteLine("Vul in een geldige naam a.u.b!");
-            Thread.Sleep(3000);
+            Console.WriteLine("Naam moet minimaal 1 karakter lang zijn en maximaal 30!\n");
             name = Console.ReadLine();
         }
 
@@ -527,8 +558,7 @@ public class Movies
         }
         else if (name.Trim() == "/")
         {
-            Console.WriteLine("Veld wordt overgeslagen!");
-            Thread.Sleep(3000);
+            Console.WriteLine("Veld wordt overgeslagen!\n");
             for (int i = 0; i < movieList.Count(); i++)
             {
                 if (movieList[i].id == filmId)
@@ -538,71 +568,27 @@ public class Movies
             }
         }
 
-        Console.WriteLine("-----------------------------------------------------------------------------------------------");
-        Console.WriteLine("|  Voer de aangepaste jaar van de film in: (typ '/' om over te slaan of '*' om te annuleren)  |");
-        Console.WriteLine("-----------------------------------------------------------------------------------------------");
-
-        bool check = true;
-        int yearPlaceholder;
-        string year = "";
-        while (check)
-        {
-            year = Console.ReadLine();
-            if (int.TryParse(year, out yearPlaceholder))
-            {
-                if (yearPlaceholder < 1888 || yearPlaceholder > @DateTime.Now.Year)
-                {
-                    Console.WriteLine("Voer een geldige jaar in a.u.b!\n");
-                    Thread.Sleep(3000);
-                }
-                else
-                    check = false;
-            }
-            else
-            {
-                if (year.Trim() == "*")
-                {
-                    Console.WriteLine("Bewerking is geannuleerd!");
-                    Thread.Sleep(3000);
-                    Console.Clear();
-                    return;
-                }
-                else if (year.Trim() == "/")
-                {
-                    Console.WriteLine("Veld wordt overgeslagen!");
-                    Thread.Sleep(3000);
-                    for (int i = 0; i < movieList.Count(); i++)
-                    {
-                        if (movieList[i].id == filmId)
-                        {
-                            year = movieList[i].year;
-                        }
-                    }
-                    check = false;
-                }
-                else
-                {
-                    Console.WriteLine("Voer een geldige jaar in a.u.b!\n");
-                    Thread.Sleep(3000);
-                }
-            }
-        }
-        
         
 
-        Console.WriteLine("-----------------------------------------------------------------------------------------------");
-        Console.WriteLine("|   Voer de aantal genres van de film in: (typ '/' om over te slaan of '*' om te annuleren)   |");
-        Console.WriteLine("-----------------------------------------------------------------------------------------------");
         int lengthArr = 0;
-        check = true;
-        string a = "";
+        bool check = true;
         while (check)
         {
+            Console.WriteLine("-----------------------------------------------------------------------------------------------");
+            Console.WriteLine("|   Voer de aantal genres van de film in: (typ '/' om over te slaan of '*' om te annuleren)   |");
+            Console.WriteLine("-----------------------------------------------------------------------------------------------");
+            Console.WriteLine("                                     MAXIMAAL: 3 KEUZES!");
+            Console.WriteLine("-----------------------------------------------------------------------------------------------\n");
             placeHolder = Console.ReadLine();
             if (int.TryParse(placeHolder, out lengthArr))
             {
-
-                check = false;
+                if (lengthArr > 0 && lengthArr <= 3)
+                    check = false;
+                else
+                {
+                    Console.WriteLine("U mag 1-3 genres kiezen!");
+                    Console.WriteLine("Probeer opnieuw!\n");
+                }
             }
             else
             {
@@ -615,8 +601,7 @@ public class Movies
                 }
                 else if (placeHolder.Trim() == "/")
                 {
-                    Console.WriteLine("Veld wordt overgeslagen!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Veld wordt overgeslagen!\n");
                     for(int i = 0; i < movieList.Count; i++)
                     {
                         if (movieList[i].id == filmId)
@@ -653,7 +638,7 @@ public class Movies
                 while (genreKeuze != "1" && genreKeuze != "2" && genreKeuze != "3" && genreKeuze != "4" && genreKeuze != "5" && genreKeuze != "6" && genreKeuze != "7" && genreKeuze != "8" && genreKeuze != "9")
                 {
                     Console.WriteLine("Ongeldig keuze!");
-                    Console.WriteLine("Probeer opnieuw a.u.b!");
+                    Console.WriteLine("Probeer opnieuw a.u.b!\n");
                     genreKeuze = Console.ReadLine();
                 }
                 switch (genreKeuze)
@@ -686,8 +671,17 @@ public class Movies
                         genreKeuze = "Fantasie";
                         break;
                 }
-
-                genreArr[i] = genreKeuze;
+                if (genreArr.Contains(genreKeuze))
+                {
+                    Console.WriteLine("U heeft deze genre al gekozen!");
+                    Console.WriteLine("Probeer opnieuw a.u.b!\n");
+                    i--;
+                }
+                else
+                {
+                    genreArr[i] = genreKeuze;
+                    Console.WriteLine("Genre toegevoegd!\n");
+                }
             }
         }
         else
@@ -707,11 +701,12 @@ public class Movies
         Console.WriteLine("---------------------------------------------------------------------------------------------");
         Console.WriteLine("|    Voer de verhaal van de film in: (typ '/' om over te slaan of '*' om te annuleren)      |");
         Console.WriteLine("---------------------------------------------------------------------------------------------");
+     
         string storyLine = Console.ReadLine();
 
         while (string.IsNullOrEmpty(storyLine) || storyLine.Trim().Length == 0)
         {
-            Console.WriteLine("Uw invoer is ongeldig!");
+            Console.WriteLine("Uw invoer is ongeldig!\n");
             Thread.Sleep(3000);
             storyLine = Console.ReadLine();
         }
@@ -724,8 +719,8 @@ public class Movies
         }
         else if (storyLine.Trim() == "/")
         {
-            Console.WriteLine("Veld wordt overgeslagen!");
-            Thread.Sleep(3000);
+            Console.WriteLine("Veld wordt overgeslagen!\n");
+            
             for (int i = 0; i < movieList.Count(); i++)
             {
                 if (movieList[i].id == filmId)
@@ -735,53 +730,122 @@ public class Movies
             }
         }
 
-        Console.WriteLine("------------------------------------------------------------------------------------------------");
-        Console.WriteLine("|     Voer de naam van de regisseur in: (typ '/' om over te slaan of '*' om te annuleren)      |");
-        Console.WriteLine("------------------------------------------------------------------------------------------------");
-        string director = Console.ReadLine();
-        if (director.Trim() == "*")
+
+        check = true;
+        string director = "";
+        while (check)
         {
-            Console.WriteLine("Bewerking is geannuleerd!");
-            Thread.Sleep(3000);
-            Console.Clear();
-            return;
-        }
-        else if (director.Trim() == "/")
-        {
-            Console.WriteLine("Veld wordt overgeslagen!");
-            Thread.Sleep(3000);
-            for (int i = 0; i < movieList.Count(); i++)
+            Console.WriteLine("------------------------------------------------------------------------------------------------");
+            Console.WriteLine("|     Voer de naam van de regisseur in: (typ '/' om over te slaan of '*' om te annuleren)      |");
+            Console.WriteLine("------------------------------------------------------------------------------------------------");
+            Console.WriteLine("                                 Naam maximaal 30 karakters!");
+            Console.WriteLine("------------------------------------------------------------------------------------------------\n");
+            director = Console.ReadLine();
+            if (int.TryParse(director, out _))
             {
-                if (movieList[i].id == filmId)
+                Console.WriteLine("Ongeldig invoer!");
+                Console.WriteLine("De naam mag geen nummers of speciale karakters bevatten!\n");
+            }
+            else
+            {
+                if (director.Trim() == "*")
                 {
-                    director = movieList[i].director;
+                    Console.WriteLine("Bewerking is geannuleerd!");
+                    Thread.Sleep(3000);
+                    Console.Clear();
+                    return;
+                }
+                else if (director.Trim() == "/")
+                {
+                    Console.WriteLine("Veld wordt overgeslagen!");
+                    
+                    for (int i = 0; i < movieList.Count(); i++)
+                    {
+                        if (movieList[i].id == filmId)
+                        {
+                            director = movieList[i].director;
+                        }
+                    }
+                    check = false;
+                }
+                else if (Locatie.hasSpecialChar(director))
+                {
+                    Console.WriteLine("Vul in een geldige naam a.u.b!");
+                    Console.WriteLine("De naam mag geen speciale karakters bevatten!\n");
+                }
+                else if (director.Trim().Length == 0 || director.Trim().Length < 3)
+                {
+                    Console.WriteLine("Vul in een geldige naam a.u.b!");
+                    Console.WriteLine("De naam moet minimaal 3 karakters zijn!\n");
+                }
+                else if (director.Trim().Length > 30)
+                {
+                    Console.WriteLine("Excuses, maar deze naam is te lang!");
+                    Console.WriteLine("Probeer opnieuw a.u.b!\n");
+                }
+                else
+                {
+                    check = false;
                 }
             }
         }
 
-        Console.WriteLine("----------------------------------------------------------------------------------------------------");
-        Console.WriteLine("|     Voer de publicatiedatum in:(DD-MM-YYYY) (typ '/' om over te slaan of '*' om te annuleren)    |");
-        Console.WriteLine("----------------------------------------------------------------------------------------------------");
-        string releasedate = Console.ReadLine();
-        if (releasedate.Trim() == "*")
-        {
-            Console.WriteLine("Bewerking is geannuleerd!");
-            Thread.Sleep(3000);
-            Console.Clear();
-            return;
-        }
-        else if (releasedate.Trim() == "/")
-        {
-            Console.WriteLine("Veld wordt overgeslagen!");
-            Thread.Sleep(3000);
-            for (int i = 0; i < movieList.Count(); i++)
-            {
-                if (movieList[i].id == filmId)
+
+        string[] formats =
                 {
-                    releasedate = movieList[i].releasedate;
+                    "dd/MM/yyyy", "dd/M/yyyy", "d/M/yyyy", "d/MM/yyyy",
+                    "dd/MM/yy", "dd/M/yy", "d/M/yy", "d/MM/yy","dd-MM-yyyy", "dd-M-yyyy", "d-M-yyyy", "d-MM-yyyy",
+                    "dd-MM-yy", "dd-M-yy", "d-M-yy", "d-MM-yy"
+                };
+
+        string releasedate = "";
+        DateTime actualDate;
+        check = true;
+        string year = "";
+        while (check)
+        {
+            Console.WriteLine("----------------------------------------------------------------------------------------------------");
+            Console.WriteLine("|     Voer de publicatiedatum in:(DD-MM-YYYY) (typ '/' om over te slaan of '*' om te annuleren)    |");
+            Console.WriteLine("----------------------------------------------------------------------------------------------------");
+            Console.WriteLine("                                 Voorbeeld: 25-12-2022\n");
+            releasedate = Console.ReadLine();
+            if (DateTime.TryParseExact(releasedate, formats, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out actualDate))
+            {
+                releasedate = actualDate.ToString();
+                releasedate = releasedate.Remove(releasedate.Length - 9); ;
+                year = releasedate[^4..];
+                check = false;
+            }
+            else
+            {
+                if (releasedate.Trim() == "*")
+                {
+                    Console.WriteLine("Bewerking is geannuleerd!");
+                    Thread.Sleep(3000);
+                    Console.Clear();
+                    return;
+                }
+                else if (releasedate.Trim() == "/")
+                {
+                    Console.WriteLine("Veld wordt overgeslagen!");
+                    
+                    for (int i = 0; i < movieList.Count(); i++)
+                    {
+                        if (movieList[i].id == filmId)
+                        {
+                            releasedate = movieList[i].releasedate;
+                            year = movieList[i].year;   
+                        }
+                    }
+                    check = false;
+                }
+                else
+                {
+                    Console.WriteLine("Ongeldig datum!");
+                    Console.WriteLine("Voer de datum in deze format a.u.b! (DD-MM-YYYY)\n");
                 }
             }
-        }
+        }    
 
         for (int i=0; i<movieList.Count; i++)
         {
