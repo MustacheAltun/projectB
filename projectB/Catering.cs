@@ -259,23 +259,27 @@ class Catering
                     {
                         foreach (dynamic item in etenMenu)
                         {
-                            if (item.amount < productAmount && item.productID ==  productID)
+                            if (item.productID == productID)
                             {
-                                Console.WriteLine("Excuses, niet genoeg van deze product in voorraad!");
-                                Console.WriteLine("Probeer nogmaals a.u.b!");
-                                break;
+                                if (item.amount < productAmount && item.productID == productID)
+                                {
+                                    Console.WriteLine("Excuses, niet genoeg van deze product in voorraad!");
+                                    Console.WriteLine("Probeer nogmaals a.u.b!");
+                                    break;
+                                }
+                                else if (productAmount <= 0)
+                                {
+                                    Console.WriteLine("Ongelding invoer!");
+                                    Console.WriteLine("Probeer nogmaals a.u.b!");
+                                    break;
+                                }
+                                else
+                                {
+                                    checkInventory = false;
+                                    break;
+                                }
                             }
-                            else if (productAmount <= 0)
-                            {
-                                Console.WriteLine("Ongelding invoer!");
-                                Console.WriteLine("Probeer nogmaals a.u.b!");
-                                break;
-                            }
-                            else
-                            {
-                                checkInventory = false;
-                                break;
-                            }
+                            
                         }
 
                     }
