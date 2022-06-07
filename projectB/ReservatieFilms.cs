@@ -379,7 +379,7 @@ public class ReservatieFilms
 				Console.WriteLine("\nU moet de nummer aangeven van de stoel zonder letters, probeer nogmaals:");
 				input = Console.ReadLine();
 			}
-			else if (String.IsNullOrEmpty(input))
+			else if (String.IsNullOrEmpty(input) || input.Length > 3)
 			{
 				Console.WriteLine("\nUw nummer staat niet in de lijst, probeer nogmaals:");
 				input = Console.ReadLine();
@@ -847,6 +847,12 @@ public class ReservatieFilms
                     {
 						return;
                     }
+                    else if (bioscoopKeuze.Length > 3)
+                    {
+						bioscoopNamenCounter = 0;
+						Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.\n");
+						Thread.Sleep(1000);
+					}
 					else if (!(bioscoopKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(bioscoopKeuze) || Int32.Parse(bioscoopKeuze) >= bioscoopNamen.Length || Int32.Parse(bioscoopKeuze) < 0)
 					{
 						bioscoopNamenCounter = 0;
@@ -955,6 +961,12 @@ public class ReservatieFilms
                     {
 						return;
                     }
+                    else if (datumKeuze.Length > 3)
+                    {
+						dagenCounter = 0;
+						Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.\n");
+						Thread.Sleep(1000);
+					}
 					else if (!(datumKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(datumKeuze) || Int32.Parse(datumKeuze) >= datums.Length || Int32.Parse(datumKeuze) < 0)
 					{
 						dagenCounter = 0;
@@ -1081,6 +1093,12 @@ public class ReservatieFilms
                     {
 						return;
                     }
+                    else if (zaalKeuze.Length > 3)
+                    {
+						Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.\n");
+						zalenMetFilm = 0;
+						Thread.Sleep(1000);
+					}
 					else if (!(zaalKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(zaalKeuze) || Int32.Parse(zaalKeuze) >= zalenTechnoligien.Length || Int32.Parse(zaalKeuze) < 0)
 					{
 						Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.\n");
@@ -1270,7 +1288,13 @@ public class ReservatieFilms
                     {
 						return;
                     }
-					else if (!(tijdKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(tijdKeuze) || Int32.Parse(tijdKeuze) >= filmtijden.Length || Int32.Parse(tijdKeuze) < 0)
+                    else if (tijdKeuze.Length > 3)
+                    {
+						filmtijdenCounter = 0;
+						Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.");
+						Thread.Sleep(1000);
+					}
+					else if (!(tijdKeuze.All(char.IsDigit)) || String.IsNullOrEmpty(tijdKeuze) || Int32.Parse(tijdKeuze) >= filmtijden.Length || Int32.Parse(tijdKeuze) < 0 )
 					{
 						filmtijdenCounter = 0;
 						Console.WriteLine("Gebruik alstublieft de bovenstaande keuzes.");
@@ -1332,6 +1356,8 @@ public class ReservatieFilms
 				//als er geen goed aantal is gegeven dan wordt het opnieuw gelooped
 				while (aantalGeselecteerd == false)
                 {
+					Console.Clear();
+					Logo();
 					Console.WriteLine("Selecteer de aantal stoelen die u wilt reserveren:");
 					Console.WriteLine("Het aantal moet hoger dan 0 zijn en lager of gelijk aan "+ aantalStoelenOver);
 					Console.WriteLine("\nU kunt '/' typen om al uw keuzes opnieuw te maken.");
@@ -1357,14 +1383,26 @@ public class ReservatieFilms
                         {
 							return;
                         }
+                        else if (aantalStoelenKeuze.Length > 3)
+                        {
+							Console.WriteLine("Typ een correcte nummer tussen reeks getallen die is aangegeven.");
+							Thread.Sleep(2000);
+						}
                         else if (!aantalStoelenIsNumber)
                         {
 							Console.WriteLine("Typ een nummer alstublieft.");
-                        }
+							Thread.Sleep(2000);
+						}
                         else if (aantalStoelenKeuzeInt >0 && aantalStoelenKeuzeInt<= aantalStoelenOver)
                         {
-							Console.WriteLine("Er zijn momenteel niet zoveel stoelen vrij.");
+							Console.WriteLine("Dank u wel voor uw invoer.");
 							aantalGeselecteerd = true;
+							Thread.Sleep(2000);
+                        }
+                        else
+                        {
+							Console.WriteLine("Typ een correcte nummer tussen reeks getallen die is aangegeven.");
+							Thread.Sleep(2000);
 						}
 					}
 					Console.WriteLine();
