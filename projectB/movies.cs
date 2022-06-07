@@ -356,6 +356,10 @@ public class Movies
                     Console.WriteLine("Vul in een geldige naam a.u.b!");
                     Console.WriteLine("De naam mag geen speciale karakters bevatten!\n");
                 }
+                else if (hasNumber(director.Trim()))
+                {
+                    Console.WriteLine("De naam mag geen nummers bevatten!\n");
+                }
                 else if (director.Trim().Length == 0 || director.Trim().Length < 3)
                 {
                     Console.WriteLine("Vul in een geldige naam a.u.b!");
@@ -767,6 +771,10 @@ public class Movies
                         }
                     }
                     check = false;
+                }
+                else if (hasNumber(director.Trim()))
+                {
+                    Console.WriteLine("De naam mag geen nummers bevatten!\n");
                 }
                 else if (Locatie.hasSpecialChar(director))
                 {
@@ -1911,4 +1919,13 @@ public class Movies
 
     }
 
+    private static bool hasNumber(string input)
+    {
+        string numbers = "1234567890";
+        foreach(var elm in numbers)
+        {
+            if(input.Contains(elm)) return true;
+        }
+        return false;
+    }
 }
