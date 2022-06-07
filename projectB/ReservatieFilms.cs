@@ -8,7 +8,7 @@ using System.Threading;
 
 public class ReservatieFilms
 {
-	private void showBeschikbaar(int bioscoopNaam, string zaalNaam, string tijdNaam, string datum)
+	private void showBeschikbaar(int bioscoopNaam, string zaalNaam, string tijdNaam, string datum, string[] stoelenArray)
 	{
 		//pak alle json informatie
 		string url = "..\\..\\..\\locatie.json";
@@ -18,12 +18,16 @@ public class ReservatieFilms
 		List<Cinema_adress> locatieList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Cinema_adress>>(locatieJson);
 
 		// vraag de input
-		Console.Write("				Beschikbaar: ");
+		Console.Write("		Beschikbaar: ");
 		Console.BackgroundColor = ConsoleColor.Green;
 		Console.Write("   ");
 		Console.BackgroundColor = ConsoleColor.Black;
 		Console.Write("       Onbeschikbaar: ");
 		Console.BackgroundColor = ConsoleColor.Red;
+		Console.Write("   ");
+		Console.BackgroundColor = ConsoleColor.Black;
+		Console.Write("       Gekozen: ");
+		Console.BackgroundColor = ConsoleColor.White;
 		Console.Write("   ");
 		Console.BackgroundColor = ConsoleColor.Black;
 		Console.Write("				\n");
@@ -210,7 +214,16 @@ public class ReservatieFilms
 				}
                 if (steps>0)
                 {
-                    if (stoelen[colorChair] == "B")
+                    if (stoelenArray.Contains(colorChair.ToString()))
+					{
+						Console.BackgroundColor = ConsoleColor.White;
+						Console.ForegroundColor = ConsoleColor.Black;
+						Console.Write(letter);
+						steps--;
+						Console.BackgroundColor = ConsoleColor.Black;
+						Console.ForegroundColor = ConsoleColor.Blue;
+					}
+                    else if (stoelen[colorChair] == "B")
                     {
 						Console.BackgroundColor = ConsoleColor.Green;
 						Console.ForegroundColor = ConsoleColor.Black;
@@ -219,7 +232,7 @@ public class ReservatieFilms
 						Console.BackgroundColor = ConsoleColor.Black;
 						Console.ForegroundColor = ConsoleColor.Blue;
 					}
-                    if (stoelen[colorChair] == "O")
+                    else if (stoelen[colorChair] == "O")
                     {
 						Console.BackgroundColor = ConsoleColor.Red;
 						Console.ForegroundColor = ConsoleColor.Black;
@@ -1365,11 +1378,14 @@ public class ReservatieFilms
 					Console.Clear();
 
 					Logo();
-					//de stoelen worden door deze functie geprint.
-					showBeschikbaar(Int32.Parse(bioscoopKeuze), searchZaal, tijdKeuze, datumKeuze);
+					
+					
 					//Nu worden de stoelen gevraagd voor de aantal stoelen die de klant wilt.
                     foreach (var stoel in stoelen)
                     {
+						Console.Clear();
+						//de stoelen worden door deze functie geprint.
+						showBeschikbaar(Int32.Parse(bioscoopKeuze), searchZaal, tijdKeuze, datumKeuze, stoelen);
 						//in de stoelkiezen zijn er al checks vandaar dat er niet hier veel gechecked wordt.
 						stoelKeuze = stoelKiezen(Int32.Parse(bioscoopKeuze), searchZaal, tijdKeuze, datumKeuze);
 						//als de input '/' is dan maakt hij eerst elke stoel vrij
@@ -1400,11 +1416,13 @@ public class ReservatieFilms
                         {
 							Console.WriteLine("U heeft uw stoel gekozen.");
 							Console.WriteLine("Kies nog een stoel alstublieft.");
+							Thread.Sleep(2000);
                         }
                         else
                         {
 							Console.WriteLine("U heeft al uw stoelen gekozen");
-                        }
+							Thread.Sleep(2000);
+						}
 						
 						stoelen[stoelCounter] = stoelKeuze;
 						stoelCounter++;
