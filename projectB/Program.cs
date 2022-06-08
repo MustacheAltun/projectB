@@ -106,7 +106,7 @@ namespace projectB
                 {
                     catering.etenMenu(rol, id);
                 }
-                else if (page == "Account Gegevens")
+                else if (page == "Reserveringen")
                 {
                     AccGegevens.showGegevens(url, id);
                 }

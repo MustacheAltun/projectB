@@ -113,19 +113,19 @@ public class Gegevens
                 if (keuze == "3")
                 {
                     removeSnack(url, Accountid);
-                    Thread.Sleep(2000);
+                    Thread.Sleep(500);
                     break;
                 }
                 if (keuze == "2")
                 {
                     removeTicket(url, Accountid);
-                    Thread.Sleep(2000);
+                    Thread.Sleep(500);
                     break;
                 }
                 else
                 {
                     Console.WriteLine("Onjuiste Invoer probeer het nogmaals.");
-                    Thread.Sleep(2000);
+                    Thread.Sleep(500);
                     break;
 
                 }
@@ -180,7 +180,7 @@ public class Gegevens
         if(accountList[Accountid].tickets == null)
         {
             Console.WriteLine("U heeft geen tickets gereserveerd");
-            Thread.Sleep(2000);
+            Thread.Sleep(500);
             return;
         }
         foreach(var item in accountList){
@@ -277,17 +277,17 @@ public class Gegevens
                 }
             }
             Console.WriteLine("Reservering succesvol geannuleerd");
-            Thread.Sleep(2000);
+            Thread.Sleep(500);
             return;
         }
 
         else
         {
             Console.WriteLine("ID niet gevonden... Probeer het nogmaals.");
-            Thread.Sleep(2000);
+            Thread.Sleep(500);
             return;
         }
-        Thread.Sleep(1000);
+        Thread.Sleep(500);
         Console.Clear();
 
     }
@@ -302,7 +302,7 @@ public class Gegevens
         if (accountList[Accountid].etenBestelling == null)
         {
             Console.WriteLine("U heeft geen snacks gereserveerd");
-            Thread.Sleep(2000);
+            Thread.Sleep(500);
             return;
         }
         Console.WriteLine("Voer de ID in van de snack die u wilt annuleren of voer * in om terug te gaan:");
@@ -310,7 +310,7 @@ public class Gegevens
         if (snackID == "*")
         {
             Console.WriteLine("Actie geannuleerd");
-            Thread.Sleep(2000);
+            Thread.Sleep(500);
             return;
         }
         int input;
