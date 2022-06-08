@@ -1450,7 +1450,7 @@ public class ReservatieFilms
 							}
 							return;
                         }
-                        if (stoelCounter < stoelen.Length)
+                        if (stoelCounter+1 < stoelen.Length)
                         {
 							Console.WriteLine("U heeft uw stoel gekozen.");
 							Console.WriteLine("Kies nog een stoel alstublieft.");
