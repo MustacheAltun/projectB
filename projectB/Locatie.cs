@@ -113,7 +113,7 @@ public class Locatie
        
     }
 
-    private void locationOverview(List<Cinema_adress> locatieList)
+    private static void locationOverview(List<Cinema_adress> locatieList)
     {
         //2D-array bedoeld voor tijdelijke opslag van locatiegegevens 
         object[][] arr = new object[locatieList.Count][];
@@ -157,44 +157,66 @@ public class Locatie
             id = item.id + 1;
         }
 
-        Console.WriteLine("------------------------------------------------------------------");
-        Console.WriteLine("|    Voer de naam van de locatie in: (typ '*' om te annuleren)   |");
-        Console.WriteLine("------------------------------------------------------------------" + "\n");
-        string bioscoop = Console.ReadLine();
-        while (string.IsNullOrEmpty(bioscoop) || bioscoop.Trim().Length == 0)
-        {
-            Console.WriteLine("Vul in een geldige naam a.u.b!");
-            Thread.Sleep(3000);
-            bioscoop = Console.ReadLine();
-        }
-        if (bioscoop.Trim() == "*")
-        {
-            Console.WriteLine("Bewerking is geannuleerd!");
-            Thread.Sleep(3000);
-            Console.Clear();
-            return;
-        }
 
-
-        Console.WriteLine("------------------------------------------------------------------------");
-        Console.WriteLine("|    Voer de straat naam van de locatie in: (typ '*' om te annuleren)   |");
-        Console.WriteLine("------------------------------------------------------------------------" + "\n");
-        
-        string straat = "";
+        string bioscoop = "";
         bool check = true;
+
         while (check)
         {
+            Console.WriteLine("------------------------------------------------------------------");
+            Console.WriteLine("|    Voer de naam van de locatie in: (typ '*' om te annuleren)   |");
+            Console.WriteLine("------------------------------------------------------------------");
+            Console.WriteLine("                     MAXIMAAL: 10 karakters!\n");
+
+            bioscoop = Console.ReadLine();
+
+            if (int.TryParse(bioscoop, out _))
+            {
+                Console.WriteLine("Ongeldig invoer!\nDe locatie naam mag geen nummer zijn!\n");
+            }
+            else
+            {
+                if (bioscoop.Trim() == "*")
+                {
+                    Console.WriteLine("Bewerking is geannuleerd!");
+                    Thread.Sleep(3000);
+                    Console.Clear();
+                    return;
+                }
+                else if (hasSpecialChar(bioscoop) || hasNumber(bioscoop) || bioscoop.Trim().Contains("'"))
+                {
+                    Console.WriteLine("Ongeldig invoer!\nDe locatie naam mag geen speciale karakters of nummers bevatten!\n");
+                }
+                else if (bioscoop.Trim().Length == 0 || bioscoop.Trim().Length < 3 || bioscoop.Trim().Length > 10)
+                {
+                    Console.WriteLine("Ongeldig invoer!\nDe locatie naam moet minimaal 2 karakters lang zijn en maximaal 10 karakters!\n");
+                }
+                else
+                {
+                    check = false;
+                }
+            }
+        }
+
+        
+        string straat = "";
+        check = true;
+        while (check)
+        {
+            Console.WriteLine("------------------------------------------------------------------------");
+            Console.WriteLine("|    Voer de straat naam van de locatie in: (typ '*' om te annuleren)   |");
+            Console.WriteLine("------------------------------------------------------------------------" + "\n");
             straat = Console.ReadLine();
             if (int.TryParse(straat, out _))
             {
-                Console.WriteLine("Ongeldig invoer!\nDe straatnaam mag geen nummer zijn!");
+                Console.WriteLine("Ongeldig invoer!\nDe straatnaam mag geen nummer zijn!\n");
             }
             else
             {
                 if (straat.Trim().ToCharArray().Any(char.IsDigit))
                 {
-                    Console.WriteLine("Een straatnaam mag geen nummer bevatten!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Een straatnaam mag geen nummer bevatten!\n");
+                    
                 }
                 else if (straat.Trim() == "*")
                 {
@@ -205,13 +227,13 @@ public class Locatie
                 }
                 else if (straat.Trim().Length == 0)
                 {
-                    Console.WriteLine("Ongeldig invoer!\nVoer een geldige straatnaam in a.u.b!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Ongeldig invoer!\nVoer een geldige straatnaam in a.u.b!\n");
+                    
                 }
                 else if (hasSpecialChar(straat.Trim()))
                 {
-                    Console.WriteLine("Een straatnaam mag geen speciale karakter bevatten!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Een straatnaam mag geen speciale karakter bevatten!\n");
+                    
                 }
                 else
                 {
@@ -220,21 +242,22 @@ public class Locatie
             }
         }
 
-        Console.WriteLine("-------------------------------------------------------------------------");
-        Console.WriteLine("|    Voer de huisnummer van de locatie in: (typ '*' om te annuleren)    |");
-        Console.WriteLine("-------------------------------------------------------------------------" + "\n");
-        string straatNr;
+        
+        string straatNr = "";
         check = true;
         int straatNrPlaceholder = 0;
         while (check)
         {
+            Console.WriteLine("-------------------------------------------------------------------------");
+            Console.WriteLine("|    Voer de huisnummer van de locatie in: (typ '*' om te annuleren)    |");
+            Console.WriteLine("-------------------------------------------------------------------------" + "\n");
             straatNr = Console.ReadLine();
             if (int.TryParse(straatNr, out straatNrPlaceholder))
             {
                 if (straatNrPlaceholder <= 0 || straatNrPlaceholder > 999)
                 {
                     Console.WriteLine("Voer een geldige huisnummer in a.u.b!\n");
-                    Thread.Sleep(3000);
+                    
                 }
                 else
                     check = false;
@@ -251,23 +274,90 @@ public class Locatie
                 else
                 {
                     Console.WriteLine("Voer een geldige huisnummer in a.u.b!\n");
-                    Thread.Sleep(3000);
+                    
                 }
             }
         }
-        straatNr = straatNrPlaceholder.ToString();
+        check = true;
+        string toevoeging = "";
+        string tvgKeuze;
+        
+        Console.WriteLine("-------------------------------------------------------------");
+        Console.WriteLine("|   Toevoeging (Optioneel): (typ '*' om te annuleren)       |");
+        Console.WriteLine("-------------------------------------------------------------");
+        Console.WriteLine("| [1] Ja | [2] Nee |");
+        tvgKeuze = Console.ReadLine();
+        while(tvgKeuze.Trim() != "1" && tvgKeuze.Trim() != "2")
+        {
+            Console.WriteLine("\nKies a.u.b. een van de bovenstaande opties.\n");
+            tvgKeuze = Console.ReadLine();
+        }
+        switch (tvgKeuze.Trim())
+        {
+            case "1":
+                check = true;
+                break;
+            case "2":
+                check = false;
+                break;
+
+        }
+
+        while (check)
+        {
+            Console.WriteLine("-------------------------------------------------------------");
+            Console.WriteLine("|  Voer in de toevoeging letter: (typ '*' om te annuleren)  |");
+            Console.WriteLine("-------------------------------------------------------------");
+            toevoeging = Console.ReadLine();
+            if (int.TryParse(toevoeging, out _))
+            {
+                if (toevoeging.Length > 1)
+                {
+                    Console.WriteLine("Ongeldig invoer!\nToevoeging moet een letter zijn van maximaal 1 karakter!\n");
+                }
+                else
+                {
+                    Console.WriteLine("Ongeldig invoer!\nToevoeging mag geen nummer zijn!\n");
+                }
+            }
+            else
+            {
+                if (toevoeging.Trim() == "*")
+                {
+                    Console.WriteLine("Bewerking is geannuleerd!");
+                    Thread.Sleep(3000);
+                    Console.Clear();
+                }
+                else if (toevoeging.Trim().Length == 0 || toevoeging.Trim().Length > 1)
+                {
+                    Console.WriteLine("Ongeldig invoer\nVoer in een letter a.u.b!\n");
+                }
+                else if (hasSpecialChar(toevoeging.Trim()) || toevoeging.Contains("'") || toevoeging.Contains("-") || !(alphabet(toevoeging.ToLower())))
+                {
+                    Console.WriteLine("Ongeldig invoer\nToevoeging mag geen speciale karakters bevatten!\n");
+                }
+                else
+                {
+                    straatNr = straatNr + "-" + toevoeging.ToUpper();
+                    check = false;
+                }
+            }
+        }
 
 
-        Console.WriteLine("-------------------------------------------------------------------------");
-        Console.WriteLine("|    Voer de postcode van de locatie in: (typ '*' om te annuleren)      |");
-        Console.WriteLine("-------------------------------------------------------------------------" + "\n");
+
         string postcode = "";
         check = true;
         string postcodeNr;
         string postcodeString;
         while (check)
         {
+            Console.WriteLine("-------------------------------------------------------------------------");
+            Console.WriteLine("|    Voer de postcode van de locatie in: (typ '*' om te annuleren)      |");
+            Console.WriteLine("-------------------------------------------------------------------------" + "\n");
+
             postcode = Console.ReadLine();
+
             if (postcode.Trim().Length == 6)
             {
                 postcodeNr = postcode.Substring(0, 4);
@@ -279,12 +369,12 @@ public class Locatie
                     if (poscodePlaceholder < 1000 || poscodePlaceholder > 9999)
                     {
                         Console.WriteLine("Voer een geldige postcode in a.u.b!\n");
-                        Thread.Sleep(3000);
+                        
                     }
                     else if (int.TryParse(postcodeString, out _) || postcodeString.Trim().Length == 0 || hasSpecialChar(postcodeString.Trim()))
                     {
                         Console.WriteLine("Voer een geldige postcode in a.u.b!\n");
-                        Thread.Sleep(3000);
+                        
                     }
                     else
                         check = false;
@@ -303,25 +393,24 @@ public class Locatie
                 else
                 {
                     Console.WriteLine("Voer een geldige postcode in a.u.b!\n");
-                    Thread.Sleep(3000);
+                    
                 }
             }
         }
 
 
-        Console.WriteLine("-----------------------------------------------------------------------");
-        Console.WriteLine("|    Voer de stad naam van de locatie in: (typ '*' om te annuleren)   |");
-        Console.WriteLine("-----------------------------------------------------------------------" + "\n");
+        
         string stad = "";
-
         check = true;
         while (check)
         {
-
+            Console.WriteLine("-----------------------------------------------------------------------");
+            Console.WriteLine("|    Voer de stad naam van de locatie in: (typ '*' om te annuleren)   |");
+            Console.WriteLine("-----------------------------------------------------------------------" + "\n");
             stad = Console.ReadLine();
             if (int.TryParse(stad, out _))
             {
-                Console.WriteLine("Een stad naam mag geen nummer zijn!");
+                Console.WriteLine("Een stad naam mag geen nummer zijn!\n");
             }
             else
             {
@@ -335,17 +424,17 @@ public class Locatie
                 else if (stad.Trim().Length == 0)
                 {
                     Console.WriteLine("Ongeldig invoer!\n");
-                    Thread.Sleep(3000);
+                    
                 }
                 else if (stad.Trim().ToCharArray().Any(char.IsDigit))
                 {
-                    Console.WriteLine("Een stad naam mag geen nummer bevatten!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Een stad mag geen nummer bevatten!");
+                    
                 }
-                else if (hasSpecialChar(stad.Trim()))
+                else if (hasSpecialChar(stad.Trim()) || stad.Trim().Contains("'"))
                 {
-                    Console.WriteLine("Een stad naam mag geen speciale karakter bevatten!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Een stad mag geen speciale karakters bevatten!");
+                    
                 }
                 else
                 {
@@ -355,24 +444,37 @@ public class Locatie
         }
 
 
-        Console.WriteLine("-----------------------------------------------------------------------------");
-        Console.WriteLine("|    Voer het telefoonnummer van de locatie in: (typ '*' om te annuleren)   |");
-        Console.WriteLine("-----------------------------------------------------------------------------" + "\n");
         string nummer = "";
         check = true;
         while (check)
         {
+            Console.WriteLine("-----------------------------------------------------------------------------");
+            Console.WriteLine("|    Voer het telefoonnummer van de locatie in: (typ '*' om te annuleren)   |");
+            Console.WriteLine("-----------------------------------------------------------------------------" + "\n");
             nummer = Console.ReadLine();
             if (int.TryParse(nummer, out _))
             {
                 if (nummer.Length == 9)
                 {
+                    nummer = "31 " + nummer;
                     check = false;
+                }
+                else if(nummer[0] == '0' && nummer.Length == 10)
+                {
+                    nummer = nummer.Remove(0, 1);
+                    nummer = "31 " + nummer;
+                    check = false;
+                }
+                else if(nummer.Length < 9)
+                {
+                    Console.WriteLine("Dit telefoonnummer is ongeldig!");
+                    Console.WriteLine("Het telefoonnummer moet '9' nummers bevatten!\n");
                 }
                 else
                 {
+                    Console.WriteLine("Dit telefoonnummer is ongeldig!");
                     Console.WriteLine("Het telefoonnummer moet '9' nummers bevatten!\n");
-                    Thread.Sleep(3000);
+                    
                 }
             }
             else
@@ -387,7 +489,7 @@ public class Locatie
                 else
                 {
                     Console.WriteLine("Ongeldig invoer!\n");
-                    Thread.Sleep(3000);
+                    
                 }
             }
         }
@@ -970,7 +1072,7 @@ public class Locatie
             streetNr = straatNr,
             zipcode = postcode,
             city = stad,
-            telNr = "+31 " + nummer,
+            telNr = nummer,
             dagen = dagen
         });
 
@@ -1006,7 +1108,9 @@ public class Locatie
         {
             bioscoopNrArray[i] = lijst[i].id;
         }
-        
+
+        locationOverview(lijst);
+
         //de huidige nummer is NinValue zodat dit geen goede id is
         int bioscoopNr = int.MinValue;
         string placeHolder;
@@ -1026,7 +1130,7 @@ public class Locatie
                 {
                     Console.WriteLine("Er is geen locatie die overeenkomt met deze ID!\n");
                     bioscoopNr = int.MinValue;
-                    Thread.Sleep(3000);
+                    
                 }
                 else
                 {
@@ -1066,63 +1170,83 @@ public class Locatie
                 {
                     bioscoopNr = int.MinValue;
                     Console.WriteLine("Voer een geldige ID in a.u.b!");
-                    Thread.Sleep(1000);
+                    
                 }
             }
         }
+        bool check = true;
+        string bioscoop = "";
 
         // alle informatie voor het veranderen van bioscoop informatie gebeurd hier
-        Console.WriteLine("------------------------------------------------------------------------------------------------------------");
-        Console.WriteLine("|  Voer de aangepaste naam van de bioscoop locatie in: (typ '/' om over te slaan of '*' om te annuleren)   |");
-        Console.WriteLine("------------------------------------------------------------------------------------------------------------");
-        string filmName = Console.ReadLine();
-        while (string.IsNullOrEmpty(filmName) || filmName.Trim().Length == 0)
+        while (check)
         {
-            Console.WriteLine("Vul in een geldige naam a.u.b!");
-            Thread.Sleep(3000);
-            filmName = Console.ReadLine();
-        }
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine("|  Voer de aangepaste naam van de bioscoop locatie in: (typ '/' om over te slaan of '*' om te annuleren)   |");
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine("                                         MAXIMAAL: 10 karakters!\n");
 
-        if (filmName.Trim() == "*")
-        {
-            Console.WriteLine("Bewerking is geannuleerd!");
-            Thread.Sleep(3000);
-            Console.Clear();
-            return;
-        }
-        else if (filmName.Trim() == "/")
-        {
-            Console.WriteLine("Veld wordt overgeslagen!");
-            Thread.Sleep(3000);
-            for (int i = 0; i < lijst.Count(); i++)
+            bioscoop = Console.ReadLine();
+
+            if (int.TryParse(bioscoop, out _))
             {
-                if (lijst[i].id == bioscoopNr)
+                Console.WriteLine("Ongeldig invoer!\nDe locatie naam mag geen nummer zijn!\n");
+            }
+            else
+            {
+                if (bioscoop.Trim() == "*")
                 {
-                    filmName = lijst[i].name;
+                    Console.WriteLine("Bewerking is geannuleerd!");
+                    Thread.Sleep(3000);
+                    Console.Clear();
+                    return;
+                }
+                else if (bioscoop.Trim() == "/")
+                {
+                    Console.WriteLine("Veld wordt overgeslagen!\n");
+                    
+                    for (int i = 0; i < lijst.Count(); i++)
+                    {
+                        if (lijst[i].id == bioscoopNr)
+                        {
+                            bioscoop = lijst[i].name;
+                        }
+                    }
+                    check = false;
+                }
+                else if (hasSpecialChar(bioscoop) || hasNumber(bioscoop) || bioscoop.Trim().Contains("'"))
+                {
+                    Console.WriteLine("Ongeldig invoer!\nDe locatie naam mag geen speciale karakters of nummers bevatten!\n");
+                }
+                else if (bioscoop.Trim().Length == 0 || bioscoop.Trim().Length < 3 || bioscoop.Trim().Length > 10)
+                {
+                    Console.WriteLine("Ongeldig invoer!\nDe locatie naam moet minimaal 2 karakters lang zijn en maximaal 10 karakters!\n");
+                }
+                else
+                {
+                    check = false;
                 }
             }
         }
 
-        
-        Console.WriteLine("------------------------------------------------------------------------------------------------------------------");
-        Console.WriteLine("|  Voer de aangepaste straatnaam van de bioscoop locatie in: (typ '/' om over te slaan of '*' om te annuleren)   |");
-        Console.WriteLine("------------------------------------------------------------------------------------------------------------------");
 
         string streetName = "";
-        bool check = true;
+        check = true;
         while (check)
         {
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine("|  Voer de aangepaste straatnaam van de bioscoop locatie in: (typ '/' om over te slaan of '*' om te annuleren)   |");
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------\n");
             streetName = Console.ReadLine();
             if (int.TryParse(streetName, out _))
             {
-                Console.WriteLine("Ongeldig invoer!\nDe straatnaam mag geen nummer zijn!");
+                Console.WriteLine("Ongeldig invoer!\nDe straatnaam mag geen nummer zijn!\n");
             }
             else
             {
                 if (streetName.Trim().ToCharArray().Any(char.IsDigit))
                 {
-                    Console.WriteLine("Een straatnaam mag geen nummer bevatten!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Een straatnaam mag geen nummer bevatten!\n");
+                    
                 }
                 else if(streetName.Trim() == "*")
                 {
@@ -1133,8 +1257,8 @@ public class Locatie
                 }
                 else if(streetName.Trim() == "/")
                 {
-                    Console.WriteLine("Veld wordt overgeslagen!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Veld wordt overgeslagen!\n");
+                    
                     for (int i = 0; i < lijst.Count(); i++)
                     {
                         if (lijst[i].id == bioscoopNr)
@@ -1146,13 +1270,13 @@ public class Locatie
                 }
                 else if (streetName.Trim().Length == 0)
                 {
-                    Console.WriteLine("Ongeldig invoer!\nVoer een geldige straatnaam in a.u.b!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Ongeldig invoer!\nVoer een geldige straatnaam in a.u.b!\n");
+                    
                 }
                 else if (hasSpecialChar(streetName.Trim()))
                 {
-                    Console.WriteLine("Een straatnaam mag geen speciale karakter bevatten!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Een straatnaam mag geen speciale karakter bevatten!\n");
+                    
                 }
                 else
                 {
@@ -1161,21 +1285,23 @@ public class Locatie
             }
         }
 
-        Console.WriteLine("------------------------------------------------------------------------------------------------------------------");
-        Console.WriteLine("|  Voer de aangepaste huisnummer van de bioscoop locatie in: (typ '/' om over te slaan of '*' om te annuleren)   |");
-        Console.WriteLine("------------------------------------------------------------------------------------------------------------------");
+        
         string streetNr = "";
         check = true;
         int straatNrPlaceholder = 0;
+        bool toevgSkip = false;
         while (check)
         {
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine("|  Voer de aangepaste huisnummer van de bioscoop locatie in: (typ '/' om over te slaan of '*' om te annuleren)   |");
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------\n");
             streetNr = Console.ReadLine();
             if (int.TryParse(streetNr, out straatNrPlaceholder))
             {
                 if (straatNrPlaceholder <= 0 || straatNrPlaceholder > 999)
                 {
                     Console.WriteLine("Voer een geldige huisnummer in a.u.b!\n");
-                    Thread.Sleep(3000);
+                    
                 }
                 else
                     check = false;
@@ -1191,8 +1317,8 @@ public class Locatie
                 }
                 else if(streetNr.Trim() == "/")
                 {
-                    Console.WriteLine("Veld wordt overgeslagen!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Veld wordt overgeslagen!\n");
+                    
                     for (int i = 0; i < lijst.Count(); i++)
                     {
                         if (lijst[i].id == bioscoopNr)
@@ -1201,24 +1327,95 @@ public class Locatie
                         }
                     }
                     check = false;
+                    toevgSkip = true;
                 }
                 else
                 {
                     Console.WriteLine("Voer een geldige huisnummer in a.u.b!\n");
-                    Thread.Sleep(3000);
+                    
                 }
             }
         }
 
-        Console.WriteLine("----------------------------------------------------------------------------------------------------------------");
-        Console.WriteLine("|  Voer de aangepaste postcode van de bioscoop locatie in: (typ '/' om over te slaan of '*' om te annuleren)   |");
-        Console.WriteLine("----------------------------------------------------------------------------------------------------------------");
+        if (!toevgSkip)
+        {
+            check = true;
+            string toevoeging = "";
+            string tvgKeuze;
+
+            Console.WriteLine("-------------------------------------------------------------");
+            Console.WriteLine("|   Toevoeging (Optioneel): (typ '*' om te annuleren)       |");
+            Console.WriteLine("-------------------------------------------------------------");
+            Console.WriteLine("| [1] Ja | [2] Nee |\n");
+            tvgKeuze = Console.ReadLine();
+            while (tvgKeuze.Trim() != "1" && tvgKeuze.Trim() != "2")
+            {
+                Console.WriteLine("\nKies a.u.b. een van de bovenstaande opties.\n");
+                tvgKeuze = Console.ReadLine();
+            }
+            switch (tvgKeuze.Trim())
+            {
+                case "1":
+                    check = true;
+                    break;
+                case "2":
+                    check = false;
+                    break;
+
+            }
+
+            while (check)
+            {
+                Console.WriteLine("-------------------------------------------------------------");
+                Console.WriteLine("|  Voer in de toevoeging letter: (typ '*' om te annuleren)  |");
+                Console.WriteLine("-------------------------------------------------------------\n");
+                toevoeging = Console.ReadLine();
+                if (int.TryParse(toevoeging, out _))
+                {
+                    if (toevoeging.Length > 1)
+                    {
+                        Console.WriteLine("Ongeldig invoer!\nToevoeging moet een letter zijn van maximaal 1 karakter!\n");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ongeldig invoer!\nToevoeging mag geen nummer zijn!\n");
+                    }
+                }
+                else
+                {
+                    if (toevoeging.Trim() == "*")
+                    {
+                        Console.WriteLine("Bewerking is geannuleerd!");
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                    }
+                    else if (toevoeging.Trim().Length == 0 || toevoeging.Trim().Length > 1)
+                    {
+                        Console.WriteLine("Ongeldig invoer\nVoer in een letter a.u.b!\n");
+                    }
+                    else if (hasSpecialChar(toevoeging.Trim()) || toevoeging.Contains("'") || toevoeging.Contains("-") || !(alphabet(toevoeging.ToLower())))
+                    {
+                        Console.WriteLine("Ongeldig invoer\nToevoeging mag geen speciale karakters bevatten!\n");
+                    }
+                    else
+                    {
+                        streetNr = streetNr + "-" + toevoeging.ToUpper();
+                        check = false;
+                    }
+                }
+            }
+        }
+        
+
         string postcode = "";
         check = true;
         string postcodeNr;
         string postcodeString;
         while (check)
         {
+            Console.WriteLine("----------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine("|  Voer de aangepaste postcode van de bioscoop locatie in: (typ '/' om over te slaan of '*' om te annuleren)   |");
+            Console.WriteLine("----------------------------------------------------------------------------------------------------------------\n");
             postcode = Console.ReadLine();
 
             //Checkt of postcode veld invoer een geldige postcode is.
@@ -1233,12 +1430,12 @@ public class Locatie
                     if (poscodePlaceholder < 1000 || poscodePlaceholder > 9999)
                     {
                         Console.WriteLine("Voer een geldige postcode in a.u.b!\n");
-                        Thread.Sleep(3000);
+                        
                     }
                     else if (int.TryParse(postcodeString, out _) || postcodeString.Trim().Length == 0 || hasSpecialChar(postcodeString.Trim()))
                     {
                         Console.WriteLine("Voer een geldige postcode in a.u.b!\n");
-                        Thread.Sleep(3000);
+                        
                     }
                     else
                         check = false;
@@ -1256,8 +1453,8 @@ public class Locatie
                 }
                 else if(postcode.Trim() == "/")
                 {
-                    Console.WriteLine("Veld wordt overgeslagen!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Veld wordt overgeslagen!\n");
+                    
                     for (int i = 0; i < lijst.Count(); i++)
                     {
                         if (lijst[i].id == bioscoopNr)
@@ -1270,23 +1467,24 @@ public class Locatie
                 else
                 {
                     Console.WriteLine("Voer een geldige postcode in a.u.b!\n");
-                    Thread.Sleep(3000);
+                    
                 }
             }
         }
 
-        Console.WriteLine("-----------------------------------------------------------------------------------------------------------------");
-        Console.WriteLine("|  Voer de aangepaste stad naam van de bioscoop locatie in: (typ '/' om over te slaan of '*' om te annuleren)   |");
-        Console.WriteLine("-----------------------------------------------------------------------------------------------------------------");
+        
         string stad = "";
         check = true;
         while (check)
         {
+            Console.WriteLine("-----------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine("|  Voer de aangepaste stad naam van de bioscoop locatie in: (typ '/' om over te slaan of '*' om te annuleren)   |");
+            Console.WriteLine("-----------------------------------------------------------------------------------------------------------------\n");
 
             stad = Console.ReadLine();
             if (int.TryParse(stad, out _))
             {
-                Console.WriteLine("Een stad mag geen nummer zijn!");
+                Console.WriteLine("Een stad mag geen nummer zijn!\n");
             }
             else
             {
@@ -1299,8 +1497,8 @@ public class Locatie
                 }
                 else if (stad.Trim() == "/")
                 {
-                    Console.WriteLine("Veld wordt overgeslagen!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Veld wordt overgeslagen!\n");
+                    
                     for (int i = 0; i < lijst.Count(); i++)
                     {
                         if (lijst[i].id == bioscoopNr)
@@ -1313,17 +1511,17 @@ public class Locatie
                 else if (stad.Trim().Length == 0)
                 {
                     Console.WriteLine("Ongeldig invoer!\n");
-                    Thread.Sleep(3000);
+                    
                 }
                 else if (stad.Trim().ToCharArray().Any(char.IsDigit))
                 {
-                    Console.WriteLine("Een stad naam mag geen nummer bevatten!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Een stad naam mag geen nummers bevatten!\n");
+                    
                 }
-                else if (hasSpecialChar(stad.Trim()))
+                else if (hasSpecialChar(stad.Trim()) || stad.Contains("-") || stad.Contains("'"))
                 {
-                    Console.WriteLine("Een stad naam mag geen speciale karakter bevatten!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Een stad naam mag geen speciale karakter bevatten!\n");
+                    
                 }
                 else
                 {
@@ -1333,13 +1531,14 @@ public class Locatie
         }
 
 
-        Console.WriteLine("----------------------------------------------------------------------------------------------------------------------");
-        Console.WriteLine("|  Voer de aangepaste telefoonnummer van de bioscoop locatie in: (typ '/' om over te slaan of '*' om te annuleren)   |");
-        Console.WriteLine("----------------------------------------------------------------------------------------------------------------------");
+        
         string nummer = "";
         check = true;
         while (check)
         {
+            Console.WriteLine("----------------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine("|  Voer de aangepaste telefoonnummer van de bioscoop locatie in: (typ '/' om over te slaan of '*' om te annuleren)   |");
+            Console.WriteLine("----------------------------------------------------------------------------------------------------------------------\n");
             nummer = Console.ReadLine();
             if (int.TryParse(nummer, out _))
             {
@@ -1348,10 +1547,22 @@ public class Locatie
                     check = false;
                     nummer = "+31 " + nummer;
                 }
+                else if (nummer[0] == '0' && nummer.Length == 10)
+                {
+                    nummer = nummer.Remove(0, 1);
+                    nummer = "+31 " + nummer;
+                    check = false;
+                }
+                else if (nummer.Length < 9)
+                {
+                    Console.WriteLine("Dit telefoonnummer is ongeldig!");
+                    Console.WriteLine("Het telefoonnummer moet '9' nummers bevatten!\n");
+                }
                 else
                 {
+                    Console.WriteLine("Dit telefoonnummer is ongeldig!");
                     Console.WriteLine("Het telefoonnummer moet '9' nummers bevatten!\n");
-                    Thread.Sleep(3000);
+
                 }
             }
             else
@@ -1365,8 +1576,8 @@ public class Locatie
                 }
                 else if(nummer.Trim() == "/")
                 {
-                    Console.WriteLine("Veld wordt overgeslagen!");
-                    Thread.Sleep(3000);
+                    Console.WriteLine("Veld wordt overgeslagen!\n");
+                    
                     for (int i = 0; i < lijst.Count(); i++)
                     {
                         if (lijst[i].id == bioscoopNr)
@@ -1379,7 +1590,7 @@ public class Locatie
                 else
                 {
                     Console.WriteLine("Ongeldig invoer!\n");
-                    Thread.Sleep(3000);
+                    
                 }
             }
         }
@@ -1389,7 +1600,7 @@ public class Locatie
         {
             if (item.id == bioscoopNr)
             {
-                item.name = filmName.Trim();
+                item.name = bioscoop.Trim();
                 item.address = streetName.Trim() + " " + streetNr.Trim();
                 item.streetNr = streetNr.Trim();
                 item.street = streetName.Trim();
@@ -1416,14 +1627,21 @@ public class Locatie
         {
             bioscoopNrArray[i] = lijst[i].id;
         }
+        Console.Clear();
+        Console.WriteLine("-----------------------------------------------------------------------------------");
+        Console.WriteLine("|                                    Verwijderen                                  |");
+        Console.WriteLine("-----------------------------------------------------------------------------------");
 
+        locationOverview(lijst);
         //de huidige nummer is minvalue zodat dit geen goede id is
         int bioscoopNr = int.MinValue;
 
         //als de bioscoopNr niet in de lijst zit dan vraag je gewoon telkens opnieuw totdat de persoon een geldig ID geeft
         while (!bioscoopNrArray.Contains(bioscoopNr))
         {
-            Console.WriteLine("Voer de ID in van de bioscoop die u wilt verwijderen: (typ '*' om te annuleren)");
+            Console.WriteLine("-----------------------------------------------------------------------------------");
+            Console.WriteLine("| Voer de ID in van de bioscoop die u wilt verwijderen: (typ '*' om te annuleren) |");
+            Console.WriteLine("-----------------------------------------------------------------------------------");
             string placeHolder = Console.ReadLine();
             if (int.TryParse(placeHolder, out bioscoopNr))
             {
@@ -1470,12 +1688,32 @@ public class Locatie
 
     public static bool hasSpecialChar(string input)
     {
-        string specialChar = @"\|!#$%&/()=?»«@£§€{}.;<>_,*";
+        string specialChar = @"[]~^\|!#$%&/()=?»«@£§€{}.;:+<>_,*";
         foreach (var item in specialChar)
         {
             if (input.Contains(item)) return true;
         }
 
+        return false;
+    }
+
+    public static bool alphabet(string input)
+    {
+        string check = "abcdefghijklmnopqrstuvwxyz";
+        foreach(var letter in check)
+        {
+            if (input.Contains(letter)) return true;
+        }
+        return false;
+    }
+
+    private static bool hasNumber(string input)
+    {
+        string numbers = "1234567890";
+        foreach (var elm in numbers)
+        {
+            if (input.Contains(elm)) return true;
+        }
         return false;
     }
 
