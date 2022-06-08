@@ -55,6 +55,8 @@ namespace projectB
 
                 if (page == "Inloggen")
                 {
+                    strResultJson = File.ReadAllText("..\\..\\..\\account.json");
+                    jsonList = JsonConvert.DeserializeObject<List<Account>>(strResultJson);
                     id = accountInloggen.LoginScherm(jsonList);
                     foreach (dynamic item in jsonList)
                     {

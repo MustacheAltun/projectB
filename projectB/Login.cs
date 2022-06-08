@@ -230,6 +230,7 @@ public class Login
             {
                 accountMaken.RegistrerenFrontend(url, accountList);
                 keuze = "";
+                break;
             }
             else if ((keuze == "1") || (keuze.ToLower() == "terug"))
             {
