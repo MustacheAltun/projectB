@@ -2,9 +2,9 @@
 !!READ ME!!
 --------------------------------------------------------------------------------------------|
 LOGIN INFORMATIE:                                                                           |
-[Admin] Gebruikersnaam: admin | Wachtwoord: admin                                           |
-[Test] Gebruikersnaam: Test | Wachtwoord: Test                                              |
-[Gebruiker] Gebruik de registreer functie in het progamma om een uniek account aan te maken.|
+[Admin] Gebruikersnaam: admin & Wachtwoord: admin                                           |
+[Test Gebruiker] Gebruikersnaam: Test & Wachtwoord: Test                                              |
+[Gast] Gebruik de registreer functie in het progamma om een uniek account aan te maken.|
 
 
 GEEN EXTRA DOWNLOADS NODIG NAAST HET STANDAARD [.NET, C#, WINDOWS]
