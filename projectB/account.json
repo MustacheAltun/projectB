@@ -10,9 +10,9 @@
   },
   {
     "id": 1,
-    "username": "test",
-    "password": "test",
-    "security": "ikweetniet",
+    "username": "Test",
+    "password": "Test",
+    "security": "Test",
     "rol": "gebruiker",
     "tickets": null,
     "etenBestelling": null
@@ -23,15 +23,6 @@
     "password": "admin",
     "security": "admin",
     "rol": "admin",
-    "tickets": null,
-    "etenBestelling": null
-  },
-  {
-    "id": 3,
-    "username": "golbert",
-    "password": "ceitapages1234",
-    "security": "golbertceitapages",
-    "rol": "gebruiker",
     "tickets": null,
     "etenBestelling": null
   }
